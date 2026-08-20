@@ -108,6 +108,8 @@ const Carousel = React.forwardRef<
         return;
       }
 
+      // Embla must be read once after the external instance is available.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       onSelect(api);
       api.on('reInit', onSelect);
       api.on('select', onSelect);
