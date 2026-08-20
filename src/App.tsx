@@ -16,50 +16,59 @@ import {
   Clock3,
   MapPin,
   Menu,
-  ArrowUpRight,
+  ShieldCheck,
+  Sparkles,
+  Sun,
   Utensils,
   Waves,
   X,
+  Zap,
 } from "lucide-react";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import logo from "@assets/images_1787066687889.jpg";
-import heroImage from "@assets/image_1787066701325.png";
+import heroImage from "@assets/img_hero.jpeg";
 import lagoonImage from "@assets/image_1787066717007.png";
 import plateImage from "@assets/image_1787066729847.png";
 import seafoodImage from "@assets/image_1787066742218.png";
 import galleryOne from "@assets/image_1787066780463.png";
 import galleryTwo from "@assets/image_1787066829752.png";
+import parkSlideOne from "@assets/image_1787137460695.png";
+import parkSlideTwo from "@assets/image_1787137489426.png";
+import parkSlideThree from "@assets/image_1787137557063.png";
+import { ContactSection } from "./components/contact-section";
+import { LocationCard } from "./components/location-card";
 
 const queryClient = new QueryClient();
 
-type BookingDialogProps = { open: boolean; onClose: () => void };
+type BookingDialogProps = { onClose: () => void };
 
 const navItems = [
   { href: "/", label: "Início" },
   { href: "/quartos", label: "Quartos" },
   { href: "/cardapio", label: "Cardápio" },
+  { href: "/little-beach", label: "Little Beach", special: true },
 ];
 
-function Header({ onBooking }: { onBooking: () => void }) {
+function Header() {
   const [location] = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isInnerPage = location !== "/";
+  const isInternal = location !== "/";
 
   return (
-    <header className={`site-header ${scrolled ? 'scrolled' : ''} ${isInnerPage ? 'inner' : ''}`} data-testid="header-site">
+    <header className={`site-header ${isScrolled ? "is-scrolled" : ""} ${isInternal ? "is-internal" : ""}`} data-testid="header-site">
       <div className="header-inner">
         <Link href="/" className="brand-link" data-testid="link-logo">
           <img
@@ -73,21 +82,13 @@ function Header({ onBooking }: { onBooking: () => void }) {
             <Link
               key={item.href}
               href={item.href}
-              className={`nav-link ${location === item.href ? "is-active" : ""}`}
-              data-testid={`link-nav-${item.label.toLowerCase()}`}
+              className={`nav-link ${item.special ? "nav-link-special" : ""} ${location === item.href ? "is-active" : ""}`}
+              data-testid={`link-nav-${item.label.toLowerCase().replaceAll(" ", "-")}`}
             >
               {item.label}
             </Link>
           ))}
         </nav>
-        <button
-          className="header-cta"
-          onClick={onBooking}
-          data-testid="button-header-reserva"
-        >
-          <span>Consultar estadia</span>
-          <ArrowDownRight size={16} />
-        </button>
         <button
           className="menu-toggle"
           onClick={() => setMobileOpen((value) => !value)}
@@ -103,36 +104,18 @@ function Header({ onBooking }: { onBooking: () => void }) {
             key={item.href}
             href={item.href}
             onClick={() => setMobileOpen(false)}
-            className={`mobile-nav-link ${location === item.href ? "is-active" : ""}`}
-            data-testid={`link-mobile-${item.label.toLowerCase()}`}
+            className={`mobile-nav-link ${item.special ? "mobile-nav-link-special" : ""} ${location === item.href ? "is-active" : ""}`}
+            data-testid={`link-mobile-${item.label.toLowerCase().replaceAll(" ", "-")}`}
           >
             {item.label}
           </Link>
         ))}
-        <a
-          href="/#experiencia"
-          onClick={() => setMobileOpen(false)}
-          className="mobile-nav-link"
-          data-testid="link-mobile-experiencia"
-        >
-          A pousada
-        </a>
-        <button
-          className="mobile-booking"
-          onClick={() => {
-            setMobileOpen(false);
-            onBooking();
-          }}
-          data-testid="button-mobile-reserva"
-        >
-          Consultar estadia <ArrowRight size={16} />
-        </button>
       </div>
     </header>
   );
 }
 
-function BookingDialog({ open, onClose }: BookingDialogProps) {
+function BookingDialog({ onClose }: BookingDialogProps) {
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({
     arrival: "",
@@ -142,10 +125,6 @@ function BookingDialog({ open, onClose }: BookingDialogProps) {
     email: "",
     note: "",
   });
-  useEffect(() => {
-    if (!open) setSent(false);
-  }, [open]);
-  if (!open) return null;
   const update = (field: string, value: string) =>
     setForm((current) => ({ ...current, [field]: value }));
   return (
@@ -329,9 +308,9 @@ function Footer({ onBooking }: { onBooking: () => void }) {
           <Link href="/cardapio" data-testid="link-footer-cardapio">
             Cardápio
           </Link>
-          <a href="/#experiencia" data-testid="link-footer-pousada">
-            A pousada
-          </a>
+          <Link href="/little-beach" data-testid="link-footer-little-beach">
+            Little Beach
+          </Link>
         </div>
         <div className="footer-links">
           <span className="footer-heading">Converse com a gente</span>
@@ -355,9 +334,7 @@ function Footer({ onBooking }: { onBooking: () => void }) {
             className="social-link"
             aria-label="Instagram"
             data-testid="link-instagram"
-          >
-            <ArrowUpRight size={18} />
-          </a>
+          ></a>
         </div>
       </div>
       <div className="footer-bottom">
@@ -380,6 +357,7 @@ const atmosphereSlides = [
 function AtmosphereCarousel() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeSlide, setActiveSlide] = useState(0);
+  const pausedRef = useRef(false);
 
   const updateActiveSlide = () => {
     const track = trackRef.current;
@@ -395,13 +373,33 @@ function AtmosphereCarousel() {
     setActiveSlide(closestIndex);
   };
 
-  const goToSlide = (index: number) => {
+  const goToSlide = (index: number, userInteraction = false) => {
     const track = trackRef.current;
     const card = track?.children[index] as HTMLElement | undefined;
     if (!track || !card) return;
     track.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
     setActiveSlide(index);
+    if (userInteraction) {
+      pausedRef.current = true;
+      setTimeout(() => { pausedRef.current = false; }, 5000);
+    }
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (pausedRef.current) return;
+      setActiveSlide((current) => {
+        const next = (current + 1) % atmosphereSlides.length;
+        const track = trackRef.current;
+        const card = track?.children[next] as HTMLElement | undefined;
+        if (track && card) {
+          track.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+        }
+        return next;
+      });
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="atmosphere-carousel">
@@ -436,7 +434,7 @@ function AtmosphereCarousel() {
             <button
               key={slide.alt}
               className={index === activeSlide ? "is-active" : ""}
-              onClick={() => goToSlide(index)}
+              onClick={() => goToSlide(index, true)}
               aria-label={`Ir para imagem ${index + 1}`}
               aria-current={index === activeSlide ? "true" : undefined}
             />
@@ -444,17 +442,13 @@ function AtmosphereCarousel() {
         </div>
         <div className="atmosphere-carousel-arrows">
           <button
-            onClick={() => goToSlide(Math.max(0, activeSlide - 1))}
-            disabled={activeSlide === 0}
+            onClick={() => goToSlide((activeSlide - 1 + atmosphereSlides.length) % atmosphereSlides.length, true)}
             aria-label="Imagem anterior"
           >
             <ChevronLeft size={16} />
           </button>
           <button
-            onClick={() =>
-              goToSlide(Math.min(atmosphereSlides.length - 1, activeSlide + 1))
-            }
-            disabled={activeSlide === atmosphereSlides.length - 1}
+            onClick={() => goToSlide((activeSlide + 1) % atmosphereSlides.length, true)}
             aria-label="Próxima imagem"
           >
             <ChevronRight size={16} />
@@ -462,6 +456,118 @@ function AtmosphereCarousel() {
         </div>
       </div>
       <span className="atmosphere-carousel-hint">deslize para ver mais</span>
+    </div>
+  );
+}
+
+const foodSlides = [
+  { image: seafoodImage, alt: "Prato de frutos do mar grelhados", caption: "Da brasa para a mesa", subcaption: "com o pé na areia" },
+  { image: plateImage, alt: "Refeição servida à beira da água", caption: "Sabores frescos", subcaption: "do nosso litoral" },
+];
+
+function FoodCarousel() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const pausedRef = useRef(false);
+
+  const updateActiveSlide = () => {
+    const track = trackRef.current;
+    if (!track) return;
+    const cards = Array.from(track.children) as HTMLElement[];
+    const closestIndex = cards.reduce((closest, card, index) => {
+      const currentDistance = Math.abs(card.offsetLeft - track.scrollLeft);
+      const closestDistance = Math.abs(
+        cards[closest].offsetLeft - track.scrollLeft,
+      );
+      return currentDistance < closestDistance ? index : closest;
+    }, 0);
+    setActiveSlide(closestIndex);
+  };
+
+  const goToSlide = (index: number, userInteraction = false) => {
+    const track = trackRef.current;
+    const card = track?.children[index] as HTMLElement | undefined;
+    if (!track || !card) return;
+    track.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+    setActiveSlide(index);
+    if (userInteraction) {
+      pausedRef.current = true;
+      setTimeout(() => { pausedRef.current = false; }, 5000);
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (pausedRef.current) return;
+      setActiveSlide((current) => {
+        const next = (current + 1) % foodSlides.length;
+        const track = trackRef.current;
+        const card = track?.children[next] as HTMLElement | undefined;
+        if (track && card) {
+          track.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+        }
+        return next;
+      });
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="atmosphere-carousel food-carousel">
+      <div
+        ref={trackRef}
+        className="atmosphere-carousel-track"
+        onScroll={updateActiveSlide}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowRight")
+            goToSlide(Math.min(foodSlides.length - 1, activeSlide + 1));
+          if (event.key === "ArrowLeft")
+            goToSlide(Math.max(0, activeSlide - 1));
+        }}
+        tabIndex={0}
+        aria-label="Imagens da gastronomia da pousada"
+      >
+        {foodSlides.map((slide, index) => (
+          <div
+            className={`atmosphere-slide ${index === activeSlide ? "is-active" : ""}`}
+            key={slide.alt}
+          >
+            <img src={slide.image} alt={slide.alt} />
+            <div className="food-image-caption" style={{ zIndex: 10 }}>
+              {slide.caption}
+              <br />
+              <span>{slide.subcaption}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="atmosphere-carousel-controls" style={{ zIndex: 10 }}>
+        <div className="atmosphere-carousel-dots" aria-label="Escolher imagem">
+          {foodSlides.map((slide, index) => (
+            <button
+              key={slide.alt}
+              className={index === activeSlide ? "is-active" : ""}
+              onClick={() => goToSlide(index, true)}
+              aria-label={`Ir para imagem ${index + 1}`}
+              aria-current={index === activeSlide ? "true" : undefined}
+            />
+          ))}
+        </div>
+        <div className="atmosphere-carousel-arrows">
+          <button
+            onClick={() => goToSlide((activeSlide - 1 + foodSlides.length) % foodSlides.length, true)}
+            aria-label="Imagem anterior"
+          >
+            <ChevronLeft size={16} />
+          </button>
+          <button
+            onClick={() => goToSlide((activeSlide + 1) % foodSlides.length, true)}
+            aria-label="Próxima imagem"
+          >
+            <ChevronRight size={16} />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -660,21 +766,42 @@ function Home({ onBooking }: { onBooking: () => void }) {
             Abrir o cardápio <ArrowRight size={16} />
           </Link>
         </div>
-        <div className="food-image">
-          <img src={seafoodImage} alt="Prato de frutos do mar grelhados" />
-          <div className="food-image-caption">
-            Da brasa para a mesa
+        <FoodCarousel />
+      </section>
+      <section className="park-teaser page-width">
+        <div className="park-teaser-image">
+          <img src={parkSlideTwo} alt="Área aquática com toboáguas e lagoa" />
+          <div className="park-teaser-stamp">
+            <Waves size={16} /> água
             <br />
-            <span>com o pé na areia</span>
+            <b>+ aventura</b>
           </div>
         </div>
-        <div className="food-small-image">
-          <img src={plateImage} alt="Refeição servida à beira da água" />
+        <div className="park-teaser-copy">
+          <div className="park-teaser-kicker">
+            <Sparkles size={13} /> 05 · modo aventura
+          </div>
+          <h2>
+            Um mergulho
+            <br />
+            <em>fora do roteiro.</em>
+          </h2>
+          <p>
+            Quando a vontade é brincar, o Little Beach entra em cena: toboáguas,
+            lagoa e um dia inteiro para rir sem olhar o relógio.
+          </p>
+          <Link
+            href="/little-beach"
+            className="button park-teaser-button"
+            data-testid="button-home-little-beach"
+          >
+            Conhecer o Little Beach <ArrowRight size={16} />
+          </Link>
         </div>
       </section>
       <section className="gallery-section page-width">
         <div className="gallery-intro">
-          <SectionLabel>05 · guardar na memória</SectionLabel>
+          <SectionLabel>06 · guardar na memória</SectionLabel>
           <h2>
             Vá embora com
             <br />
@@ -699,26 +826,8 @@ function Home({ onBooking }: { onBooking: () => void }) {
           </div>
         </div>
       </section>
-      <section className="closing-cta">
-        <div className="closing-text">
-          <span>Seu próximo intervalo</span>
-          <h2>
-            A água está
-            <br />
-            <em>te esperando.</em>
-          </h2>
-          <button
-            className="button button-gold"
-            onClick={onBooking}
-            data-testid="button-closing-reserva"
-          >
-            Consultar estadia <ArrowRight size={17} />
-          </button>
-        </div>
-        <div className="closing-image">
-          <img src={lagoonImage} alt="Praia tranquila ao entardecer" />
-        </div>
-      </section>
+      <LocationCard />
+      <ContactSection />
     </main>
   );
 }
@@ -734,6 +843,9 @@ const roomOptions = [
     desc: "Intimidade, luz natural e a sensação gostosa de acordar perto da água.",
     image: galleryOne,
     details: ["Cama queen", "Varanda privativa", "Vista para o jardim"],
+    price: 450,
+    capacity: 2,
+    meals: ["Café da manhã"],
   },
   {
     name: "Suíte Maré",
@@ -741,6 +853,9 @@ const roomOptions = [
     desc: "Mais espaço para esticar o tempo, com um canto de descanso só seu.",
     image: galleryTwo,
     details: ["Cama queen", "Sala de estar", "Vista para a lagoa"],
+    price: 850,
+    capacity: 2,
+    meals: ["Café da manhã", "Meia pensão"],
   },
   {
     name: "Casa Areia",
@@ -748,10 +863,48 @@ const roomOptions = [
     desc: "Um jeito inteiro de viver a pousada, com espaço para reunir quem você gosta.",
     image: heroImage,
     details: ["Dois ambientes", "Varanda ampla", "Acesso à lagoa"],
+    price: 1200,
+    capacity: 4,
+    meals: ["Café da manhã", "Pensão completa"],
   },
 ];
 
 function Quartos({ onBooking }: { onBooking: () => void }) {
+  const ROOMS_PER_PAGE = 2;
+  const [page, setPage] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCapacities, setSelectedCapacities] = useState<number[]>([]);
+  const [selectedMeals, setSelectedMeals] = useState<string[]>([]);
+  const [maxPrice, setMaxPrice] = useState<number>(2000);
+
+  const toggleCapacity = (cap: number) => {
+    setSelectedCapacities((prev) =>
+      prev.includes(cap) ? prev.filter((c) => c !== cap) : [...prev, cap]
+    );
+    setPage(0);
+  };
+
+  const toggleMeal = (meal: string) => {
+    setSelectedMeals((prev) =>
+      prev.includes(meal) ? prev.filter((m) => m !== meal) : [...prev, meal]
+    );
+    setPage(0);
+  };
+
+  const filteredRooms = roomOptions.filter((room) => {
+    const matchesSearch = room.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCapacity = selectedCapacities.length === 0 || selectedCapacities.includes(room.capacity);
+    const matchesMeal = selectedMeals.length === 0 || selectedMeals.some((meal) => room.meals.includes(meal));
+    const matchesPrice = room.price <= maxPrice;
+
+    return matchesSearch && matchesCapacity && matchesMeal && matchesPrice;
+  });
+
+  const totalPages = Math.ceil(filteredRooms.length / ROOMS_PER_PAGE);
+  const visibleRooms = filteredRooms.slice(
+    page * ROOMS_PER_PAGE,
+    page * ROOMS_PER_PAGE + ROOMS_PER_PAGE,
+  );
   return (
     <main className="inner-page">
       <section className="page-hero page-width">
@@ -786,21 +939,63 @@ function Quartos({ onBooking }: { onBooking: () => void }) {
             preferência — os valores são consultados caso a caso.
           </p>
         </div>
-        <div className="room-list">
-          {roomOptions.map((room, index) => (
+
+        <div className="room-filters">
+          <div className="filter-search">
+            <input 
+              type="text" 
+              placeholder="Buscar quarto por nome..." 
+              value={searchQuery}
+              onChange={(e) => { setSearchQuery(e.target.value); setPage(0); }}
+            />
+          </div>
+          
+          <div className="filter-options">
+            <div className="filter-group">
+              <span className="filter-title">Pessoas:</span>
+              <label><input type="checkbox" checked={selectedCapacities.includes(2)} onChange={() => toggleCapacity(2)} /> 2 pessoas</label>
+              <label><input type="checkbox" checked={selectedCapacities.includes(4)} onChange={() => toggleCapacity(4)} /> 4 pessoas</label>
+            </div>
+            
+            <div className="filter-group">
+              <span className="filter-title">Refeições:</span>
+              <label><input type="checkbox" checked={selectedMeals.includes("Café da manhã")} onChange={() => toggleMeal("Café da manhã")} /> Café da manhã</label>
+              <label><input type="checkbox" checked={selectedMeals.includes("Meia pensão")} onChange={() => toggleMeal("Meia pensão")} /> Meia pensão</label>
+              <label><input type="checkbox" checked={selectedMeals.includes("Pensão completa")} onChange={() => toggleMeal("Pensão completa")} /> Pensão completa</label>
+            </div>
+
+            <div className="filter-group">
+              <span className="filter-title">Valor máx (R$ {maxPrice}):</span>
+              <input 
+                type="range" 
+                min="300" max="2000" step="50" 
+                value={maxPrice} 
+                onChange={(e) => { setMaxPrice(Number(e.target.value)); setPage(0); }} 
+              />
+            </div>
+          </div>
+        </div>
+
+        {filteredRooms.length === 0 ? (
+          <div className="room-empty-state">
+            Nenhum quarto encontrado com esses critérios. Tente limpar os filtros.
+          </div>
+        ) : (
+          <div className="room-list">
+          {visibleRooms.map((room, index) => (
             <article
               className="room-card"
               key={room.name}
-              data-testid={`card-quarto-${index}`}
+              data-testid={`card-quarto-${page * ROOMS_PER_PAGE + index}`}
             >
               <div className="room-card-image">
                 <img src={room.image} alt={room.name} />
-                <span>0{index + 1}</span>
+                <span>0{page * ROOMS_PER_PAGE + index + 1}</span>
               </div>
               <div className="room-card-body">
                 <div className="room-card-top">
                   <span className="room-type">{room.type}</span>
-                  <span className="room-number">quarto {index + 1}</span>
+                  <span className="room-number">quarto {page * ROOMS_PER_PAGE + index + 1}</span>
                 </div>
                 <h2>{room.name}</h2>
                 <p>{room.desc}</p>
@@ -814,7 +1009,7 @@ function Quartos({ onBooking }: { onBooking: () => void }) {
                 <button
                   onClick={onBooking}
                   className="text-link"
-                  data-testid={`button-reservar-quarto-${index}`}
+                  data-testid={`button-reservar-quarto-${page * ROOMS_PER_PAGE + index}`}
                 >
                   Consultar este quarto <ArrowRight size={16} />
                 </button>
@@ -822,6 +1017,36 @@ function Quartos({ onBooking }: { onBooking: () => void }) {
             </article>
           ))}
         </div>
+        )}
+        {totalPages > 1 && (
+          <div className="room-pagination" data-testid="pagination-quartos">
+            <button
+              className="room-pagination-btn"
+              onClick={() => setPage((p) => Math.max(0, p - 1))}
+              disabled={page === 0}
+              aria-label="Quartos anteriores"
+            >
+              <ArrowRight size={16} style={{ transform: 'rotate(180deg)' }} />
+            </button>
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                className={`room-pagination-dot${i === page ? ' is-active' : ''}`}
+                onClick={() => setPage(i)}
+                aria-label={`Página ${i + 1}`}
+                aria-current={i === page ? 'page' : undefined}
+              />
+            ))}
+            <button
+              className="room-pagination-btn"
+              onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+              disabled={page === totalPages - 1}
+              aria-label="Próximos quartos"
+            >
+              <ArrowRight size={16} />
+            </button>
+          </div>
+        )}
       </section>
       <section className="room-principles">
         <div className="page-width principles-inner">
@@ -845,22 +1070,24 @@ function Quartos({ onBooking }: { onBooking: () => void }) {
           </div>
         </div>
       </section>
-      <section className="room-bottom-cta page-width">
-        <div>
-          <span className="section-label">Ainda em dúvida?</span>
-          <h2>
-            Fale com a gente.
-            <br />
-            <em>É mais simples assim.</em>
-          </h2>
+      <section className="room-bottom-cta">
+        <div className="room-bottom-cta-inner page-width">
+          <div>
+            <span className="section-label">Ainda em dúvida?</span>
+            <h2>
+              Fale com a gente.
+              <br />
+              <em>É mais simples assim.</em>
+            </h2>
+          </div>
+          <button
+            onClick={onBooking}
+            className="button button-dark"
+            data-testid="button-quartos-cta"
+          >
+            Enviar minha preferência <ArrowRight size={16} />
+          </button>
         </div>
-        <button
-          onClick={onBooking}
-          className="button button-dark"
-          data-testid="button-quartos-cta"
-        >
-          Enviar minha preferência <ArrowRight size={16} />
-        </button>
       </section>
     </main>
   );
@@ -877,48 +1104,57 @@ const menuItems: {
   category: Exclude<MenuCategory, "Tudo">;
   description: string;
   mark?: string;
+  image: string;
 }[] = [
   {
     name: "Crocante de tapioca",
     category: "Para começar",
     description: "Com peixe curado, ervas frescas e toque cítrico.",
     mark: "da casa",
+    image: plateImage,
   },
   {
     name: "Peixe do dia",
     category: "Do mar",
     description: "Grelhado, com acompanhamentos que mudam com a maré.",
+    image: plateImage,
   },
   {
     name: "Moqueca de maré",
     category: "Do mar",
     description: "Leite de coco, dendê suave e cheiro verde.",
+    image: plateImage,
   },
   {
     name: "Arroz de frutos do mar",
     category: "Do mar",
     description: "Camarões, polvo e o caldo demorado da nossa cozinha.",
+    image: plateImage,
   },
   {
     name: "Brasa do litoral",
     category: "Da brasa",
     description: "Peixe inteiro, camarões e polvo para compartilhar.",
     mark: "para dividir",
+    image: plateImage,
   },
   {
     name: "Legumes na brasa",
     category: "Da brasa",
     description: "Abóbora, cebola e folhas com molho de castanhas.",
+    image: plateImage,
   },
   {
     name: "Caju com água de coco",
     category: "Para beber",
     description: "Fresco, gelado e sem pressa.",
+    image: plateImage,
   },
   {
     name: "Caipirinha da casa",
     category: "Para beber",
     description: "Fruta da estação, cachaça e um pouco de sol.",
+    image: plateImage,
   },
 ];
 
@@ -1008,13 +1244,18 @@ function Cardapio() {
                 key={item.name}
                 data-testid={`item-cardapio-${index}`}
               >
-                <div>
-                  <span className="menu-item-category">{item.category}</span>
-                  <h3>
-                    {item.name}
-                    {item.mark && <small>{item.mark}</small>}
-                  </h3>
-                  <p>{item.description}</p>
+                <div className="menu-item-content">
+                  <div className="menu-item-image">
+                    <img src={item.image} alt={item.name} />
+                  </div>
+                  <div className="menu-item-text">
+                    <span className="menu-item-category">{item.category}</span>
+                    <h3>
+                      {item.name}
+                      {item.mark && <small>{item.mark}</small>}
+                    </h3>
+                    <p>{item.description}</p>
+                  </div>
                 </div>
                 <span className="menu-item-line" />
               </article>
@@ -1045,6 +1286,230 @@ function Cardapio() {
   );
 }
 
+const parkSlides = [
+  {
+    image: parkSlideOne,
+    label: "Atração 01",
+    title: "Desça no grito.",
+    description:
+      "Curvas, velocidade e água gelada para transformar qualquer tarde em história.",
+  },
+  {
+    image: parkSlideTwo,
+    label: "Atração 02",
+    title: "Mergulhe na aventura.",
+    description: "Espaço para brincar, relaxar e deixar o sol fazer o resto.",
+  },
+  {
+    image: parkSlideThree,
+    label: "Atração 03",
+    title: "Vá mais longe.",
+    description:
+      "A lagoa é o ponto de encontro entre a pousada e a sua próxima lembrança.",
+  },
+];
+
+function LittleBeach({ onBooking }: { onBooking: () => void }) {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const slide = parkSlides[activeSlide];
+
+  useEffect(() => {
+    const timer = window.setInterval(
+      () => setActiveSlide((current) => (current + 1) % parkSlides.length),
+      5500,
+    );
+    return () => window.clearInterval(timer);
+  }, []);
+
+  return (
+    <main className="park-page">
+      <section className="park-hero">
+        <div className="park-hero-shape park-hero-shape-one" />
+        <div className="park-hero-shape park-hero-shape-two" />
+        <div className="park-hero-content page-width">
+          <div className="park-hero-copy">
+            <div className="park-kicker">
+              <Sparkles size={14} /> Um dia de pura aventura
+            </div>
+            <h1>
+              Sol, água
+              <br />
+              <em>e emoção.</em>
+            </h1>
+            <p>
+              O Little Beach da Beira D’Água foi feito para quem gosta de rir
+              alto, sair molhado e voltar para a pousada com uma história nova.
+            </p>
+            <div className="park-hero-actions">
+              <a href="#atracoes" className="park-button park-button-orange">
+                Explorar atrações <ArrowDownRight size={17} />
+              </a>
+              <button className="park-text-link" onClick={onBooking}>
+                Planejar meu dia <ArrowRight size={16} />
+              </button>
+            </div>
+          </div>
+          <div className="park-hero-badge">
+            <Sun size={25} />
+            <strong>
+              Modo
+              <br />
+              aventura
+            </strong>
+            <span>ON</span>
+          </div>
+        </div>
+        <div className="park-hero-wave" />
+      </section>
+
+      <section className="park-intro page-width">
+        <div className="park-section-number">
+          01 <span>—</span> diversão para todo mundo
+        </div>
+        <div className="park-intro-copy">
+          <span className="park-label">O parque é seu</span>
+          <h2>
+            Prepare o<br />
+            <em>melhor mergulho.</em>
+          </h2>
+          <p>
+            Entre um escorregador e outro, tem sombra, brisa e aquele tipo de
+            alegria que não precisa de legenda. Escolha seu ritmo — a aventura
+            começa na próxima onda.
+          </p>
+        </div>
+        <div className="park-sticker">
+          <Zap size={19} />
+          <span>
+            Mais
+            <br />
+            <b>energia</b>
+            <br />
+            por m²
+          </span>
+        </div>
+      </section>
+
+      <section className="park-showcase" id="atracoes">
+        <div className="park-showcase-image">
+          <img
+            key={slide.image}
+            src={slide.image}
+            alt={slide.title}
+            className="park-slide-image"
+          />
+          <div className="park-image-overlay" />
+          <div className="park-slide-count">
+            0{activeSlide + 1} <span>/ 03</span>
+          </div>
+          <div className="park-showcase-controls">
+            <button
+              onClick={() =>
+                setActiveSlide(
+                  (activeSlide - 1 + parkSlides.length) % parkSlides.length,
+                )
+              }
+              aria-label="Atração anterior"
+            >
+              <ChevronLeft size={19} />
+            </button>
+            <div className="park-dots">
+              {parkSlides.map((item, index) => (
+                <button
+                  key={item.label}
+                  className={activeSlide === index ? "is-active" : ""}
+                  onClick={() => setActiveSlide(index)}
+                  aria-label={`Ver ${item.label}`}
+                />
+              ))}
+            </div>
+            <button
+              onClick={() =>
+                setActiveSlide((activeSlide + 1) % parkSlides.length)
+              }
+              aria-label="Próxima atração"
+            >
+              <ChevronRight size={19} />
+            </button>
+          </div>
+        </div>
+        <div className="park-showcase-copy">
+          <span className="park-label">{slide.label}</span>
+          <h2>{slide.title}</h2>
+          <p>{slide.description}</p>
+          <div className="park-progress">
+            <span
+              style={{
+                width: `${((activeSlide + 1) / parkSlides.length) * 100}%`,
+              }}
+            />
+          </div>
+          <span className="park-swipe-note">
+            Troque a atração <ArrowRight size={14} />
+          </span>
+        </div>
+      </section>
+
+      <section className="park-highlights page-width">
+        <div className="park-highlights-heading">
+          <span className="park-label">Por que entrar nessa?</span>
+          <h2>
+            Um parque inteiro
+            <br />
+            <em>de bons motivos.</em>
+          </h2>
+        </div>
+        <div className="park-highlight-grid">
+          <article>
+            <div className="park-icon">
+              <Waves size={21} />
+            </div>
+            <h3>Água por todos os lados</h3>
+            <p>Para correr, boiar, deslizar ou simplesmente molhar os pés.</p>
+          </article>
+          <article>
+            <div className="park-icon">
+              <Zap size={21} />
+            </div>
+            <h3>Adrenalina na medida</h3>
+            <p>
+              Atrações para quem quer acelerar e também para quem prefere ir
+              devagar.
+            </p>
+          </article>
+          <article>
+            <div className="park-icon">
+              <ShieldCheck size={21} />
+            </div>
+            <h3>Todo mundo brinca</h3>
+            <p>
+              Um espaço pensado para juntar famílias, amigos e muitas
+              gargalhadas.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section className="park-cta">
+        <div className="park-cta-sun" />
+        <div className="page-width park-cta-inner">
+          <div>
+            <span className="park-label">Seu próximo splash</span>
+            <h2>
+              O dia pede
+              <br />
+              <em>um pouco mais.</em>
+            </h2>
+          </div>
+          <button className="park-button park-button-blue" onClick={onBooking}>
+            Consultar estadia <ArrowRight size={17} />
+          </button>
+        </div>
+      </section>
+    </main>
+  );
+}
+
 function RoutedErrorBoundary({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   useEffect(() => {
@@ -1057,23 +1522,26 @@ function Shell() {
   const [bookingOpen, setBookingOpen] = useState(false);
   return (
     <>
-      <Header onBooking={() => setBookingOpen(true)} />
+      <Header />
       <RoutedErrorBoundary>
         <Switch>
-          <Route
-            path="/"
-            component={() => <Home onBooking={() => setBookingOpen(true)} />}
-          />
-          <Route
-            path="/quartos"
-            component={() => <Quartos onBooking={() => setBookingOpen(true)} />}
-          />
+          <Route path="/">
+            <Home onBooking={() => setBookingOpen(true)} />
+          </Route>
+          <Route path="/quartos">
+            <Quartos onBooking={() => setBookingOpen(true)} />
+          </Route>
           <Route path="/cardapio" component={Cardapio} />
+          <Route path="/little-beach">
+            <LittleBeach onBooking={() => setBookingOpen(true)} />
+          </Route>
           <Route component={NotFound} />
         </Switch>
       </RoutedErrorBoundary>
       <Footer onBooking={() => setBookingOpen(true)} />
-      <BookingDialog open={bookingOpen} onClose={() => setBookingOpen(false)} />
+      {bookingOpen && (
+        <BookingDialog onClose={() => setBookingOpen(false)} />
+      )}
     </>
   );
 }
