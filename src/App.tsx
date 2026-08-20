@@ -17,6 +17,7 @@ import {
   MapPin,
   Menu,
   ShieldCheck,
+  SlidersHorizontal,
   Sparkles,
   Sun,
   Utensils,
@@ -68,7 +69,10 @@ function Header() {
   const isInternal = location !== "/";
 
   return (
-    <header className={`site-header ${isScrolled ? "is-scrolled" : ""} ${isInternal ? "is-internal" : ""}`} data-testid="header-site">
+    <header
+      className={`site-header ${isScrolled ? "is-scrolled" : ""} ${isInternal ? "is-internal" : ""}`}
+      data-testid="header-site"
+    >
       <div className="header-inner">
         <Link href="/" className="brand-link" data-testid="link-logo">
           <img
@@ -381,7 +385,9 @@ function AtmosphereCarousel() {
     setActiveSlide(index);
     if (userInteraction) {
       pausedRef.current = true;
-      setTimeout(() => { pausedRef.current = false; }, 5000);
+      setTimeout(() => {
+        pausedRef.current = false;
+      }, 5000);
     }
   };
 
@@ -442,13 +448,21 @@ function AtmosphereCarousel() {
         </div>
         <div className="atmosphere-carousel-arrows">
           <button
-            onClick={() => goToSlide((activeSlide - 1 + atmosphereSlides.length) % atmosphereSlides.length, true)}
+            onClick={() =>
+              goToSlide(
+                (activeSlide - 1 + atmosphereSlides.length) %
+                  atmosphereSlides.length,
+                true,
+              )
+            }
             aria-label="Imagem anterior"
           >
             <ChevronLeft size={16} />
           </button>
           <button
-            onClick={() => goToSlide((activeSlide + 1) % atmosphereSlides.length, true)}
+            onClick={() =>
+              goToSlide((activeSlide + 1) % atmosphereSlides.length, true)
+            }
             aria-label="Próxima imagem"
           >
             <ChevronRight size={16} />
@@ -461,8 +475,18 @@ function AtmosphereCarousel() {
 }
 
 const foodSlides = [
-  { image: seafoodImage, alt: "Prato de frutos do mar grelhados", caption: "Da brasa para a mesa", subcaption: "com o pé na areia" },
-  { image: plateImage, alt: "Refeição servida à beira da água", caption: "Sabores frescos", subcaption: "do nosso litoral" },
+  {
+    image: seafoodImage,
+    alt: "Prato de frutos do mar grelhados",
+    caption: "Da brasa para a mesa",
+    subcaption: "com o pé na areia",
+  },
+  {
+    image: plateImage,
+    alt: "Refeição servida à beira da água",
+    caption: "Sabores frescos",
+    subcaption: "do nosso litoral",
+  },
 ];
 
 function FoodCarousel() {
@@ -492,7 +516,9 @@ function FoodCarousel() {
     setActiveSlide(index);
     if (userInteraction) {
       pausedRef.current = true;
-      setTimeout(() => { pausedRef.current = false; }, 5000);
+      setTimeout(() => {
+        pausedRef.current = false;
+      }, 5000);
     }
   };
 
@@ -555,13 +581,20 @@ function FoodCarousel() {
         </div>
         <div className="atmosphere-carousel-arrows">
           <button
-            onClick={() => goToSlide((activeSlide - 1 + foodSlides.length) % foodSlides.length, true)}
+            onClick={() =>
+              goToSlide(
+                (activeSlide - 1 + foodSlides.length) % foodSlides.length,
+                true,
+              )
+            }
             aria-label="Imagem anterior"
           >
             <ChevronLeft size={16} />
           </button>
           <button
-            onClick={() => goToSlide((activeSlide + 1) % foodSlides.length, true)}
+            onClick={() =>
+              goToSlide((activeSlide + 1) % foodSlides.length, true)
+            }
             aria-label="Próxima imagem"
           >
             <ChevronRight size={16} />
@@ -838,31 +871,37 @@ function ArrowUpRightIcon() {
 
 const roomOptions = [
   {
+    slug: "quarto-brisa",
     name: "Quarto Brisa",
     type: "Para dois",
     desc: "Intimidade, luz natural e a sensação gostosa de acordar perto da água.",
     image: galleryOne,
     details: ["Cama queen", "Varanda privativa", "Vista para o jardim"],
+    gallery: [galleryOne, heroImage, galleryTwo],
     price: 450,
     capacity: 2,
     meals: ["Café da manhã"],
   },
   {
+    slug: "suite-mare",
     name: "Suíte Maré",
     type: "Para dois",
     desc: "Mais espaço para esticar o tempo, com um canto de descanso só seu.",
     image: galleryTwo,
     details: ["Cama queen", "Sala de estar", "Vista para a lagoa"],
+    gallery: [galleryTwo, galleryOne, heroImage],
     price: 850,
     capacity: 2,
     meals: ["Café da manhã", "Meia pensão"],
   },
   {
+    slug: "casa-areia",
     name: "Casa Areia",
     type: "Para até quatro",
     desc: "Um jeito inteiro de viver a pousada, com espaço para reunir quem você gosta.",
     image: heroImage,
     details: ["Dois ambientes", "Varanda ampla", "Acesso à lagoa"],
+    gallery: [heroImage, galleryTwo, galleryOne],
     price: 1200,
     capacity: 4,
     meals: ["Café da manhã", "Pensão completa"],
@@ -870,7 +909,7 @@ const roomOptions = [
 ];
 
 function Quartos({ onBooking }: { onBooking: () => void }) {
-  const ROOMS_PER_PAGE = 2;
+  const ROOMS_PER_PAGE = 5;
   const [page, setPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCapacities, setSelectedCapacities] = useState<number[]>([]);
@@ -879,22 +918,28 @@ function Quartos({ onBooking }: { onBooking: () => void }) {
 
   const toggleCapacity = (cap: number) => {
     setSelectedCapacities((prev) =>
-      prev.includes(cap) ? prev.filter((c) => c !== cap) : [...prev, cap]
+      prev.includes(cap) ? prev.filter((c) => c !== cap) : [...prev, cap],
     );
     setPage(0);
   };
 
   const toggleMeal = (meal: string) => {
     setSelectedMeals((prev) =>
-      prev.includes(meal) ? prev.filter((m) => m !== meal) : [...prev, meal]
+      prev.includes(meal) ? prev.filter((m) => m !== meal) : [...prev, meal],
     );
     setPage(0);
   };
 
   const filteredRooms = roomOptions.filter((room) => {
-    const matchesSearch = room.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCapacity = selectedCapacities.length === 0 || selectedCapacities.includes(room.capacity);
-    const matchesMeal = selectedMeals.length === 0 || selectedMeals.some((meal) => room.meals.includes(meal));
+    const matchesSearch = room.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const matchesCapacity =
+      selectedCapacities.length === 0 ||
+      selectedCapacities.includes(room.capacity);
+    const matchesMeal =
+      selectedMeals.length === 0 ||
+      selectedMeals.some((meal) => room.meals.includes(meal));
     const matchesPrice = room.price <= maxPrice;
 
     return matchesSearch && matchesCapacity && matchesMeal && matchesPrice;
@@ -905,6 +950,17 @@ function Quartos({ onBooking }: { onBooking: () => void }) {
     page * ROOMS_PER_PAGE,
     page * ROOMS_PER_PAGE + ROOMS_PER_PAGE,
   );
+  const activeFilterCount =
+    selectedCapacities.length +
+    selectedMeals.length +
+    (maxPrice < 2000 ? 1 : 0);
+  const clearFilters = () => {
+    setSearchQuery("");
+    setSelectedCapacities([]);
+    setSelectedMeals([]);
+    setMaxPrice(2000);
+    setPage(0);
+  };
   return (
     <main className="inner-page">
       <section className="page-hero page-width">
@@ -940,133 +996,196 @@ function Quartos({ onBooking }: { onBooking: () => void }) {
           </p>
         </div>
 
-        <div className="room-filters">
-          <div className="filter-search">
-            <input 
-              type="text" 
-              placeholder="Buscar quarto por nome..." 
-              value={searchQuery}
-              onChange={(e) => { setSearchQuery(e.target.value); setPage(0); }}
-            />
+        <div className="room-results-toolbar">
+          <div>
+            <span className="room-results-kicker">Sua estadia</span>
+            <strong>{filteredRooms.length} quartos encontrados</strong>
           </div>
-          
-          <div className="filter-options">
+          <span className="room-results-note">
+            Valores por noite · consulte disponibilidade
+          </span>
+        </div>
+
+        <div className="room-results-layout">
+          <aside className="room-filter-panel" aria-label="Filtros de quartos">
+            <div className="room-filter-heading">
+              <div>
+                <SlidersHorizontal size={16} />
+                <strong>Filtrar</strong>
+                {activeFilterCount > 0 && <span>{activeFilterCount}</span>}
+              </div>
+              {activeFilterCount > 0 && (
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className="clear-filters"
+                >
+                  Limpar
+                </button>
+              )}
+            </div>
+            <div className="filter-search">
+              <input
+                type="text"
+                placeholder="Buscar quarto..."
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setPage(0);
+                }}
+              />
+            </div>
+
             <div className="filter-group">
               <span className="filter-title">Pessoas:</span>
-              <label><input type="checkbox" checked={selectedCapacities.includes(2)} onChange={() => toggleCapacity(2)} /> 2 pessoas</label>
-              <label><input type="checkbox" checked={selectedCapacities.includes(4)} onChange={() => toggleCapacity(4)} /> 4 pessoas</label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={selectedCapacities.includes(2)}
+                  onChange={() => toggleCapacity(2)}
+                />{" "}
+                2 pessoas
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={selectedCapacities.includes(4)}
+                  onChange={() => toggleCapacity(4)}
+                />{" "}
+                4 pessoas
+              </label>
             </div>
-            
+
             <div className="filter-group">
               <span className="filter-title">Refeições:</span>
-              <label><input type="checkbox" checked={selectedMeals.includes("Café da manhã")} onChange={() => toggleMeal("Café da manhã")} /> Café da manhã</label>
-              <label><input type="checkbox" checked={selectedMeals.includes("Meia pensão")} onChange={() => toggleMeal("Meia pensão")} /> Meia pensão</label>
-              <label><input type="checkbox" checked={selectedMeals.includes("Pensão completa")} onChange={() => toggleMeal("Pensão completa")} /> Pensão completa</label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={selectedMeals.includes("Café da manhã")}
+                  onChange={() => toggleMeal("Café da manhã")}
+                />{" "}
+                Café da manhã
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={selectedMeals.includes("Meia pensão")}
+                  onChange={() => toggleMeal("Meia pensão")}
+                />{" "}
+                Meia pensão
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={selectedMeals.includes("Pensão completa")}
+                  onChange={() => toggleMeal("Pensão completa")}
+                />{" "}
+                Pensão completa
+              </label>
             </div>
 
             <div className="filter-group">
               <span className="filter-title">Valor máx (R$ {maxPrice}):</span>
-              <input 
-                type="range" 
-                min="300" max="2000" step="50" 
-                value={maxPrice} 
-                onChange={(e) => { setMaxPrice(Number(e.target.value)); setPage(0); }} 
+              <input
+                type="range"
+                min="300"
+                max="2000"
+                step="50"
+                value={maxPrice}
+                onChange={(e) => {
+                  setMaxPrice(Number(e.target.value));
+                  setPage(0);
+                }}
               />
             </div>
-          </div>
-        </div>
+          </aside>
 
-        {filteredRooms.length === 0 ? (
-          <div className="room-empty-state">
-            Nenhum quarto encontrado com esses critérios. Tente limpar os filtros.
-          </div>
-        ) : (
-          <div className="room-list">
-          {visibleRooms.map((room, index) => (
-            <article
-              className="room-card"
-              key={room.name}
-              data-testid={`card-quarto-${page * ROOMS_PER_PAGE + index}`}
-            >
-              <div className="room-card-image">
-                <img src={room.image} alt={room.name} />
-                <span>0{page * ROOMS_PER_PAGE + index + 1}</span>
+          <div className="room-results">
+            {filteredRooms.length === 0 ? (
+              <div className="room-empty-state">
+                Nenhum quarto encontrado com esses critérios. Tente limpar os
+                filtros.
               </div>
-              <div className="room-card-body">
-                <div className="room-card-top">
-                  <span className="room-type">{room.type}</span>
-                  <span className="room-number">quarto {page * ROOMS_PER_PAGE + index + 1}</span>
-                </div>
-                <h2>{room.name}</h2>
-                <p>{room.desc}</p>
-                <div className="room-details">
-                  {room.details.map((detail) => (
-                    <span key={detail}>
-                      <Check size={13} /> {detail}
-                    </span>
-                  ))}
-                </div>
+            ) : (
+              <div className="room-list">
+                {visibleRooms.map((room, index) => (
+                  <article
+                    className="room-card"
+                    key={room.name}
+                    data-testid={`card-quarto-${page * ROOMS_PER_PAGE + index}`}
+                  >
+                    <div className="room-card-image">
+                      <img src={room.image} alt={room.name} />
+                      <span>0{page * ROOMS_PER_PAGE + index + 1}</span>
+                    </div>
+                    <div className="room-card-body">
+                      <div className="room-card-top">
+                        <span className="room-type">{room.type}</span>
+                        <span className="room-number">
+                          quarto {page * ROOMS_PER_PAGE + index + 1}
+                        </span>
+                      </div>
+                      <h2>{room.name}</h2>
+                      <p>{room.desc}</p>
+                      <div className="room-details">
+                        {room.details.map((detail) => (
+                          <span key={detail}>
+                            <Check size={13} /> {detail}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="room-card-price">
+                      <span className="room-price-label">A partir de</span>
+                      <strong>R$ {room.price.toLocaleString("pt-BR")}</strong>
+                      <span className="room-price-period">/ noite</span>
+                      <small>{room.meals[0]} incluso</small>
+                      <Link
+                        href={`/quartos/${room.slug}`}
+                        className="button button-dark"
+                        data-testid={`button-reservar-quarto-${page * ROOMS_PER_PAGE + index}`}
+                      >
+                        Consultar <ArrowRight size={15} />
+                      </Link>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+            {totalPages > 1 && (
+              <div className="room-pagination" data-testid="pagination-quartos">
                 <button
-                  onClick={onBooking}
-                  className="text-link"
-                  data-testid={`button-reservar-quarto-${page * ROOMS_PER_PAGE + index}`}
+                  className="room-pagination-btn"
+                  onClick={() => setPage((p) => Math.max(0, p - 1))}
+                  disabled={page === 0}
+                  aria-label="Quartos anteriores"
                 >
-                  Consultar este quarto <ArrowRight size={16} />
+                  <ArrowRight
+                    size={16}
+                    style={{ transform: "rotate(180deg)" }}
+                  />
+                </button>
+                {Array.from({ length: totalPages }).map((_, i) => (
+                  <button
+                    key={i}
+                    className={`room-pagination-dot${i === page ? " is-active" : ""}`}
+                    onClick={() => setPage(i)}
+                    aria-label={`Página ${i + 1}`}
+                    aria-current={i === page ? "page" : undefined}
+                  />
+                ))}
+                <button
+                  className="room-pagination-btn"
+                  onClick={() =>
+                    setPage((p) => Math.min(totalPages - 1, p + 1))
+                  }
+                  disabled={page === totalPages - 1}
+                  aria-label="Próximos quartos"
+                >
+                  <ArrowRight size={16} />
                 </button>
               </div>
-            </article>
-          ))}
-        </div>
-        )}
-        {totalPages > 1 && (
-          <div className="room-pagination" data-testid="pagination-quartos">
-            <button
-              className="room-pagination-btn"
-              onClick={() => setPage((p) => Math.max(0, p - 1))}
-              disabled={page === 0}
-              aria-label="Quartos anteriores"
-            >
-              <ArrowRight size={16} style={{ transform: 'rotate(180deg)' }} />
-            </button>
-            {Array.from({ length: totalPages }).map((_, i) => (
-              <button
-                key={i}
-                className={`room-pagination-dot${i === page ? ' is-active' : ''}`}
-                onClick={() => setPage(i)}
-                aria-label={`Página ${i + 1}`}
-                aria-current={i === page ? 'page' : undefined}
-              />
-            ))}
-            <button
-              className="room-pagination-btn"
-              onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
-              disabled={page === totalPages - 1}
-              aria-label="Próximos quartos"
-            >
-              <ArrowRight size={16} />
-            </button>
-          </div>
-        )}
-      </section>
-      <section className="room-principles">
-        <div className="page-width principles-inner">
-          <SectionLabel>O que acompanha a estadia</SectionLabel>
-          <div className="principles-grid">
-            <div>
-              <Waves size={25} />
-              <h3>Tempo para você</h3>
-              <p>Um lugar onde a agenda pode ficar na mala.</p>
-            </div>
-            <div>
-              <Utensils size={25} />
-              <h3>Sabores da casa</h3>
-              <p>Comida fresca para não precisar ir embora.</p>
-            </div>
-            <div>
-              <MapPin size={25} />
-              <h3>Perto de tudo</h3>
-              <p>Da natureza, do silêncio e do seu descanso.</p>
-            </div>
+            )}
           </div>
         </div>
       </section>
@@ -1086,6 +1205,119 @@ function Quartos({ onBooking }: { onBooking: () => void }) {
             data-testid="button-quartos-cta"
           >
             Enviar minha preferência <ArrowRight size={16} />
+          </button>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function QuartoDetalhe({
+  slug,
+  onBooking,
+}: {
+  slug: string;
+  onBooking: () => void;
+}) {
+  const room = roomOptions.find((item) => item.slug === slug);
+  const [selectedImage, setSelectedImage] = useState(0);
+
+  if (!room) return <NotFound />;
+
+  return (
+    <main className="room-detail-page inner-page">
+      <section className="room-detail-header page-width">
+        <Link href="/quartos" className="room-back-link">
+          <ArrowRight size={15} /> Voltar para quartos
+        </Link>
+        <div className="room-detail-heading">
+          <div>
+            <SectionLabel>
+              Beira D’Água · {room.type.toLowerCase()}
+            </SectionLabel>
+            <h1>{room.name}</h1>
+            <p>{room.desc}</p>
+          </div>
+          <span className="room-detail-index">01 · quarto</span>
+        </div>
+      </section>
+
+      <section className="room-detail-gallery page-width">
+        <div className="room-detail-main-image">
+          <img
+            src={room.gallery[selectedImage]}
+            alt={`${room.name} - vista ${selectedImage + 1}`}
+          />
+          <span>
+            {String(selectedImage + 1).padStart(2, "0")} /{" "}
+            {String(room.gallery.length).padStart(2, "0")}
+          </span>
+        </div>
+        <div
+          className="room-detail-thumbs"
+          aria-label={`Galeria de ${room.name}`}
+        >
+          {room.gallery.map((image, index) => (
+            <button
+              type="button"
+              key={image}
+              className={selectedImage === index ? "is-active" : ""}
+              onClick={() => setSelectedImage(index)}
+              aria-label={`Ver imagem ${index + 1}`}
+              aria-current={selectedImage === index ? "true" : undefined}
+            >
+              <img src={image} alt="" />
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="room-detail-info page-width">
+        <div className="room-detail-copy">
+          <span className="side-note">Um canto para ficar</span>
+          <h2>O essencial bem pensado para viver devagar.</h2>
+          <p>
+            Luz natural, silêncio e espaço para deixar o tempo correr no seu
+            ritmo. Cada detalhe foi escolhido para que a estadia seja simples,
+            confortável e perto da natureza.
+          </p>
+        </div>
+        <div className="room-detail-features">
+          <div className="room-detail-feature">
+            <span>Capacidade</span>
+            <strong>
+              {room.capacity} {room.capacity === 1 ? "hóspede" : "hóspedes"}
+            </strong>
+          </div>
+          <div className="room-detail-feature">
+            <span>Inclui</span>
+            <strong>{room.meals.join(" · ")}</strong>
+          </div>
+          <div className="room-detail-feature room-detail-feature-wide">
+            <span>O quarto oferece</span>
+            <div>
+              {room.details.map((detail) => (
+                <span key={detail}>
+                  <Check size={14} /> {detail}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="room-detail-booking">
+        <div className="page-width room-detail-booking-inner">
+          <div>
+            <span className="section-label">Consulte sua estadia</span>
+            <h2>Seu lugar perto da água.</h2>
+          </div>
+          <button
+            type="button"
+            onClick={onBooking}
+            className="button button-dark"
+          >
+            Consultar disponibilidade <ArrowRight size={16} />
           </button>
         </div>
       </section>
@@ -1528,6 +1760,14 @@ function Shell() {
           <Route path="/">
             <Home onBooking={() => setBookingOpen(true)} />
           </Route>
+          <Route path="/quartos/:slug">
+            {(params) => (
+              <QuartoDetalhe
+                slug={params.slug}
+                onBooking={() => setBookingOpen(true)}
+              />
+            )}
+          </Route>
           <Route path="/quartos">
             <Quartos onBooking={() => setBookingOpen(true)} />
           </Route>
@@ -1539,9 +1779,7 @@ function Shell() {
         </Switch>
       </RoutedErrorBoundary>
       <Footer onBooking={() => setBookingOpen(true)} />
-      {bookingOpen && (
-        <BookingDialog onClose={() => setBookingOpen(false)} />
-      )}
+      {bookingOpen && <BookingDialog onClose={() => setBookingOpen(false)} />}
     </>
   );
 }
