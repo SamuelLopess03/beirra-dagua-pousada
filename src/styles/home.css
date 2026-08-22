@@ -1,0 +1,667 @@
+/* ===== Home: hero ===== */
+.home-hero {
+  height: min(790px, 100vh);
+  min-height: 660px;
+  position: relative;
+  color: #f5edda;
+  overflow: hidden;
+  /* Azul escuro da logo como fallback do hero */
+  background: #2a6fa8;
+}
+.hero-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 53%;
+  animation: hero-in 1.3s ease both;
+}
+.hero-wash {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.1) 45%,
+      transparent 100%
+    ),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.35), transparent 45%);
+}
+.hero-content {
+  position: relative;
+  padding-top: clamp(190px, 29vh, 250px);
+  animation: rise-in 0.8s 0.1s both;
+}
+.hero-overline {
+  /* Laranja sol (cor do sol no ícone da logo) */
+  color: #f5a623;
+  margin: 0 0 28px;
+}
+.hero-overline span {
+  color: rgba(255, 255, 255, 0.5);
+  margin-inline: 9px;
+}
+.home-hero h1 {
+  font-size: clamp(70px, 9.3vw, 132px);
+  line-height: 0.82;
+  margin: 0 0 33px;
+  color: #f5edda;
+}
+.hero-copy {
+  color: rgba(250, 245, 235, 0.86);
+  font-size: 14px;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+}
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-top: 39px;
+}
+.hero-aside {
+  position: absolute;
+  right: 43px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+  font-family: var(--app-font-mono);
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.72);
+}
+.hero-aside i {
+  height: 86px;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.56);
+}
+.hero-aside span:first-child {
+  color: #ffad49;
+}
+.hero-caption {
+  position: absolute;
+  right: 40px;
+  bottom: 31px;
+  color: rgba(255, 255, 255, 0.82);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-caption svg {
+  color: #ffad49;
+}
+
+/* ===== Home: intro ===== */
+.intro-section {
+  min-height: 495px;
+  display: grid;
+  grid-template-columns: 1fr 2.1fr 0.75fr;
+  gap: 55px;
+  align-items: center;
+  padding-block: 100px;
+}
+.intro-number,
+.side-note {
+  align-self: start;
+  padding-top: 9px;
+  color: #9a8771;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 10px;
+}
+.intro-number span {
+  margin-inline: 7px;
+  /* Laranja sol como acento */
+  color: #f5a623;
+}
+.intro-copy {
+  max-width: 570px;
+}
+.intro-copy h2,
+.atmosphere-copy h2,
+.teaser-heading h2,
+.food-copy h2,
+.gallery-intro h2,
+.closing-text h2 {
+  font-size: clamp(49px, 5vw, 74px);
+  line-height: 0.91;
+  /* Azul escuro da logo para headings */
+  color: #2a6fa8;
+  margin-bottom: 25px;
+}
+.intro-copy p,
+.atmosphere-copy > p,
+.food-copy > p,
+.gallery-intro p {
+  max-width: 420px;
+  color: #5e6f6d;
+  line-height: 1.75;
+  font-size: 14px;
+}
+.atmosphere-copy > p {
+  color: #f5edda;
+}
+.atmosphere-copy .section-label {
+  color: #f5edda;
+}
+.intro-copy .text-link {
+  /* Azul céu da logo */
+  color: #3d8fd1;
+  margin-top: 18px;
+  /* Laranja suave como detalhe */
+  border-bottom: 1px solid #ffad49;
+  padding-bottom: 8px;
+}
+.intro-stamp {
+  border: 1px solid #ffad49;
+  color: #ff8c2a;
+  border-radius: 50%;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform: rotate(-11deg);
+  font-family: var(--app-font-serif);
+  font-size: 13px;
+  line-height: 1.05;
+}
+.intro-stamp strong {
+  font-family: var(--app-font-sans);
+  font-size: 16px;
+  /* Laranja forte da logo */
+  color: #ff8c2a;
+  margin: 8px 0;
+  letter-spacing: 0.12em;
+}
+
+/* ===== Home: atmosphere / carrossel ===== */
+.atmosphere-section {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  /* Laranja suave como fundo */
+  background: #ffad49;
+  min-height: 0;
+}
+.atmosphere-carousel {
+  min-height: 400px;
+  position: relative;
+  overflow: hidden;
+  background: #2a6fa8;
+}
+.atmosphere-carousel-track {
+  display: flex;
+  height: 100%;
+  min-height: 400px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  outline: none;
+}
+.atmosphere-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+.atmosphere-carousel-track:focus-visible {
+  box-shadow: inset 0 0 0 2px #ff8c2a;
+}
+.atmosphere-slide {
+  position: relative;
+  flex: 0 0 100%;
+  min-width: 100%;
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+.atmosphere-slide img,
+.food-image img,
+.food-small-image img,
+.gallery-grid img,
+.closing-image img,
+.room-card-image img,
+.menu-hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 0.8s ease;
+}
+.atmosphere-slide img {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.atmosphere-slide:not(.is-active) img {
+  filter: saturate(0.75);
+  transform: scale(0.985);
+}
+.atmosphere-slide.is-active img {
+  transform: scale(1.015);
+}
+.atmosphere-slide:hover img,
+.food-image:hover img,
+.gallery-grid > div:hover img,
+.room-card:hover img {
+  transform: scale(1.04);
+}
+.photo-tag {
+  position: absolute;
+  bottom: 28px;
+  left: 30px;
+  padding: 12px 14px;
+  background: rgba(246, 240, 228, 0.9);
+  color: #2a6fa8;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+}
+.rotate-arrow {
+  transform: rotate(-90deg);
+}
+.atmosphere-carousel-controls {
+  position: absolute;
+  right: 28px;
+  bottom: 27px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.atmosphere-carousel-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.atmosphere-carousel-dots button {
+  width: 18px;
+  height: 2px;
+  padding: 0;
+  border: 0;
+  background: rgba(255, 255, 255, 0.5);
+  transition:
+    width 0.25s ease,
+    background-color 0.25s ease;
+}
+.atmosphere-carousel-dots button.is-active {
+  width: 35px;
+  background: #ffad49;
+}
+.atmosphere-carousel-arrows {
+  display: flex;
+  gap: 5px;
+}
+.atmosphere-carousel-arrows button {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  color: #f5edda;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(42, 111, 168, 0.36);
+  transition: all 0.25s ease;
+}
+.atmosphere-carousel-arrows button:hover:not(:disabled) {
+  color: #2a6fa8;
+  background: #ffad49;
+  border-color: #ffad49;
+}
+.atmosphere-carousel-arrows button:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+.atmosphere-carousel-hint {
+  position: absolute;
+  left: 30px;
+  top: 27px;
+  color: rgba(255, 255, 255, 0.88);
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-size: 8px;
+}
+.atmosphere-copy {
+  padding: 70px clamp(32px, 5vw, 105px);
+  align-self: center;
+}
+.ritual-list {
+  margin-top: 40px;
+  border-top: 1px solid rgba(42, 111, 168, 0.2);
+}
+.ritual-list > div {
+  display: grid;
+  grid-template-columns: 39px 1fr;
+  gap: 10px;
+  padding: 25px 0;
+  border-bottom: 1px solid rgba(42, 111, 168, 0.2);
+}
+.ritual-list span {
+  color: #2a6fa8;
+  font-family: var(--app-font-mono);
+  font-size: 10px;
+  padding-top: 3px;
+}
+.ritual-list p {
+  color: #f5edda;
+  font-size: 12px;
+  line-height: 1.55;
+  margin: 0;
+}
+.ritual-list b {
+  color: #2a6fa8;
+  font-size: 13px;
+}
+
+/* ===== Home: rooms teaser ===== */
+.rooms-teaser {
+  padding-block: 120px 135px;
+}
+.teaser-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 52px;
+}
+.teaser-heading h2 {
+  margin-bottom: 0;
+}
+.teaser-heading .text-link {
+  color: #3d8fd1;
+  border-bottom: 1px solid #ffad49;
+  padding-bottom: 9px;
+}
+.rooms-feature {
+  display: grid;
+  grid-template-columns: 1.35fr 0.8fr;
+  min-height: 600px;
+  /* Creme areia mais escuro para contraste */
+  background: #efe5cc;
+}
+.room-feature-image {
+  position: relative;
+  overflow: hidden;
+}
+.room-feature-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.image-index {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  padding: 8px 10px;
+  color: #fff;
+  font-size: 10px;
+  background: rgba(21, 63, 76, 0.68);
+  letter-spacing: 0.08em;
+}
+.room-feature-copy {
+  padding: 67px 55px;
+  align-self: center;
+}
+.room-feature-copy .room-type {
+  color: #b08650;
+}
+.room-feature-copy h3 {
+  font-size: 57px;
+  line-height: 0.9;
+  color: #2a6fa8;
+  margin: 18px 0 24px;
+}
+.room-feature-copy p {
+  color: #5a6f6c;
+  max-width: 300px;
+  line-height: 1.75;
+  font-size: 13px;
+  margin-bottom: 27px;
+}
+
+/* ===== Home: food section ===== */
+.food-section {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  min-height: 0;
+  /* Azul céu da logo como fundo da seção de comida */
+  background: #3d8fd1;
+  color: #f5edda;
+}
+.food-copy {
+  padding: 120px clamp(35px, 8vw, 130px);
+  align-self: center;
+}
+.food-copy .section-label {
+  /* Laranja suave sobre fundo azul */
+  color: #ffad49;
+}
+.food-copy h2 {
+  color: #f8f1e5;
+  margin-block: 40px;
+}
+.food-copy > p {
+  color: rgba(247, 241, 231, 0.72);
+  margin-bottom: 35px;
+}
+.food-image {
+  position: relative;
+  overflow: hidden;
+}
+.food-image-caption {
+  position: absolute;
+  left: 27px;
+  bottom: 28px;
+  color: #fff;
+  font-family: var(--app-font-serif);
+  font-size: 24px;
+  line-height: 0.95;
+}
+.food-image-caption span {
+  /* Laranja suave no caption */
+  color: #ffad49;
+  font-size: 16px;
+}
+.food-small-image {
+  overflow: hidden;
+  border-left: 5px solid #3d8fd1;
+}
+
+/* ===== Home: park teaser ===== */
+.park-teaser {
+  display: grid;
+  grid-template-columns: 1.35fr 0.8fr;
+  min-height: 700px;
+  margin-top: 120px;
+  margin-bottom: 125px;
+  /* Azul céu um pouco mais escuro para park teaser */
+  background: #2a6fa8;
+  overflow: hidden;
+}
+.park-teaser-image {
+  position: relative;
+  min-height: 700px;
+  overflow: hidden;
+}
+.park-teaser-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.park-teaser:hover .park-teaser-image img {
+  transform: scale(1.04);
+}
+.park-teaser-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(8, 52, 91, 0.54), transparent 56%);
+  pointer-events: none;
+}
+.park-teaser-stamp {
+  position: absolute;
+  z-index: 1;
+  left: 28px;
+  bottom: 27px;
+  width: 91px;
+  height: 91px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  /* Laranja suave como borda do stamp */
+  border: 1px solid #ffad49;
+  border-radius: 50%;
+  color: #f5edda;
+  text-align: center;
+  font-size: 10px;
+  line-height: 0.95;
+  transform: rotate(-9deg);
+}
+.park-teaser-stamp svg {
+  color: #ffad49;
+}
+.park-teaser-stamp b {
+  color: #ffad49;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.park-teaser-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px clamp(35px, 6vw, 82px);
+  color: #fff;
+}
+.park-teaser-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* Laranja suave como kicker */
+  color: #ffad49;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 9px;
+  font-weight: 700;
+}
+.park-teaser-copy h2 {
+  color: #f5edda;
+  font-size: clamp(48px, 5vw, 72px);
+  line-height: 0.84;
+  margin: 22px 0;
+}
+.park-teaser-copy h2 em {
+  /* Laranja forte como ênfase */
+  color: #ff8c2a;
+}
+.park-teaser-copy p {
+  max-width: 300px;
+  color: rgba(255, 255, 255, 0.76);
+  line-height: 1.7;
+  font-size: 13px;
+}
+.park-teaser-button {
+  align-self: start;
+  margin-top: 28px;
+  color: #f5edda;
+  /* Laranja forte como fundo do botão */
+  background: #ff8c2a;
+  box-shadow: 5px 5px 0 #2a6fa8;
+}
+.park-teaser-button:hover {
+  background: #ffad49;
+}
+
+/* ===== Home: gallery ===== */
+.gallery-section {
+  padding-block: 25px;
+}
+.gallery-intro {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+.gallery-intro p {
+  max-width: 235px;
+  margin-bottom: 9px;
+}
+.gallery-grid {
+  min-height: 520px;
+  display: grid;
+  grid-template-columns: 1.05fr 1.5fr 0.6fr;
+  grid-template-rows: 1fr 0.6fr;
+  gap: 12px;
+}
+.gallery-grid > div {
+  overflow: hidden;
+  position: relative;
+}
+.gallery-tall {
+  grid-row: span 2;
+}
+.gallery-wide {
+  grid-column: 2;
+  grid-row: span 2;
+}
+.gallery-detail {
+  /* Laranja suave como fundo do card de galeria */
+  background: #ffad49;
+  color: #2a6fa8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 23px;
+}
+.detail-art {
+  width: 47px;
+  height: 47px;
+  border: 1px solid #2a6fa8;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+.gallery-detail span {
+  font-family: var(--app-font-serif);
+  font-size: 21px;
+  line-height: 0.9;
+}
+
+/* ===== Home: closing CTA ===== */
+.closing-cta {
+  /* Creme/Areia como fundo da CTA final */
+  background: #efe5cc;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 565px;
+}
+.closing-text {
+  padding: 100px clamp(40px, 11vw, 170px);
+  align-self: center;
+}
+.closing-text > span {
+  /* Laranja forte como é o sol da logo */
+  color: #ff8c2a;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+.closing-text h2 {
+  margin-top: 28px;
+  margin-bottom: 32px;
+}
+.closing-image {
+  overflow: hidden;
+}
+.closing-image img {
+  object-position: 35% center;
+}

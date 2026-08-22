@@ -1,0 +1,457 @@
+/* ===== Little Beach (parque) ===== */
+.park-page {
+  /* Creme claro da logo como fundo da página do parque */
+  background: #f5edda;
+  color: #2a6fa8;
+  overflow: hidden;
+}
+.park-hero {
+  position: relative;
+  min-height: 680px;
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  /* Gradiente com o azul céu e laranja suave da logo */
+  background: linear-gradient(120deg, #2a6fa8 0%, #3d8fd1 55%, #ffad49 100%);
+}
+.park-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  background-image:
+    radial-gradient(circle at 18% 27%, #fff 0 2px, transparent 3px),
+    radial-gradient(circle at 76% 20%, #fff 0 1px, transparent 2px),
+    radial-gradient(circle at 62% 80%, #fff 0 2px, transparent 3px);
+  background-size:
+    130px 120px,
+    170px 150px,
+    190px 180px;
+  animation: bubbles-float 9s linear infinite;
+}
+.park-hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+.park-hero-copy {
+  max-width: 680px;
+  color: #fff;
+  animation: park-rise 0.75s ease both;
+}
+.park-kicker,
+.park-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* Laranja suave como kicker das seções do parque */
+  color: #ffad49;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 10px;
+  font-weight: 800;
+  margin-top: 20px;
+}
+.park-hero h1 {
+  color: #f5edda;
+  font-size: clamp(70px, 9vw, 132px);
+  line-height: 0.78;
+  letter-spacing: -0.055em;
+  margin: 28px 0;
+  /* Sombra laranja forte */
+  text-shadow: 5px 6px 0 #ff8c2a;
+}
+.park-hero h1 em {
+  color: #ffad49;
+}
+.park-hero-copy > p {
+  max-width: 440px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.park-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 27px;
+  margin-top: 34px;
+}
+.park-button {
+  min-height: 54px;
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  padding: 0 23px;
+  border: 0;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 10px;
+  font-weight: 800;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.park-button:hover {
+  transform: translateY(-4px) rotate(-1deg);
+}
+.park-button-orange {
+  color: #f5edda;
+  /* Laranja suave como botão laranja */
+  background: #ffad49;
+  box-shadow: 6px 6px 0 #ff8c2a;
+}
+.park-button-blue {
+  color: #f5edda;
+  /* Azul céu da logo como botão azul */
+  background: #3d8fd1;
+  box-shadow: 6px 6px 0 #ff8c2a;
+}
+.park-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+  background: transparent;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 10px;
+}
+.park-hero-badge {
+  width: 145px;
+  height: 145px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 2px dashed #ffad49;
+  border-radius: 50%;
+  color: #f5edda;
+  text-align: center;
+  transform: rotate(11deg);
+  animation: park-wobble 4s ease-in-out infinite;
+}
+.park-hero-badge strong {
+  font-family: var(--app-font-serif);
+  font-size: 21px;
+  line-height: 0.88;
+}
+.park-hero-badge span {
+  color: #ffad49;
+  font-family: var(--app-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.17em;
+}
+.park-hero-shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.24;
+}
+.park-hero-shape-one {
+  width: 430px;
+  height: 430px;
+  /* Laranja suave como bolha decorativa */
+  background: #ffad49;
+  right: -90px;
+  top: -180px;
+}
+.park-hero-shape-two {
+  width: 280px;
+  height: 280px;
+  /* Laranja forte como segunda bolha */
+  background: #ff8c2a;
+  left: -110px;
+  bottom: -150px;
+}
+.park-hero-wave {
+  position: absolute;
+  left: -3%;
+  right: -3%;
+  bottom: -72px;
+  height: 145px;
+  /* Creme da logo como onda de transição */
+  background: #f5edda;
+  border-radius: 50% 50% 0 0 / 65% 65% 0 0;
+}
+.park-intro {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 0.45fr;
+  gap: 55px;
+  padding-block: 106px 120px;
+}
+.park-section-number {
+  color: #ee7130;
+  font-family: var(--app-font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.park-section-number span {
+  margin-inline: 7px;
+  color: #0b88bf;
+}
+.park-intro-copy {
+  max-width: 540px;
+}
+.park-intro-copy h2,
+.park-highlights h2,
+.park-cta h2 {
+  color: #2a6fa8;
+  font-size: clamp(54px, 6vw, 82px);
+  line-height: 0.84;
+  margin: 20px 0 25px;
+}
+.park-intro-copy h2 em,
+.park-highlights h2 em,
+.park-cta h2 em {
+  /* Laranja forte como ênfase */
+  color: #ff8c2a;
+}
+.park-intro-copy p {
+  max-width: 430px;
+  color: #50747d;
+  font-size: 14px;
+  line-height: 1.75;
+}
+.park-sticker {
+  width: 107px;
+  height: 107px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 50%;
+  /* Laranja suave como sticker */
+  background: #ffad49;
+  color: #2a6fa8;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.02;
+  transform: rotate(8deg);
+}
+.park-sticker svg {
+  color: #ff8c2a;
+}
+.park-sticker b {
+  color: #ff8c2a;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.park-showcase {
+  display: grid;
+  grid-template-columns: 1.22fr 0.78fr;
+  height: 760px;
+  /* Azul céu como fundo do showcase */
+  background: #3d8fd1;
+}
+.park-showcase-image {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+.park-slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: park-image-in 0.7s ease both;
+}
+.park-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(5, 47, 84, 0.58), transparent 50%);
+  pointer-events: none;
+}
+.park-slide-count {
+  position: absolute;
+  top: 27px;
+  right: 31px;
+  color: #ffad49;
+  font-family: var(--app-font-mono);
+  font-size: 13px;
+}
+.park-slide-count span {
+  color: rgba(255, 255, 255, 0.68);
+}
+.park-showcase-controls {
+  position: absolute;
+  left: 31px;
+  right: 31px;
+  bottom: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.park-showcase-controls > button {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(5, 47, 84, 0.35);
+  color: #fff;
+  transition: all 0.2s ease;
+}
+.park-showcase-controls > button:hover {
+  background: #ffad49;
+  border-color: #ffad49;
+  color: #2a6fa8;
+}
+.park-dots {
+  display: flex;
+  gap: 7px;
+}
+.park-dots button {
+  width: 23px;
+  height: 3px;
+  padding: 0;
+  border: 0;
+  background: rgba(255, 255, 255, 0.45);
+}
+.park-dots button.is-active {
+  width: 47px;
+  background: #ffad49;
+}
+.park-showcase-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 70px clamp(35px, 6vw, 95px);
+  color: #fff;
+}
+.park-showcase-copy .park-label {
+  color: #ffad49;
+}
+.park-showcase-copy h2 {
+  color: #f5edda;
+  font-size: clamp(48px, 5vw, 74px);
+  line-height: 0.84;
+  margin: 23px 0;
+}
+.park-showcase-copy p {
+  max-width: 300px;
+  color: rgba(255, 255, 255, 0.76);
+  line-height: 1.7;
+  font-size: 13px;
+}
+.park-progress {
+  height: 3px;
+  max-width: 280px;
+  margin-top: 37px;
+  background: rgba(255, 255, 255, 0.2);
+}
+.park-progress span {
+  display: block;
+  height: 100%;
+  background: #ffad49;
+  transition: width 0.45s ease;
+}
+.park-swipe-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  color: #9be5ea;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 9px;
+}
+.park-highlights {
+  padding-block: 115px 125px;
+}
+.park-highlights-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 57px;
+}
+.park-highlights h2 {
+  margin: 19px 0 0;
+}
+.park-highlight-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.park-highlight-grid article {
+  min-height: 210px;
+  padding: 25px 27px;
+  /* Creme claro como fundo dos cards */
+  background: #fbf5e6;
+  /* Laranja suave como borda superior */
+  border-top: 5px solid #ffad49;
+  box-shadow: 8px 8px 0 #efe5cc;
+}
+.park-highlight-grid article:nth-child(2) {
+  /* Laranja forte como borda da 2a card */
+  border-color: #ff8c2a;
+  transform: translateY(15px);
+}
+.park-highlight-grid article:nth-child(3) {
+  /* Azul céu como borda da 3a card */
+  border-color: #3d8fd1;
+}
+.park-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 27px;
+  border-radius: 50%;
+  /* Creme azulado como fundo dos ícones */
+  background: #d9eafb;
+  color: #2a6fa8;
+}
+.park-highlight-grid article:nth-child(2) .park-icon {
+  background: #ffe5cc;
+  color: #ff8c2a;
+}
+.park-highlight-grid h3 {
+  color: #2a6fa8;
+  font-size: 17px;
+  margin-bottom: 9px;
+}
+.park-highlight-grid p {
+  max-width: 240px;
+  color: #58757c;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.park-cta {
+  position: relative;
+  overflow: hidden;
+  /* Laranja suave como fundo da CTA do parque */
+  background: #ffad49;
+}
+.park-cta-sun {
+  position: absolute;
+  width: 290px;
+  height: 290px;
+  right: 8%;
+  top: -150px;
+  border-radius: 50%;
+  /* Laranja forte como o sol da CTA */
+  background: #ff8c2a;
+  opacity: 0.45;
+}
+.park-cta-inner {
+  min-height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.park-cta .park-label {
+  color: #2a6fa8;
+}
+.park-cta h2 {
+  margin-bottom: 0;
+}

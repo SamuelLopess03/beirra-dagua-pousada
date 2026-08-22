@@ -1,0 +1,270 @@
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-card-border: hsl(var(--card-border));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-popover-border: hsl(var(--popover-border));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary-border: var(--primary-border);
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-secondary-border: var(--secondary-border);
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-muted-border: var(--muted-border);
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-accent-border: var(--accent-border);
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-destructive-border: var(--destructive-border);
+
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  --color-sidebar: hsl(var(--sidebar));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-primary-border: var(--sidebar-primary-border);
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-accent-border: var(--sidebar-accent-border);
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  --font-sans: var(--app-font-sans);
+  --font-serif: var(--app-font-serif);
+  --font-mono: var(--app-font-mono);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* LIGHT MODE — Beira D'Água, paleta oficial da identidade visual da logo */
+:root {
+  --button-outline: rgba(0, 0, 0, 0.1);
+  --badge-outline: rgba(0, 0, 0, 0.05);
+
+  /* Automatic computation of border around primary / danger buttons */
+  --opaque-button-border-intensity: -8; /* In terms of percentages */
+
+  /* Backgrounds applied on top of other backgrounds when hovered/active */
+  --elevate-1: rgba(0, 0, 0, 0.03);
+  --elevate-2: rgba(0, 0, 0, 0.08);
+
+  /* Creme/Areia — fundo principal da logo */
+  --background: 39 62% 91%;
+  /* Azul escuro — texto principal */
+  --foreground: 208 60% 22%;
+  /* Borda suave areia */
+  --border: 39 30% 80%;
+  /* Card levemente mais claro que fundo */
+  --card: 39 50% 95%;
+  --card-foreground: 208 60% 22%;
+  --card-border: 39 30% 80%;
+  /* Sidebar — usa a mesma base creme */
+  --sidebar: 39 55% 93%;
+  --sidebar-foreground: 208 60% 22%;
+  --sidebar-border: 39 30% 80%;
+  /* Azul céu como primário do sidebar */
+  --sidebar-primary: 208 63% 52%;
+  --sidebar-primary-foreground: 39 62% 96%;
+  /* Laranja suave como accent do sidebar */
+  --sidebar-accent: 36 100% 65%;
+  --sidebar-accent-foreground: 208 60% 22%;
+  --sidebar-ring: 208 63% 52%;
+  /* Popover */
+  --popover: 39 50% 96%;
+  --popover-foreground: 208 60% 22%;
+  --popover-border: 39 30% 80%;
+  /* Primário — Azul Céu da logo */
+  --primary: 208 63% 52%;
+  --primary-foreground: 39 62% 96%;
+  /* Secundário — Laranja Forte da logo */
+  --secondary: 27 100% 58%;
+  --secondary-foreground: 39 62% 96%;
+  /* Muted — areia escurecida */
+  --muted: 39 35% 85%;
+  --muted-foreground: 208 20% 45%;
+  /* Accent — Laranja Suave da logo */
+  --accent: 36 100% 65%;
+  --accent-foreground: 208 60% 22%;
+  /* Destructive */
+  --destructive: 6 49% 49%;
+  --destructive-foreground: 39 62% 96%;
+  /* Input e ring */
+  --input: 39 30% 80%;
+  --ring: 208 63% 52%;
+  /* Charts usando toda a paleta da logo */
+  --chart-1: 208 63% 52%;
+  --chart-2: 27 100% 58%;
+  --chart-3: 36 100% 65%;
+  --chart-4: 208 60% 41%;
+  --chart-5: 39 45% 75%;
+
+  --app-font-sans: "Manrope", "Trebuchet MS", sans-serif;
+  --app-font-serif: "Cormorant Garamond", Georgia, serif;
+  --app-font-mono: "IBM Plex Mono", monospace;
+  --radius: 0.25rem;
+  --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-sm:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-md:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 2px 4px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-lg:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 4px 6px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-xl:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 8px 10px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-2xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+
+  /* Automatically computed borders - intensity can be controlled by the user by the --opaque-button-border-intensity setting */
+
+  /* Fallback for older browsers */
+  --sidebar-primary-border: hsl(var(--sidebar-primary));
+  --sidebar-primary-border: hsl(
+    from hsl(var(--sidebar-primary)) h s
+      calc(l + var(--opaque-button-border-intensity)) / alpha
+  );
+
+  /* Fallback for older browsers */
+  --sidebar-accent-border: hsl(var(--sidebar-accent));
+  --sidebar-accent-border: hsl(
+    from hsl(var(--sidebar-accent)) h s
+      calc(l + var(--opaque-button-border-intensity)) / alpha
+  );
+
+  /* Fallback for older browsers */
+  --primary-border: hsl(var(--primary));
+  --primary-border: hsl(
+    from hsl(var(--primary)) h s
+      calc(l + var(--opaque-button-border-intensity)) / alpha
+  );
+
+  /* Fallback for older browsers */
+  --secondary-border: hsl(var(--secondary));
+  --secondary-border: hsl(
+    from hsl(var(--secondary)) h s
+      calc(l + var(--opaque-button-border-intensity)) / alpha
+  );
+
+  /* Fallback for older browsers */
+  --muted-border: hsl(var(--muted));
+  --muted-border: hsl(
+    from hsl(var(--muted)) h s calc(l + var(--opaque-button-border-intensity)) /
+      alpha
+  );
+
+  /* Fallback for older browsers */
+  --accent-border: hsl(var(--accent));
+  --accent-border: hsl(
+    from hsl(var(--accent)) h s
+      calc(l + var(--opaque-button-border-intensity)) / alpha
+  );
+
+  /* Fallback for older browsers */
+  --destructive-border: hsl(var(--destructive));
+  --destructive-border: hsl(
+    from hsl(var(--destructive)) h s
+      calc(l + var(--opaque-button-border-intensity)) / alpha
+  );
+}
+
+.dark {
+  --button-outline: rgba(255, 255, 255, 0.1);
+  --badge-outline: rgba(255, 255, 255, 0.05);
+
+  --opaque-button-border-intensity: 9; /* In terms of percentages */
+
+  /* Backgrounds applied on top of other backgrounds when hovered/active */
+  --elevate-1: rgba(255, 255, 255, 0.04);
+  --elevate-2: rgba(255, 255, 255, 0.09);
+
+  /* Dark mode — azul escuro da logo como fundo */
+  --background: 208 60% 18%;
+  --foreground: 39 62% 91%;
+  --border: 208 30% 33%;
+  --card: 208 55% 22%;
+  --card-foreground: 39 62% 91%;
+  --card-border: 208 30% 33%;
+  --sidebar: 208 60% 18%;
+  --sidebar-foreground: 39 62% 91%;
+  --sidebar-border: 208 30% 33%;
+  --sidebar-primary: 36 100% 65%;
+  --sidebar-primary-foreground: 208 60% 18%;
+  --sidebar-accent: 27 100% 58%;
+  --sidebar-accent-foreground: 39 62% 96%;
+  --sidebar-ring: 36 100% 65%;
+  --popover: 208 55% 22%;
+  --popover-foreground: 39 62% 91%;
+  --popover-border: 208 30% 33%;
+  /* Laranja suave como primário em dark mode */
+  --primary: 36 100% 65%;
+  --primary-foreground: 208 60% 18%;
+  /* Laranja forte como secundário */
+  --secondary: 27 100% 58%;
+  --secondary-foreground: 39 62% 96%;
+  --muted: 208 30% 27%;
+  --muted-foreground: 39 30% 74%;
+  --accent: 208 63% 52%;
+  --accent-foreground: 39 62% 91%;
+  --destructive: 6 49% 52%;
+  --destructive-foreground: 39 62% 96%;
+  --input: 208 30% 37%;
+  --ring: 36 100% 65%;
+  --chart-1: 36 100% 65%;
+  --chart-2: 27 100% 58%;
+  --chart-3: 208 63% 52%;
+  --chart-4: 39 62% 91%;
+  --chart-5: 208 60% 41%;
+
+  --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-sm:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-md:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 2px 4px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-lg:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 4px 6px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-xl:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 8px 10px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-2xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0);
+}
