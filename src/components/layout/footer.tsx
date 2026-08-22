@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { ArrowRight, Clock3, MapPin } from "lucide-react";
-import { useBooking } from "@/hooks/use-booking";
+import { useBooking } from "@/hooks/booking-context";
 import logo from "@assets/images_1787066687889.jpg";
 
 export function Footer() {

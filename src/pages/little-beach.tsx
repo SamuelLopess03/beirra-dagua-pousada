@@ -11,7 +11,7 @@ import {
   Zap,
 } from "lucide-react";
 import { parkSlides } from "@/data/slides";
-import { useBooking } from "@/hooks/use-booking";
+import { useBooking } from "@/hooks/booking-context";
 
 export function LittleBeach() {
   const { openBooking } = useBooking();
@@ -206,7 +206,10 @@ export function LittleBeach() {
               <em>um pouco mais.</em>
             </h2>
           </div>
-          <button className="park-button park-button-blue" onClick={openBooking}>
+          <button
+            className="park-button park-button-blue"
+            onClick={openBooking}
+          >
             Consultar estadia <ArrowRight size={17} />
           </button>
         </div>

@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { ArrowRight, Check, SlidersHorizontal } from "lucide-react";
 import { SectionLabel } from "@/components/layout/section-label";
 import { useRoomFilters } from "@/hooks/use-room-filters";
-import { useBooking } from "@/hooks/use-booking";
+import { useBooking } from "@/hooks/booking-context";
 
 export function Quartos() {
   const { openBooking } = useBooking();

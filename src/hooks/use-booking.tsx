@@ -1,17 +1,6 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useState,
-  type ReactNode,
-} from "react";
+import { useCallback, useState, type ReactNode } from "react";
 import { BookingDialog } from "@/components/booking/booking-dialog";
-
-type BookingContextValue = {
-  openBooking: () => void;
-};
-
-const BookingContext = createContext<BookingContextValue | null>(null);
+import { BookingContext } from "./booking-context";
 
 export function BookingProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,12 +12,4 @@ export function BookingProvider({ children }: { children: ReactNode }) {
       {isOpen && <BookingDialog onClose={() => setIsOpen(false)} />}
     </BookingContext.Provider>
   );
-}
-
-export function useBooking() {
-  const context = useContext(BookingContext);
-  if (!context) {
-    throw new Error("useBooking deve ser usado dentro de BookingProvider");
-  }
-  return context;
 }

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { ArrowRight, Check } from "lucide-react";
 import { SectionLabel } from "@/components/layout/section-label";
-import { useBooking } from "@/hooks/use-booking";
+import { useBooking } from "@/hooks/booking-context";
 import NotFound from "@/pages/not-found";
 import { roomOptions } from "@/data/rooms";
 

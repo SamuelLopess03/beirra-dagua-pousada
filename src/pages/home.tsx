@@ -4,7 +4,7 @@ import { SectionLabel } from "@/components/layout/section-label";
 import { ContactSection } from "@/components/contact-section";
 import { LocationCard } from "@/components/location-card";
 import { Carousel } from "@/components/carousel/carousel";
-import { useBooking } from "@/hooks/use-booking";
+import { useBooking } from "@/hooks/booking-context";
 import { atmosphereSlides, foodSlides } from "@/data/slides";
 import heroImage from "@assets/img_hero.jpeg";
 import galleryOne from "@assets/image_1787066780463.png";
