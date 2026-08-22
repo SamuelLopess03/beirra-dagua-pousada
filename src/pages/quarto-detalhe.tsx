@@ -2,16 +2,12 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { ArrowRight, Check } from "lucide-react";
 import { SectionLabel } from "@/components/layout/section-label";
+import { useBooking } from "@/hooks/use-booking";
 import NotFound from "@/pages/not-found";
 import { roomOptions } from "@/data/rooms";
 
-export function QuartoDetalhe({
-  slug,
-  onBooking,
-}: {
-  slug: string;
-  onBooking: () => void;
-}) {
+export function QuartoDetalhe({ slug }: { slug: string }) {
+  const { openBooking } = useBooking();
   const room = roomOptions.find((item) => item.slug === slug);
   const [selectedImage, setSelectedImage] = useState(0);
 
@@ -107,7 +103,7 @@ export function QuartoDetalhe({
           </div>
           <button
             type="button"
-            onClick={onBooking}
+            onClick={openBooking}
             className="button button-dark"
           >
             Consultar disponibilidade <ArrowRight size={16} />

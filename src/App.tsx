@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Route, Switch, useLocation, Router as WouterRouter } from "wouter";
 import { ErrorBoundary } from "@/components/error-boundary";
@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { BookingDialog } from "@/components/booking/booking-dialog";
+import { BookingProvider } from "@/hooks/use-booking";
 import { Home } from "@/pages/home";
 import { Quartos } from "@/pages/quartos";
 import { QuartoDetalhe } from "@/pages/quarto-detalhe";
@@ -25,35 +25,23 @@ function RoutedErrorBoundary({ children }: { children: ReactNode }) {
 }
 
 function Shell() {
-  const [bookingOpen, setBookingOpen] = useState(false);
-  const openBooking = () => setBookingOpen(true);
-
   return (
-    <>
+    <BookingProvider>
       <Header />
       <RoutedErrorBoundary>
         <Switch>
-          <Route path="/">
-            <Home onBooking={openBooking} />
-          </Route>
+          <Route path="/" component={Home} />
           <Route path="/quartos/:slug">
-            {(params) => (
-              <QuartoDetalhe slug={params.slug} onBooking={openBooking} />
-            )}
+            {(params) => <QuartoDetalhe slug={params.slug} />}
           </Route>
-          <Route path="/quartos">
-            <Quartos onBooking={openBooking} />
-          </Route>
+          <Route path="/quartos" component={Quartos} />
           <Route path="/cardapio" component={Cardapio} />
-          <Route path="/little-beach">
-            <LittleBeach onBooking={openBooking} />
-          </Route>
+          <Route path="/little-beach" component={LittleBeach} />
           <Route component={NotFound} />
         </Switch>
       </RoutedErrorBoundary>
-      <Footer onBooking={openBooking} />
-      {bookingOpen && <BookingDialog onClose={() => setBookingOpen(false)} />}
-    </>
+      <Footer />
+    </BookingProvider>
   );
 }
 

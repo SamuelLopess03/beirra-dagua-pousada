@@ -2,8 +2,10 @@ import { Link } from "wouter";
 import { ArrowRight, Check, SlidersHorizontal } from "lucide-react";
 import { SectionLabel } from "@/components/layout/section-label";
 import { useRoomFilters } from "@/hooks/use-room-filters";
+import { useBooking } from "@/hooks/use-booking";
 
-export function Quartos({ onBooking }: { onBooking: () => void }) {
+export function Quartos() {
+  const { openBooking } = useBooking();
   const {
     page,
     setPage,
@@ -256,7 +258,7 @@ export function Quartos({ onBooking }: { onBooking: () => void }) {
             </h2>
           </div>
           <button
-            onClick={onBooking}
+            onClick={openBooking}
             className="button button-dark"
             data-testid="button-quartos-cta"
           >

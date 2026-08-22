@@ -11,8 +11,10 @@ import {
   Zap,
 } from "lucide-react";
 import { parkSlides } from "@/data/slides";
+import { useBooking } from "@/hooks/use-booking";
 
-export function LittleBeach({ onBooking }: { onBooking: () => void }) {
+export function LittleBeach() {
+  const { openBooking } = useBooking();
   const [activeSlide, setActiveSlide] = useState(0);
   const slide = parkSlides[activeSlide];
 
@@ -47,7 +49,7 @@ export function LittleBeach({ onBooking }: { onBooking: () => void }) {
               <a href="#atracoes" className="park-button park-button-orange">
                 Explorar atrações <ArrowDownRight size={17} />
               </a>
-              <button className="park-text-link" onClick={onBooking}>
+              <button className="park-text-link" onClick={openBooking}>
                 Planejar meu dia <ArrowRight size={16} />
               </button>
             </div>
@@ -204,7 +206,7 @@ export function LittleBeach({ onBooking }: { onBooking: () => void }) {
               <em>um pouco mais.</em>
             </h2>
           </div>
-          <button className="park-button park-button-blue" onClick={onBooking}>
+          <button className="park-button park-button-blue" onClick={openBooking}>
             Consultar estadia <ArrowRight size={17} />
           </button>
         </div>

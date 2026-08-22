@@ -4,6 +4,7 @@ import { SectionLabel } from "@/components/layout/section-label";
 import { ContactSection } from "@/components/contact-section";
 import { LocationCard } from "@/components/location-card";
 import { Carousel } from "@/components/carousel/carousel";
+import { useBooking } from "@/hooks/use-booking";
 import { atmosphereSlides, foodSlides } from "@/data/slides";
 import heroImage from "@assets/img_hero.jpeg";
 import galleryOne from "@assets/image_1787066780463.png";
@@ -48,7 +49,9 @@ function FoodCarousel() {
   );
 }
 
-export function Home({ onBooking }: { onBooking: () => void }) {
+export function Home() {
+  const { openBooking } = useBooking();
+
   return (
     <main>
       <section className="home-hero">
@@ -75,7 +78,7 @@ export function Home({ onBooking }: { onBooking: () => void }) {
           <div className="hero-actions">
             <button
               className="button button-gold"
-              onClick={onBooking}
+              onClick={openBooking}
               data-testid="button-hero-reserva"
             >
               Planejar minha estadia <ArrowRight size={17} />

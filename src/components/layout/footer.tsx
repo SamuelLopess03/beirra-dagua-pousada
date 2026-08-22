@@ -1,8 +1,11 @@
 import { Link } from "wouter";
 import { ArrowRight, Clock3, MapPin } from "lucide-react";
+import { useBooking } from "@/hooks/use-booking";
 import logo from "@assets/images_1787066687889.jpg";
 
-export function Footer({ onBooking }: { onBooking: () => void }) {
+export function Footer() {
+  const { openBooking } = useBooking();
+
   return (
     <footer className="site-footer">
       <div className="footer-main">
@@ -27,7 +30,7 @@ export function Footer({ onBooking }: { onBooking: () => void }) {
         </div>
         <div className="footer-links">
           <span className="footer-heading">Converse com a gente</span>
-          <button onClick={onBooking} data-testid="button-footer-reserva">
+          <button onClick={openBooking} data-testid="button-footer-reserva">
             Consultar estadia <ArrowRight size={14} />
           </button>
           <a href="mailto:oi@beiradagua.com" data-testid="link-footer-email">
