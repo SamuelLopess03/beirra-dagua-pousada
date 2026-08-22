@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from "react";
+import { lazy, Suspense, useEffect, type ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Route, Switch, useLocation, Router as WouterRouter } from "wouter";
 import { ErrorBoundary } from "@/components/error-boundary";
@@ -8,11 +8,20 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { BookingProvider } from "@/hooks/use-booking";
 import { Home } from "@/pages/home";
-import { Quartos } from "@/pages/quartos";
-import { QuartoDetalhe } from "@/pages/quarto-detalhe";
-import { Cardapio } from "@/pages/cardapio";
-import { LittleBeach } from "@/pages/little-beach";
 import NotFound from "@/pages/not-found";
+
+const Quartos = lazy(() =>
+  import("@/pages/quartos").then((m) => ({ default: m.Quartos })),
+);
+const QuartoDetalhe = lazy(() =>
+  import("@/pages/quarto-detalhe").then((m) => ({ default: m.QuartoDetalhe })),
+);
+const Cardapio = lazy(() =>
+  import("@/pages/cardapio").then((m) => ({ default: m.Cardapio })),
+);
+const LittleBeach = lazy(() =>
+  import("@/pages/little-beach").then((m) => ({ default: m.LittleBeach })),
+);
 
 const queryClient = new QueryClient();
 
@@ -29,16 +38,18 @@ function Shell() {
     <BookingProvider>
       <Header />
       <RoutedErrorBoundary>
-        <Switch>
-          <Route path="/" component={Home} />
-          <Route path="/quartos/:slug">
-            {(params) => <QuartoDetalhe slug={params.slug} />}
-          </Route>
-          <Route path="/quartos" component={Quartos} />
-          <Route path="/cardapio" component={Cardapio} />
-          <Route path="/little-beach" component={LittleBeach} />
-          <Route component={NotFound} />
-        </Switch>
+        <Suspense fallback={null}>
+          <Switch>
+            <Route path="/" component={Home} />
+            <Route path="/quartos/:slug">
+              {(params) => <QuartoDetalhe slug={params.slug} />}
+            </Route>
+            <Route path="/quartos" component={Quartos} />
+            <Route path="/cardapio" component={Cardapio} />
+            <Route path="/little-beach" component={LittleBeach} />
+            <Route component={NotFound} />
+          </Switch>
+        </Suspense>
       </RoutedErrorBoundary>
       <Footer />
     </BookingProvider>
