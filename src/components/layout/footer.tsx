@@ -30,7 +30,10 @@ export function Footer() {
         </div>
         <div className="footer-links">
           <span className="footer-heading">Converse com a gente</span>
-          <button onClick={openBooking} data-testid="button-footer-reserva">
+          <button
+            onClick={() => openBooking()}
+            data-testid="button-footer-reserva"
+          >
             Consultar estadia <ArrowRight size={14} />
           </button>
           <a href="mailto:oi@beiradagua.com" data-testid="link-footer-email">

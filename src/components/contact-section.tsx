@@ -45,14 +45,14 @@ export function ContactSection() {
     const result = contactSchema.safeParse({ name, email, message });
 
     if (!result.success) {
-      toast.error(result.error.issues[0]?.message ?? "Revise os campos do formulário.");
+      toast.error(
+        result.error.issues[0]?.message ?? "Revise os campos do formulário.",
+      );
       return;
     }
 
     const { name: n, email: e, message: m } = result.data;
-    openWhatsApp(
-      `Olá! Meu nome é ${n} (${e}).\n\nO que eu quero viver: ${m}`,
-    );
+    openWhatsApp(`Olá! Meu nome é ${n} (${e}).\n\nO que eu quero viver: ${m}`);
   };
 
   return (
@@ -65,13 +65,16 @@ export function ContactSection() {
           <p className="mb-8 text-xs font-medium uppercase tracking-[0.25em] opacity-80">
             Fale com a gente
           </p>
-          <h2 className="mb-10 text-5xl leading-[1.05] tracking-tight sm:text-6xl" style={{ fontFamily: 'var(--app-font-serif)' }}>
+          <h2
+            className="mb-10 text-5xl leading-[1.05] tracking-tight sm:text-6xl"
+            style={{ fontFamily: "var(--app-font-serif)" }}
+          >
             Ainda ficou <span className="italic">alguma dúvida?</span>
           </h2>
           <p className="max-w-md text-base leading-relaxed opacity-90">
-            A sua viagem começa na primeira pergunta. Fale com o nosso time e descubra o
-            roteiro perfeito para a sua família — sem compromisso, com a paciência de quem
-            ama o que faz.
+            A sua viagem começa na primeira pergunta. Fale com o nosso time e
+            descubra o roteiro perfeito para a sua família — sem compromisso,
+            com a paciência de quem ama o que faz.
           </p>
           <Button
             type="button"
@@ -81,7 +84,11 @@ export function ContactSection() {
               openWhatsApp("Olá! Gostaria de saber mais sobre a pousada.")
             }
             className="mt-10 rounded-none border-[#F5EDDA]/70 bg-transparent px-7 text-[#F5EDDA] hover:bg-[#F5EDDA] hover:text-[#FF8C2A] uppercase tracking-[0.11em] text-[10px] font-bold"
-            style={{ fontFamily: 'var(--app-font-sans)', fontSize: '10px', letterSpacing: '0.11em' }}
+            style={{
+              fontFamily: "var(--app-font-sans)",
+              fontSize: "10px",
+              letterSpacing: "0.11em",
+            }}
           >
             <MessageCircle className="size-4" />
             Falar pelo WhatsApp
@@ -90,8 +97,15 @@ export function ContactSection() {
         </div>
 
         <div className="rounded-none bg-[#F5EDDA] p-8 text-[#2A6FA8] shadow-xl sm:p-12">
-          <h3 className="text-3xl tracking-tight" style={{ fontFamily: 'var(--app-font-serif)' }}>Vamos conversar?</h3>
-          <p className="mt-1 text-sm opacity-70">Respondemos em até 24 horas.</p>
+          <h3
+            className="text-3xl tracking-tight"
+            style={{ fontFamily: "var(--app-font-serif)" }}
+          >
+            Vamos conversar?
+          </h3>
+          <p className="mt-1 text-sm opacity-70">
+            Respondemos em até 24 horas.
+          </p>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-5" noValidate>
             <div className="space-y-2">
@@ -151,7 +165,11 @@ export function ContactSection() {
               type="submit"
               size="lg"
               className="rounded-none bg-[#2A6FA8] px-7 text-white hover:bg-[#3D8FD1] uppercase tracking-[0.11em] text-[10px] font-bold"
-              style={{ fontFamily: 'var(--app-font-sans)', fontSize: '10px', letterSpacing: '0.11em' }}
+              style={{
+                fontFamily: "var(--app-font-sans)",
+                fontSize: "10px",
+                letterSpacing: "0.11em",
+              }}
             >
               Enviar mensagem
               <ArrowRight className="size-4" />

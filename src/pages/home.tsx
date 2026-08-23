@@ -162,7 +162,7 @@ export function Home() {
           <div className="hero-actions">
             <button
               className="button button-gold"
-              onClick={openBooking}
+              onClick={() => openBooking()}
               data-testid="button-hero-reserva"
             >
               Planejar minha estadia <ArrowRight size={17} />

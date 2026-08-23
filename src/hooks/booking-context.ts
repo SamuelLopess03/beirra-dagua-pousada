@@ -1,7 +1,8 @@
 import { createContext, useContext } from "react";
+import type { Room } from "@/data/rooms";
 
 export type BookingContextValue = {
-  openBooking: () => void;
+  openBooking: (room?: Room) => void;
 };
 
 export const BookingContext = createContext<BookingContextValue | null>(null);

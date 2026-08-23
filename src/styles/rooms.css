@@ -658,6 +658,9 @@
 .room-detail-feature-wide svg {
   color: #ff8c2a;
 }
+.room-detail-reserve {
+  margin-top: 24px;
+}
 .room-detail-booking {
   background: #ffad49;
 }

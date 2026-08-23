@@ -360,7 +360,7 @@ export function Quartos() {
             </h2>
           </div>
           <button
-            onClick={openBooking}
+            onClick={() => openBooking()}
             className="button button-dark"
             data-testid="button-quartos-cta"
           >

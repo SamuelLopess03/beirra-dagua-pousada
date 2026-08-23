@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, MessageCircle } from "lucide-react";
 import { SectionLabel } from "@/components/layout/section-label";
 import { useBooking } from "@/hooks/booking-context";
 import NotFound from "@/pages/not-found";
@@ -12,6 +12,14 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
   const [selectedImage, setSelectedImage] = useState(0);
 
   if (!room) return <NotFound />;
+
+  const whatsappMessage = [
+    `Olá! Tenho interesse no ${room.name}.`,
+    `Gostaria de saber mais sobre disponibilidade, valores e detalhes da acomodação.`,
+    `Capacidade: ${room.capacity} ${room.capacity === 1 ? "hóspede" : "hóspedes"}.`,
+    `Inclui: ${room.meals.join(" e ")}.`,
+  ].join("\n");
+  const whatsappUrl = `https://wa.me/5588981338506?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
     <main className="room-detail-page inner-page">
@@ -91,6 +99,14 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
                 </span>
               ))}
             </div>
+            <button
+              type="button"
+              className="button button-outline room-detail-reserve"
+              onClick={() => openBooking(room)}
+              data-testid="button-reservar-quarto"
+            >
+              Reservar este quarto <ArrowRight size={16} />
+            </button>
           </div>
         </div>
       </section>
@@ -101,13 +117,15 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
             <span className="section-label">Consulte sua estadia</span>
             <h2>Seu lugar perto da água.</h2>
           </div>
-          <button
-            type="button"
-            onClick={openBooking}
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noreferrer"
             className="button button-dark"
+            data-testid="button-whatsapp-quarto"
           >
-            Consultar disponibilidade <ArrowRight size={16} />
-          </button>
+            Falar sobre este quarto <MessageCircle size={16} />
+          </a>
         </div>
       </section>
     </main>

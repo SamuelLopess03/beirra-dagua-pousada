@@ -349,12 +349,26 @@
     flex-direction: column;
     gap: 22px;
   }
+  .park-hero-secondary-actions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+  }
   .park-hero-badge {
     margin: 48px 0 0 auto;
   }
   .park-intro {
     display: block;
     padding-block: 70px 78px;
+  }
+  .park-intro-aside {
+    margin-top: 45px;
+  }
+  .park-intro-aside .park-sticker {
+    display: none;
+  }
+  .park-package-carousel-viewport {
+    margin-right: 0;
   }
   .park-section-number {
     margin-bottom: 34px;
@@ -402,6 +416,20 @@
   }
   .park-cta .park-button {
     margin-top: 34px;
+  }
+  .park-packages-panel {
+    padding: 42px 22px 28px;
+  }
+  .park-packages-list {
+    grid-template-columns: 1fr;
+  }
+  .park-package-card {
+    min-height: 0;
+  }
+  .park-package-selected {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
   }
   .teaser-heading,
   .gallery-intro {
@@ -494,6 +522,28 @@
   }
   .booking-panel h2 {
     font-size: 50px;
+  }
+  .booking-room-preview,
+  .booking-review-room {
+    align-items: flex-start;
+  }
+  .booking-room-preview img,
+  .booking-review-room img {
+    width: 88px;
+    height: 72px;
+  }
+  .booking-summary {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .booking-summary-total {
+    grid-column: auto;
+  }
+  .booking-review-actions {
+    flex-direction: column-reverse;
+  }
+  .booking-review-actions .button {
+    width: 100%;
   }
   .form-grid {
     grid-template-columns: 1fr;
@@ -727,12 +777,12 @@
     display: block;
   }
   .menu-item {
-    min-height: 170px;
+    min-height: 195px;
     margin-bottom: 28px;
   }
   .menu-item-image {
-    width: 112px;
-    height: 100px;
+    width: 150px;
+    height: 125px;
   }
   .menu-item h3 {
     font-size: 28px;

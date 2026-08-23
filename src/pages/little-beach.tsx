@@ -7,16 +7,26 @@ import {
   ShieldCheck,
   Sparkles,
   Sun,
+  Ticket,
   Waves,
   Zap,
 } from "lucide-react";
 import { parkSlides } from "@/data/slides";
 import { useBooking } from "@/hooks/booking-context";
+import { ParkPackagesDialog } from "@/components/booking/park-packages-dialog";
+import { ParkPackageCarousel } from "@/components/booking/park-packages-carousel";
 
 export function LittleBeach() {
   const { openBooking } = useBooking();
   const [activeSlide, setActiveSlide] = useState(0);
+  const [packagesOpen, setPackagesOpen] = useState(false);
+  const [selectedPackageId, setSelectedPackageId] = useState<string>();
   const slide = parkSlides[activeSlide];
+
+  const openPackageDetails = (packageId?: string) => {
+    setSelectedPackageId(packageId);
+    setPackagesOpen(true);
+  };
 
   useEffect(() => {
     const timer = window.setInterval(
@@ -49,9 +59,15 @@ export function LittleBeach() {
               <a href="#atracoes" className="park-button park-button-orange">
                 Explorar atrações <ArrowDownRight size={17} />
               </a>
-              <button className="park-text-link" onClick={openBooking}>
-                Planejar meu dia <ArrowRight size={16} />
-              </button>
+              <div className="park-hero-secondary-actions">
+                <button
+                  className="park-text-link park-packages-link"
+                  onClick={() => setPackagesOpen(true)}
+                  data-testid="button-ver-pacotes-hero"
+                >
+                  Ver pacotes de acesso <Ticket size={15} />
+                </button>
+              </div>
             </div>
           </div>
           <div className="park-hero-badge">
@@ -83,15 +99,18 @@ export function LittleBeach() {
             começa na próxima onda.
           </p>
         </div>
-        <div className="park-sticker">
-          <Zap size={19} />
-          <span>
-            Mais
-            <br />
-            <b>energia</b>
-            <br />
-            por m²
-          </span>
+        <div className="park-intro-aside">
+          <div className="park-sticker">
+            <Zap size={19} />
+            <span>
+              Mais
+              <br />
+              <b>energia</b>
+              <br />
+              por m²
+            </span>
+          </div>
+          <ParkPackageCarousel onSelectPackage={openPackageDetails} />
         </div>
       </section>
 
@@ -208,12 +227,18 @@ export function LittleBeach() {
           </div>
           <button
             className="park-button park-button-blue"
-            onClick={openBooking}
+            onClick={() => openBooking()}
           >
             Consultar estadia <ArrowRight size={17} />
           </button>
         </div>
       </section>
+      {packagesOpen && (
+        <ParkPackagesDialog
+          initialPackageId={selectedPackageId}
+          onClose={() => setPackagesOpen(false)}
+        />
+      )}
     </main>
   );
 }

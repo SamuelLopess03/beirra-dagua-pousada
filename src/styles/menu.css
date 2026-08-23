@@ -101,7 +101,7 @@
   row-gap: 8px;
 }
 .menu-item {
-  min-height: 190px;
+  min-height: 225px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -111,11 +111,11 @@
 }
 .menu-item-content {
   display: flex;
-  gap: 24px;
+  gap: 28px;
 }
 .menu-item-image {
-  width: 132px;
-  height: 112px;
+  width: 190px;
+  height: 155px;
   flex-shrink: 0;
   border: 1px solid rgba(42, 111, 168, 0.2);
   padding: 3px;
@@ -135,7 +135,7 @@
 }
 .menu-item h3 {
   color: #2a6fa8;
-  font-size: 30px;
+  font-size: 32px;
   letter-spacing: -0.03em;
   margin: 13px 0 7px;
 }
@@ -150,10 +150,10 @@
 }
 .menu-item p {
   color: #61716d;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.6;
   margin: 0;
-  max-width: 320px;
+  max-width: 330px;
 }
 .menu-pagination {
   display: flex;
@@ -162,7 +162,6 @@
   gap: 18px;
   margin-top: 24px;
   padding-top: 27px;
-  border-top: 1px solid #d8cab5;
 }
 .menu-pagination-arrow {
   display: grid;

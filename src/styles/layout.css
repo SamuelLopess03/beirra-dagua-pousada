@@ -372,7 +372,7 @@
 }
 .booking-panel {
   position: relative;
-  width: min(600px, 100%);
+  width: min(700px, 100%);
   max-height: calc(100dvh - 40px);
   overflow: auto;
   padding: 51px clamp(25px, 6vw, 65px) 54px;
@@ -407,6 +407,109 @@
   line-height: 1.7;
   max-width: 420px;
   margin-bottom: 29px;
+}
+.booking-room-preview,
+.booking-review-room {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  margin: 0 0 27px;
+  padding: 10px;
+  border: 1px solid rgba(42, 111, 168, 0.16);
+  background: #fbf5e6;
+}
+.booking-room-preview img,
+.booking-review-room img {
+  width: 105px;
+  height: 78px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+.booking-room-preview div,
+.booking-review-room div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.booking-room-type {
+  color: #b08650;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.booking-room-preview strong,
+.booking-review-room strong {
+  color: #2a6fa8;
+  font-family: var(--app-font-serif);
+  font-size: 25px;
+  font-weight: 500;
+}
+.booking-room-preview div > span:last-child,
+.booking-review-room div > span:last-child {
+  color: #61716d;
+  font-size: 11px;
+  line-height: 1.45;
+}
+.booking-date-error {
+  margin: -5px 0 0;
+  color: #b64d39;
+  font-size: 11px;
+}
+.booking-review h2 {
+  margin-bottom: 24px;
+}
+.booking-summary {
+  display: grid;
+  grid-template-columns: 1.35fr 0.65fr;
+  gap: 0 25px;
+  border-top: 1px solid #d8cab5;
+}
+.booking-summary > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 17px 0;
+  border-bottom: 1px solid #d8cab5;
+}
+.booking-summary span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #b08650;
+  font-size: 9px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+.booking-summary strong {
+  color: #2a6fa8;
+  font-family: var(--app-font-serif);
+  font-size: 19px;
+  font-weight: 500;
+}
+.booking-summary-total {
+  grid-column: 1 / -1;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: space-between;
+}
+.booking-summary-total strong {
+  color: #ff8c2a;
+  font-size: 26px;
+}
+.booking-review-contact {
+  color: #61716d;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 21px 0;
+}
+.booking-review-contact strong {
+  color: #2a6fa8;
+  font-weight: 600;
+}
+.booking-review-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
 }
 .booking-form {
   display: flex;
