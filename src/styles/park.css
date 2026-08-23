@@ -193,8 +193,11 @@
 .park-intro {
   position: relative;
   display: grid;
-  grid-template-columns: 0.7fr 1fr 1.25fr;
-  gap: 45px;
+  grid-template-columns:
+    minmax(300px, 0.95fr)
+    minmax(460px, 1.55fr);
+  column-gap: clamp(40px, 4vw, 72px);
+  align-items: start;
   padding-block: 106px 120px;
 }
 .park-section-number {
@@ -258,12 +261,16 @@
 }
 .park-intro-aside {
   min-width: 0;
+  width: 100%;
+  max-width: 620px;
+  justify-self: end;
 }
 .park-intro-aside .park-sticker {
   margin-left: auto;
   margin-bottom: 16px;
 }
 .park-package-carousel {
+  width: 100%;
   min-width: 0;
 }
 .park-package-carousel-heading {
@@ -658,6 +665,9 @@
   box-shadow: 0 24px 75px rgba(8, 34, 42, 0.3);
   animation: panel-in 0.4s ease both;
 }
+.park-packages-panel-focused {
+  width: min(620px, 100%);
+}
 .park-packages-panel h2 {
   color: #2a6fa8;
   font-size: clamp(45px, 6vw, 68px);
@@ -706,6 +716,58 @@
   border-color: #2a6fa8;
   box-shadow: 5px 5px 0 #ffad49;
   transform: translateY(-3px);
+}
+.park-package-detail {
+  padding: 24px 25px 27px;
+  border: 1px solid #d8cab5;
+  border-top: 5px solid #ff8c2a;
+  background: #fbf5e6;
+  box-shadow: 8px 8px 0 #efe5cc;
+}
+.park-package-detail-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.park-package-detail h3 {
+  margin: 25px 0 8px;
+  color: #2a6fa8;
+  font-family: var(--app-font-serif);
+  font-size: 38px;
+  font-weight: 500;
+}
+.park-package-detail p {
+  max-width: 430px;
+  color: #61716d;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.park-package-detail-label {
+  display: block;
+  margin-top: 25px;
+  color: #b08650;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.park-package-detail ul {
+  display: grid;
+  gap: 10px;
+  margin: 13px 0 0;
+  padding: 0;
+  color: #50747d;
+  font-size: 11px;
+  list-style: none;
+}
+.park-package-detail li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.park-package-detail li svg {
+  flex-shrink: 0;
+  color: #ff8c2a;
 }
 .park-package-card-top {
   width: 100%;

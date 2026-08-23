@@ -18,6 +18,7 @@ export function ParkPackagesDialog({
   );
   const selectedPackage =
     parkPackages.find((item) => item.id === selectedId) ?? parkPackages[0];
+  const isFocused = Boolean(initialPackageId);
   const message = [
     `Olá! Quero saber como comprar o pacote "${selectedPackage.name}" do Little Beach.`,
     `Valor de referência: R$ ${selectedPackage.price.toLocaleString("pt-BR")}.`,
@@ -34,7 +35,7 @@ export function ParkPackagesDialog({
       }}
     >
       <section
-        className="park-packages-panel"
+        className={`park-packages-panel${isFocused ? " park-packages-panel-focused" : ""}`}
         role="dialog"
         aria-modal="true"
         aria-labelledby="park-packages-title"
@@ -52,51 +53,90 @@ export function ParkPackagesDialog({
           <span className="eyebrow-dot" /> Acesso Little Beach
         </div>
         <h2 id="park-packages-title">
-          Escolha seu
-          <br />
-          <em>pacote de aventura.</em>
+          {isFocused ? (
+            <>
+              Seu pacote
+              <br />
+              <em>em detalhes.</em>
+            </>
+          ) : (
+            <>
+              Escolha seu
+              <br />
+              <em>pacote de aventura.</em>
+            </>
+          )}
         </h2>
         <p className="park-packages-intro">
-          Consulte as opções de acesso, compare o que cada uma inclui e fale com
-          a equipe para confirmar a disponibilidade.
+          {isFocused
+            ? `Tudo o que você precisa saber sobre o ${selectedPackage.name}. Fale com a equipe para confirmar a disponibilidade.`
+            : "Consulte as opções de acesso, compare o que cada uma inclui e fale com a equipe para confirmar a disponibilidade."}
         </p>
-        <div className="park-packages-list">
-          {parkPackages.map((item) => (
-            <button
-              type="button"
-              key={item.id}
-              className={`park-package-card${selectedId === item.id ? " is-selected" : ""}`}
-              onClick={() => setSelectedId(item.id)}
-              aria-pressed={selectedId === item.id}
-              data-testid={`button-pacote-${item.id}`}
-            >
-              <div className="park-package-card-top">
-                <span className="park-package-icon">
-                  <Ticket size={17} />
-                </span>
-                <span className="park-package-price">
-                  R$ {item.price.toLocaleString("pt-BR")}{" "}
-                  <small>{item.note}</small>
-                </span>
-              </div>
-              <strong>{item.name}</strong>
-              <span className="park-package-description">
-                {item.description}
+        {isFocused ? (
+          <article className="park-package-detail">
+            <div className="park-package-detail-top">
+              <span className="park-package-icon">
+                <Ticket size={20} />
               </span>
-              <span className="park-package-benefits">
-                {item.benefits.map((benefit) => (
-                  <span key={benefit}>
-                    <Check size={13} /> {benefit}
+              <span className="park-package-price">
+                R$ {selectedPackage.price.toLocaleString("pt-BR")}{" "}
+                <small>{selectedPackage.note}</small>
+              </span>
+            </div>
+            <h3>{selectedPackage.name}</h3>
+            <p>{selectedPackage.description}</p>
+            <span className="park-package-detail-label">
+              O que está incluído
+            </span>
+            <ul>
+              {selectedPackage.benefits.map((benefit) => (
+                <li key={benefit}>
+                  <Check size={14} /> {benefit}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ) : (
+          <>
+            <div className="park-packages-list">
+              {parkPackages.map((item) => (
+                <button
+                  type="button"
+                  key={item.id}
+                  className={`park-package-card${selectedId === item.id ? " is-selected" : ""}`}
+                  onClick={() => setSelectedId(item.id)}
+                  aria-pressed={selectedId === item.id}
+                  data-testid={`button-pacote-${item.id}`}
+                >
+                  <div className="park-package-card-top">
+                    <span className="park-package-icon">
+                      <Ticket size={17} />
+                    </span>
+                    <span className="park-package-price">
+                      R$ {item.price.toLocaleString("pt-BR")}{" "}
+                      <small>{item.note}</small>
+                    </span>
+                  </div>
+                  <strong>{item.name}</strong>
+                  <span className="park-package-description">
+                    {item.description}
                   </span>
-                ))}
-              </span>
-            </button>
-          ))}
-        </div>
-        <div className="park-package-selected">
-          <span>Pacote escolhido</span>
-          <strong>{selectedPackage.name}</strong>
-        </div>
+                  <span className="park-package-benefits">
+                    {item.benefits.map((benefit) => (
+                      <span key={benefit}>
+                        <Check size={13} /> {benefit}
+                      </span>
+                    ))}
+                  </span>
+                </button>
+              ))}
+            </div>
+            <div className="park-package-selected">
+              <span>Pacote escolhido</span>
+              <strong>{selectedPackage.name}</strong>
+            </div>
+          </>
+        )}
         <a
           className="park-button park-button-blue park-packages-whatsapp"
           href={whatsappUrl}

@@ -1,4 +1,10 @@
-import { useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   ArrowRight,
   Check,
@@ -16,6 +22,9 @@ export function ParkPackageCarousel({
   onSelectPackage,
 }: ParkPackageCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [trackOffset, setTrackOffset] = useState(0);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<Array<HTMLElement | null>>([]);
 
   const move = (direction: number) => {
     setActiveIndex(
@@ -23,6 +32,29 @@ export function ParkPackageCarousel({
         (current + direction + parkPackages.length) % parkPackages.length,
     );
   };
+
+  const centerActiveCard = useCallback(() => {
+    const viewport = viewportRef.current;
+    const activeCard = cardRefs.current[activeIndex];
+
+    if (!viewport || !activeCard) return;
+
+    const cardCenter = activeCard.offsetLeft + activeCard.offsetWidth / 2;
+    setTrackOffset(viewport.clientWidth / 2 - cardCenter);
+  }, [activeIndex]);
+
+  useLayoutEffect(() => {
+    centerActiveCard();
+  }, [centerActiveCard]);
+
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+
+    const observer = new ResizeObserver(centerActiveCard);
+    observer.observe(viewport);
+    return () => observer.disconnect();
+  }, [centerActiveCard]);
 
   return (
     <div
@@ -35,15 +67,20 @@ export function ParkPackageCarousel({
           0{activeIndex + 1} <span>/ 03</span>
         </span>
       </div>
-      <div className="park-package-carousel-viewport">
+      <div className="park-package-carousel-viewport" ref={viewportRef}>
         <div
           className="park-package-carousel-track"
-          style={{ transform: `translateX(-${activeIndex * 80}%)` }}
+          style={{
+            transform: `translateX(${trackOffset}px)`,
+          }}
         >
           {parkPackages.map((item, index) => (
             <article
               className={`park-package-feature-card${index === activeIndex ? " is-active" : ""}`}
               key={item.id}
+              ref={(element) => {
+                cardRefs.current[index] = element;
+              }}
             >
               <div className="park-package-feature-top">
                 <span className="park-package-icon">

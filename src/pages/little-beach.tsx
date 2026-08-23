@@ -84,9 +84,6 @@ export function LittleBeach() {
       </section>
 
       <section className="park-intro page-width">
-        <div className="park-section-number">
-          01 <span>—</span> diversão para todo mundo
-        </div>
         <div className="park-intro-copy">
           <span className="park-label">O parque é seu</span>
           <h2>
