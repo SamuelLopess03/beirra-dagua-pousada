@@ -85,21 +85,30 @@
     width: 100%;
   }
   .intro-section {
-    grid-template-columns: 1fr 0.3fr;
+    grid-template-columns: 1fr;
     gap: 20px;
     padding-block: 75px;
   }
-  .intro-number {
+  .intro-content {
     grid-column: 1 / -1;
-  }
-  .intro-copy {
-    grid-column: 1;
   }
   .intro-stamp {
     width: 110px;
     height: 110px;
     font-size: 11px;
     justify-self: end;
+  }
+  .stay-video-coverflow {
+    grid-column: 1 / -1;
+    max-width: 460px;
+    justify-self: center;
+  }
+  .stay-video-coverflow-stage {
+    height: 390px;
+  }
+  .stay-video-card {
+    width: 280px;
+    height: 340px;
   }
   .atmosphere-section {
     grid-template-columns: 1fr;
@@ -640,6 +649,7 @@
   }
   .room-card {
     display: block;
+    height: auto;
     min-height: 0;
   }
   .room-card-image {

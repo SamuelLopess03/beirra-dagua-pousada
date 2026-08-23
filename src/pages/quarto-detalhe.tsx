@@ -25,7 +25,7 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
     <main className="room-detail-page inner-page">
       <section className="room-detail-header page-width">
         <Link href="/quartos" className="room-back-link">
-          <ArrowRight size={15} /> Voltar para quartos
+          <ArrowRight size={15} /> Voltar para hospedagem
         </Link>
         <div className="room-detail-heading">
           <div>
@@ -35,7 +35,7 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
             <h1>{room.name}</h1>
             <p>{room.desc}</p>
           </div>
-          <span className="room-detail-index">01 · quarto</span>
+          <span className="room-detail-index">01 · acomodação</span>
         </div>
       </section>
 
@@ -91,7 +91,7 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
             <strong>{room.meals.join(" · ")}</strong>
           </div>
           <div className="room-detail-feature room-detail-feature-wide">
-            <span>O quarto oferece</span>
+            <span>A acomodação oferece</span>
             <div>
               {room.details.map((detail) => (
                 <span key={detail}>
@@ -105,7 +105,7 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
               onClick={() => openBooking(room)}
               data-testid="button-reservar-quarto"
             >
-              Reservar este quarto <ArrowRight size={16} />
+              Reservar esta hospedagem <ArrowRight size={16} />
             </button>
           </div>
         </div>
@@ -124,7 +124,7 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
             className="button button-dark"
             data-testid="button-whatsapp-quarto"
           >
-            Falar sobre este quarto <MessageCircle size={16} />
+            Falar sobre esta hospedagem <MessageCircle size={16} />
           </a>
         </div>
       </section>

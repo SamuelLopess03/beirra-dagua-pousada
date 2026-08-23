@@ -4,12 +4,33 @@ import { roomOptions, type Room } from "@/data/rooms";
 const ROOMS_PER_PAGE = 5;
 const MAX_PRICE = 2000;
 
+function getInitialFilters() {
+  const params = new URLSearchParams(window.location.search);
+  const capacity = Number(params.get("capacity"));
+  const meal = params.get("meal");
+  const maxPrice = Number(params.get("maxPrice"));
+
+  return {
+    capacities: capacity === 2 || capacity === 4 ? [capacity] : [],
+    meals: meal ? [meal] : [],
+    maxPrice:
+      Number.isFinite(maxPrice) && maxPrice >= 300 && maxPrice <= MAX_PRICE
+        ? maxPrice
+        : MAX_PRICE,
+  };
+}
+
 export function useRoomFilters() {
+  const initialFilters = getInitialFilters();
   const [page, setPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCapacities, setSelectedCapacities] = useState<number[]>([]);
-  const [selectedMeals, setSelectedMeals] = useState<string[]>([]);
-  const [maxPrice, setMaxPrice] = useState<number>(MAX_PRICE);
+  const [selectedCapacities, setSelectedCapacities] = useState<number[]>(
+    initialFilters.capacities,
+  );
+  const [selectedMeals, setSelectedMeals] = useState<string[]>(
+    initialFilters.meals,
+  );
+  const [maxPrice, setMaxPrice] = useState<number>(initialFilters.maxPrice);
 
   const toggleCapacity = (cap: number) => {
     setSelectedCapacities((prev) =>

@@ -6,7 +6,7 @@ export type NavItem = {
 
 export const navItems: NavItem[] = [
   { href: "/", label: "Início" },
-  { href: "/quartos", label: "Quartos" },
-  { href: "/cardapio", label: "Cardápio" },
+  { href: "/quartos", label: "Hospedagem" },
+  { href: "/cardapio", label: "Gastronomia" },
   { href: "/little-beach", label: "Little Beach", special: true },
 ];

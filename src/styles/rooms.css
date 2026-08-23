@@ -310,7 +310,8 @@
 .room-card {
   display: grid;
   grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.35fr) 165px;
-  min-height: 315px;
+  height: 315px;
+  min-height: 0;
   margin-bottom: 17px;
   background: #ede3cf;
   border: 1px solid rgba(42, 111, 168, 0.12);
@@ -327,6 +328,7 @@
   overflow: hidden;
   position: relative;
   height: 100%;
+  min-height: 0;
 }
 .room-card-image > img {
   animation: room-image-in 0.45s ease both;
@@ -404,6 +406,9 @@
   background: #ffad49;
 }
 .room-card-body {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
   padding: 25px 27px;
   align-self: stretch;
 }

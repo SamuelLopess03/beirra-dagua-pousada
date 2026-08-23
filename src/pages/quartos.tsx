@@ -60,7 +60,7 @@ function RoomGallery({ room, roomNumber }: { room: Room; roomNumber: number }) {
               <ArrowRight size={15} />
             </button>
           </div>
-          <div className="room-gallery-dots" aria-label="Imagens do quarto">
+          <div className="room-gallery-dots" aria-label="Imagens da acomodação">
             {room.gallery.map((_, index) => (
               <button
                 type="button"
@@ -111,7 +111,7 @@ export function Quartos() {
             <em>canto de calma.</em>
           </h1>
           <p>
-            Quartos com o essencial bem pensado, cercados pelo verde e pelo
+            Hospedagens com o essencial bem pensado, cercadas pelo verde e pelo
             barulho bom da água.
           </p>
         </div>
@@ -119,7 +119,7 @@ export function Quartos() {
           <span>02</span>
           <i />
           <span>
-            quartos para
+            hospedagens para
             <br />
             viver devagar
           </span>
@@ -129,8 +129,8 @@ export function Quartos() {
         <div className="room-guide-intro">
           <span className="side-note">Acomodações</span>
           <p>
-            Não existe quarto melhor. Existe o quarto que combina com o jeito
-            que você quer descansar. Veja os nossos cantos e envie sua
+            Não existe acomodação melhor. Existe a acomodação que combina com o
+            jeito que você quer descansar. Veja os nossos cantos e envie sua
             preferência — os valores são consultados caso a caso.
           </p>
         </div>
@@ -138,7 +138,7 @@ export function Quartos() {
         <div className="room-results-toolbar">
           <div>
             <span className="room-results-kicker">Sua estadia</span>
-            <strong>{filteredRooms.length} quartos encontrados</strong>
+            <strong>{filteredRooms.length} hospedagens encontradas</strong>
           </div>
           <div className="room-toolbar-actions">
             <span className="room-results-note">
@@ -152,7 +152,7 @@ export function Quartos() {
               aria-controls="room-filter-panel"
             >
               <SlidersHorizontal size={15} />
-              {filtersOpen ? "Fechar filtros" : "Filtrar quartos"}
+              {filtersOpen ? "Fechar filtros" : "Filtrar hospedagens"}
               {activeFilterCount > 0 && <span>{activeFilterCount}</span>}
             </button>
           </div>
@@ -164,7 +164,7 @@ export function Quartos() {
           <aside
             className="room-filter-panel"
             id="room-filter-panel"
-            aria-label="Filtros de quartos"
+            aria-label="Filtros de hospedagem"
             aria-hidden={!filtersOpen}
           >
             <div className="room-filter-heading">
@@ -193,7 +193,7 @@ export function Quartos() {
             <div className="filter-search">
               <input
                 type="text"
-                placeholder="Buscar quarto..."
+                placeholder="Buscar acomodação..."
                 value={searchQuery}
                 onChange={(e) => updateSearch(e.target.value)}
               />
@@ -263,8 +263,8 @@ export function Quartos() {
           <div className="room-results">
             {filteredRooms.length === 0 ? (
               <div className="room-empty-state">
-                Nenhum quarto encontrado com esses critérios. Tente limpar os
-                filtros.
+                Nenhuma hospedagem encontrada com esses critérios. Tente limpar
+                os filtros.
               </div>
             ) : (
               <div className="room-list">
@@ -282,7 +282,7 @@ export function Quartos() {
                       <div className="room-card-top">
                         <span className="room-type">{room.type}</span>
                         <span className="room-number">
-                          quarto {page * ROOMS_PER_PAGE + index + 1}
+                          acomodação {page * ROOMS_PER_PAGE + index + 1}
                         </span>
                       </div>
                       <h2>{room.name}</h2>
@@ -318,7 +318,7 @@ export function Quartos() {
                   className="room-pagination-btn"
                   onClick={() => setPage((p) => Math.max(0, p - 1))}
                   disabled={page === 0}
-                  aria-label="Quartos anteriores"
+                  aria-label="Hospedagens anteriores"
                 >
                   <ArrowRight
                     size={16}
@@ -340,7 +340,7 @@ export function Quartos() {
                     setPage((p) => Math.min(totalPages - 1, p + 1))
                   }
                   disabled={page === totalPages - 1}
-                  aria-label="Próximos quartos"
+                  aria-label="Próximas hospedagens"
                 >
                   <ArrowRight size={16} />
                 </button>

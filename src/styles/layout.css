@@ -89,15 +89,25 @@
 .nav-link {
   position: relative;
   color: rgba(245, 237, 218, 0.85);
+  padding: 7px 8px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
   font-size: 11px;
   letter-spacing: 0.13em;
   text-transform: uppercase;
   text-decoration: none;
   transition: color 0.3s ease;
 }
+.site-header.is-scrolled .nav-link,
+.site-header.is-internal .nav-link {
+  text-shadow: none;
+}
 .site-header.is-internal:not(.is-scrolled) .nav-link,
 .site-header.is-scrolled .nav-link {
   color: rgba(42, 111, 168, 0.85);
+}
+.site-header.is-park:not(.is-scrolled) .nav-link {
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.9);
 }
 .nav-link::after {
   content: "";
