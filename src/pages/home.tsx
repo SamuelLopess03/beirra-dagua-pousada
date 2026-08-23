@@ -1,5 +1,12 @@
-import { Link } from "wouter";
-import { ArrowDownRight, ArrowRight, Sparkles, Waves } from "lucide-react";
+import { Link, useLocation } from "wouter";
+import { useState } from "react";
+import {
+  ArrowDownRight,
+  ArrowRight,
+  Search,
+  Sparkles,
+  Waves,
+} from "lucide-react";
 import { SectionLabel } from "@/components/layout/section-label";
 import { ContactSection } from "@/components/contact-section";
 import { LocationCard } from "@/components/location-card";
@@ -46,6 +53,83 @@ function FoodCarousel() {
         </div>
       )}
     />
+  );
+}
+
+function HomeRoomSearch() {
+  const [, setLocation] = useLocation();
+  const [capacity, setCapacity] = useState("");
+  const [meal, setMeal] = useState("");
+  const [maxPrice, setMaxPrice] = useState("2000");
+
+  const searchRooms = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const params = new URLSearchParams();
+
+    if (capacity) params.set("capacity", capacity);
+    if (meal) params.set("meal", meal);
+    if (maxPrice !== "2000") params.set("maxPrice", maxPrice);
+
+    const query = params.toString();
+    setLocation(query ? `/quartos?${query}` : "/quartos");
+  };
+
+  return (
+    <section
+      className="home-room-search page-width"
+      aria-label="Buscar quartos"
+    >
+      <form className="home-room-search-card" onSubmit={searchRooms}>
+        <div className="home-room-search-intro">
+          <span className="home-room-search-kicker">Sua estadia</span>
+          <h2>
+            Encontre seu <em>canto.</em>
+          </h2>
+          <p>Escolha o que combina com os seus dias por aqui.</p>
+        </div>
+        <label className="home-room-search-field">
+          <span>Pessoas</span>
+          <select
+            value={capacity}
+            onChange={(event) => setCapacity(event.target.value)}
+            aria-label="Quantidade de pessoas"
+          >
+            <option value="">Qualquer quantidade</option>
+            <option value="2">2 pessoas</option>
+            <option value="4">Até 4 pessoas</option>
+          </select>
+        </label>
+        <label className="home-room-search-field">
+          <span>Refeições</span>
+          <select
+            value={meal}
+            onChange={(event) => setMeal(event.target.value)}
+            aria-label="Preferência de refeições"
+          >
+            <option value="">Qualquer opção</option>
+            <option value="Café da manhã">Café da manhã</option>
+            <option value="Meia pensão">Meia pensão</option>
+            <option value="Pensão completa">Pensão completa</option>
+          </select>
+        </label>
+        <label className="home-room-search-field">
+          <span>Valor máximo</span>
+          <select
+            value={maxPrice}
+            onChange={(event) => setMaxPrice(event.target.value)}
+            aria-label="Valor máximo por noite"
+          >
+            <option value="2000">Sem limite</option>
+            <option value="600">Até R$ 600</option>
+            <option value="900">Até R$ 900</option>
+            <option value="1200">Até R$ 1.200</option>
+          </select>
+        </label>
+        <button className="button home-room-search-submit" type="submit">
+          Buscar quartos <Search size={16} />
+        </button>
+      </form>
+    </section>
   );
 }
 
@@ -104,6 +188,7 @@ export function Home() {
           <Waves size={15} /> Água calma, sombra boa, mesa posta.
         </div>
       </section>
+      <HomeRoomSearch />
       <section className="intro-section page-width" id="experiencia">
         <div className="intro-number">
           01 <span>—</span> a experiência

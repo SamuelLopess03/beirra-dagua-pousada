@@ -1,8 +1,82 @@
 import { Link } from "wouter";
-import { ArrowRight, Check, SlidersHorizontal } from "lucide-react";
+import {
+  Armchair,
+  ArrowLeft,
+  ArrowRight,
+  BedDouble,
+  SlidersHorizontal,
+  Sun,
+  Trees,
+  Waves,
+} from "lucide-react";
 import { SectionLabel } from "@/components/layout/section-label";
 import { useRoomFilters } from "@/hooks/use-room-filters";
 import { useBooking } from "@/hooks/booking-context";
+import { useState } from "react";
+import type { Room } from "@/data/rooms";
+
+function DetailIcon({ detail }: { detail: string }) {
+  const normalizedDetail = detail.toLowerCase();
+
+  if (normalizedDetail.includes("cama")) return <BedDouble size={16} />;
+  if (normalizedDetail.includes("varanda")) return <Sun size={16} />;
+  if (normalizedDetail.includes("vista")) return <Trees size={16} />;
+  if (normalizedDetail.includes("sala")) return <Armchair size={16} />;
+  return <Waves size={16} />;
+}
+
+function RoomGallery({ room, roomNumber }: { room: Room; roomNumber: number }) {
+  const [activeImage, setActiveImage] = useState(0);
+  const imageCount = room.gallery.length;
+
+  const moveImage = (direction: number) => {
+    setActiveImage(
+      (current) => (current + direction + imageCount) % imageCount,
+    );
+  };
+
+  return (
+    <div className="room-card-image">
+      <img
+        src={room.gallery[activeImage]}
+        alt={`${room.name} — imagem ${activeImage + 1}`}
+      />
+      <span className="room-card-index">0{roomNumber}</span>
+      {imageCount > 1 && (
+        <>
+          <div className="room-gallery-arrows">
+            <button
+              type="button"
+              onClick={() => moveImage(-1)}
+              aria-label={`Imagem anterior de ${room.name}`}
+            >
+              <ArrowLeft size={15} />
+            </button>
+            <button
+              type="button"
+              onClick={() => moveImage(1)}
+              aria-label={`Próxima imagem de ${room.name}`}
+            >
+              <ArrowRight size={15} />
+            </button>
+          </div>
+          <div className="room-gallery-dots" aria-label="Imagens do quarto">
+            {room.gallery.map((_, index) => (
+              <button
+                type="button"
+                key={index}
+                className={index === activeImage ? "is-active" : ""}
+                onClick={() => setActiveImage(index)}
+                aria-label={`Ver imagem ${index + 1}`}
+                aria-current={index === activeImage ? "true" : undefined}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
 
 export function Quartos() {
   const { openBooking } = useBooking();
@@ -24,6 +98,7 @@ export function Quartos() {
     activeFilterCount,
     clearFilters,
   } = useRoomFilters();
+  const [filtersOpen, setFiltersOpen] = useState(activeFilterCount > 0);
 
   return (
     <main className="inner-page">
@@ -65,13 +140,33 @@ export function Quartos() {
             <span className="room-results-kicker">Sua estadia</span>
             <strong>{filteredRooms.length} quartos encontrados</strong>
           </div>
-          <span className="room-results-note">
-            Valores por noite · consulte disponibilidade
-          </span>
+          <div className="room-toolbar-actions">
+            <span className="room-results-note">
+              Valores por noite · consulte disponibilidade
+            </span>
+            <button
+              type="button"
+              className={`room-filter-toggle${filtersOpen ? " is-open" : ""}`}
+              onClick={() => setFiltersOpen((open) => !open)}
+              aria-expanded={filtersOpen}
+              aria-controls="room-filter-panel"
+            >
+              <SlidersHorizontal size={15} />
+              {filtersOpen ? "Fechar filtros" : "Filtrar quartos"}
+              {activeFilterCount > 0 && <span>{activeFilterCount}</span>}
+            </button>
+          </div>
         </div>
 
-        <div className="room-results-layout">
-          <aside className="room-filter-panel" aria-label="Filtros de quartos">
+        <div
+          className={`room-results-layout${filtersOpen ? "" : " filters-closed"}`}
+        >
+          <aside
+            className="room-filter-panel"
+            id="room-filter-panel"
+            aria-label="Filtros de quartos"
+            aria-hidden={!filtersOpen}
+          >
             <div className="room-filter-heading">
               <div>
                 <SlidersHorizontal size={16} />
@@ -88,6 +183,13 @@ export function Quartos() {
                 </button>
               )}
             </div>
+            <button
+              type="button"
+              className="room-filter-close"
+              onClick={() => setFiltersOpen(false)}
+            >
+              Fechar filtros
+            </button>
             <div className="filter-search">
               <input
                 type="text"
@@ -172,10 +274,10 @@ export function Quartos() {
                     key={room.name}
                     data-testid={`card-quarto-${page * ROOMS_PER_PAGE + index}`}
                   >
-                    <div className="room-card-image">
-                      <img src={room.image} alt={room.name} />
-                      <span>0{page * ROOMS_PER_PAGE + index + 1}</span>
-                    </div>
+                    <RoomGallery
+                      room={room}
+                      roomNumber={page * ROOMS_PER_PAGE + index + 1}
+                    />
                     <div className="room-card-body">
                       <div className="room-card-top">
                         <span className="room-type">{room.type}</span>
@@ -188,7 +290,7 @@ export function Quartos() {
                       <div className="room-details">
                         {room.details.map((detail) => (
                           <span key={detail}>
-                            <Check size={13} /> {detail}
+                            <DetailIcon detail={detail} /> {detail}
                           </span>
                         ))}
                       </div>

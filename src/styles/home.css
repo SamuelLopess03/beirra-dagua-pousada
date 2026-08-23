@@ -94,6 +94,80 @@
   color: #ffad49;
 }
 
+/* ===== Home: busca de quartos ===== */
+.home-room-search {
+  position: relative;
+  z-index: 2;
+  margin-top: -42px;
+}
+.home-room-search-card {
+  display: grid;
+  grid-template-columns: 1.25fr repeat(3, minmax(135px, 0.82fr)) auto;
+  align-items: end;
+  gap: 18px;
+  padding: 25px 28px 23px;
+  background: #f5edda;
+  border-top: 4px solid #ff8c2a;
+  box-shadow: 0 12px 30px rgba(42, 111, 168, 0.13);
+}
+.home-room-search-intro {
+  padding-right: 8px;
+}
+.home-room-search-kicker {
+  display: block;
+  margin-bottom: 9px;
+  color: #f5a623;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 9px;
+  font-weight: 700;
+}
+.home-room-search-intro h2 {
+  margin: 0;
+  color: #2a6fa8;
+  font-size: clamp(26px, 2.4vw, 35px);
+  line-height: 0.9;
+}
+.home-room-search-intro p {
+  margin: 9px 0 0;
+  color: #61716d;
+  font-size: 11px;
+  line-height: 1.45;
+}
+.home-room-search-field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 8px;
+}
+.home-room-search-field > span {
+  color: #2a6fa8;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-family: var(--app-font-mono);
+  font-size: 9px;
+}
+.home-room-search-field select {
+  width: 100%;
+  min-height: 43px;
+  padding: 0 29px 0 12px;
+  border: 1px solid #d8cab5;
+  border-radius: 0;
+  outline: none;
+  background: #efe5cc;
+  color: #5e6e69;
+  font-size: 12px;
+  cursor: pointer;
+}
+.home-room-search-field select:focus {
+  border-color: #ff8c2a;
+}
+.home-room-search-submit {
+  min-height: 43px;
+  white-space: nowrap;
+  padding-inline: 17px;
+}
+
 /* ===== Home: intro ===== */
 .intro-section {
   min-height: 495px;

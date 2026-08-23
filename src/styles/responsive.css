@@ -70,6 +70,20 @@
     right: 20px;
     bottom: 20px;
   }
+  .home-room-search {
+    margin-top: -28px;
+  }
+  .home-room-search-card {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 14px;
+    padding: 23px 20px 20px;
+  }
+  .home-room-search-intro {
+    grid-column: 1 / -1;
+  }
+  .home-room-search-submit {
+    width: 100%;
+  }
   .intro-section {
     grid-template-columns: 1fr 0.3fr;
     gap: 20px;
@@ -158,6 +172,14 @@
   .room-guide-intro {
     grid-template-columns: 1fr 2fr;
     gap: 25px;
+  }
+  .room-toolbar-actions {
+    align-items: end;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .room-card {
+    grid-template-columns: 245px minmax(0, 1fr) 145px;
   }
   .room-card-body {
     padding: 35px;
@@ -551,6 +573,47 @@
     display: block;
     margin-bottom: 38px;
   }
+  .room-results-toolbar {
+    align-items: start;
+    flex-direction: column;
+  }
+  .room-toolbar-actions {
+    align-items: start;
+    width: 100%;
+  }
+  .room-results-note {
+    order: 2;
+  }
+  .room-filter-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+  .room-card {
+    display: block;
+    min-height: 0;
+  }
+  .room-card-image {
+    height: 250px;
+  }
+  .room-card-body {
+    padding: 25px 22px;
+  }
+  .room-details {
+    grid-template-columns: 1fr 1fr;
+  }
+  .room-card-price {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 5px 12px;
+    padding: 20px 22px;
+    border-top: 1px solid rgba(42, 111, 168, 0.16);
+    border-left: 0;
+  }
+  .room-card-price .button {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+  }
   .room-guide-intro .side-note {
     display: block;
     margin-bottom: 25px;
@@ -664,11 +727,22 @@
     display: block;
   }
   .menu-item {
-    min-height: 135px;
+    min-height: 170px;
     margin-bottom: 28px;
+  }
+  .menu-item-image {
+    width: 112px;
+    height: 100px;
   }
   .menu-item h3 {
     font-size: 28px;
+  }
+  .menu-pagination {
+    gap: 11px;
+    justify-content: space-between;
+  }
+  .menu-pagination-label {
+    display: none;
   }
   .menu-image-break {
     height: 400px;
