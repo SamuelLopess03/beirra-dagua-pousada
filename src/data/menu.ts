@@ -1,4 +1,4 @@
-import plateImage from "@assets/image_1787066729847.png";
+import plateImage from "@assets/grilled-meal.png";
 
 export type MenuCategory =
   | "Tudo"

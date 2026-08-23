@@ -2,8 +2,8 @@ import { useState } from "react";
 import { ArrowLeft, ArrowRight, Clock3, Utensils } from "lucide-react";
 import { SectionLabel } from "@/components/layout/section-label";
 import { menuCategories, menuItems, type MenuCategory } from "@/data/menu";
-import plateImage from "@assets/image_1787066729847.png";
-import seafoodImage from "@assets/image_1787066742218.png";
+import plateImage from "@assets/grilled-meal.png";
+import seafoodImage from "@assets/seafood-platter.png";
 
 export function Cardapio() {
   const [category, setCategory] = useState<MenuCategory>("Tudo");
@@ -59,7 +59,7 @@ export function Cardapio() {
         </div>
         <div>
           <p>
-            A gente cozinha com o que encontra de bonito e fresco. O cardápio
+            A gente cozinha com o que encontra de bonito e fresco. A gastronomia
             acompanha a estação, a pesca e a vontade do dia — por isso, aqui
             você encontra uma direção de sabores, não uma lista engessada.
           </p>
@@ -77,7 +77,7 @@ export function Cardapio() {
         <div
           className="category-tabs"
           role="tablist"
-          aria-label="Categorias do cardápio"
+          aria-label="Categorias da gastronomia"
         >
           {menuCategories.map((item) => (
             <button
@@ -123,7 +123,7 @@ export function Cardapio() {
             {totalPages > 1 && (
               <nav
                 className="menu-pagination"
-                aria-label="Paginação do cardápio"
+                aria-label="Paginação da gastronomia"
               >
                 <button
                   type="button"

@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { ArrowRight, Clock3, MapPin } from "lucide-react";
 import { useBooking } from "@/hooks/booking-context";
-import logo from "@assets/images_1787066687889.jpg";
+import logo from "@assets/logo-little-beach.jpg";
 
 export function Footer() {
   const { openBooking } = useBooking();
@@ -19,10 +19,10 @@ export function Footer() {
         <div className="footer-links">
           <span className="footer-heading">Explore</span>
           <Link href="/quartos" data-testid="link-footer-quartos">
-            Quartos
+            Hospedagem
           </Link>
           <Link href="/cardapio" data-testid="link-footer-cardapio">
-            Cardápio
+            Gastronomia
           </Link>
           <Link href="/little-beach" data-testid="link-footer-little-beach">
             Little Beach

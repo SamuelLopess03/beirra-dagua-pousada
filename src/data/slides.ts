@@ -1,11 +1,11 @@
-import heroImage from "@assets/img_hero.jpeg";
-import lagoonImage from "@assets/image_1787066717007.png";
-import plateImage from "@assets/image_1787066729847.png";
-import seafoodImage from "@assets/image_1787066742218.png";
-import galleryTwo from "@assets/image_1787066829752.png";
-import parkSlideOne from "@assets/image_1787137460695.png";
-import parkSlideTwo from "@assets/image_1787137489426.png";
-import parkSlideThree from "@assets/image_1787137557063.png";
+import heroImage from "@assets/pousada-aerea.jpeg";
+import lagoonImage from "@assets/lagoon-waterfall.png";
+import plateImage from "@assets/grilled-meal.png";
+import seafoodImage from "@assets/seafood-platter.png";
+import galleryTwo from "@assets/room-white-bed.png";
+import parkSlideOne from "@assets/waterslide-tower.png";
+import parkSlideTwo from "@assets/water-park-aerial.png";
+import parkSlideThree from "@assets/lagoon-slide.png";
 
 export type AtmosphereSlide = {
   image: string;

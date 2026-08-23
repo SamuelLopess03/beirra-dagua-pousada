@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
 import { navItems } from "@/data/navigation";
-import logo from "@assets/images_1787066687889.jpg";
+import logo from "@assets/logo-little-beach.jpg";
 
 export function Header() {
   const [location] = useLocation();
@@ -18,10 +18,11 @@ export function Header() {
   }, []);
 
   const isInternal = location !== "/";
+  const isPark = location === "/little-beach";
 
   return (
     <header
-      className={`site-header ${isScrolled ? "is-scrolled" : ""} ${isInternal ? "is-internal" : ""}`}
+      className={`site-header ${isScrolled ? "is-scrolled" : ""} ${isInternal ? "is-internal" : ""} ${isPark ? "is-park" : ""}`}
       data-testid="header-site"
     >
       <div className="header-inner">

@@ -1,11 +1,15 @@
 import { Link, useLocation } from "wouter";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowDownRight,
   ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Maximize2,
   Search,
   Sparkles,
   Waves,
+  X,
 } from "lucide-react";
 import { SectionLabel } from "@/components/layout/section-label";
 import { ContactSection } from "@/components/contact-section";
@@ -13,10 +17,13 @@ import { LocationCard } from "@/components/location-card";
 import { Carousel } from "@/components/carousel/carousel";
 import { useBooking } from "@/hooks/booking-context";
 import { atmosphereSlides, foodSlides } from "@/data/slides";
-import heroImage from "@assets/img_hero.jpeg";
-import galleryOne from "@assets/image_1787066780463.png";
-import galleryTwo from "@assets/image_1787066829752.png";
-import parkSlideTwo from "@assets/image_1787137489426.png";
+import heroImage from "@assets/pousada-aerea.jpeg";
+import galleryOne from "@assets/room-blue-bed.png";
+import galleryTwo from "@assets/room-white-bed.png";
+import parkSlideTwo from "@assets/water-park-aerial.png";
+import videoOne from "@assets/promo-video-01.mp4";
+import videoTwo from "@assets/promo-video-02.mp4";
+import videoThree from "@assets/promo-video-03.mp4";
 
 function ArrowUpRightIcon() {
   return <ArrowDownRight size={18} className="rotate-arrow" />;
@@ -56,6 +63,184 @@ function FoodCarousel() {
   );
 }
 
+const stayVideos = [
+  {
+    title: "A lagoa ao amanhecer",
+    source: videoOne,
+    poster: heroImage,
+  },
+  {
+    title: "Dias perto da água",
+    source: videoTwo,
+    poster: galleryOne,
+  },
+  {
+    title: "O ritmo da pousada",
+    source: videoThree,
+    poster: galleryTwo,
+  },
+];
+
+function StayVideoCoverflow() {
+  const [activeVideo, setActiveVideo] = useState(0);
+  const [expandedVideo, setExpandedVideo] = useState<number | null>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const videos = stageRef.current?.querySelectorAll("video");
+    if (!videos) return;
+
+    videos.forEach((video, index) => {
+      if (index === activeVideo && expandedVideo === null) {
+        video.play().catch(() => undefined);
+      } else {
+        video.pause();
+      }
+    });
+  }, [activeVideo, expandedVideo]);
+
+  useEffect(() => {
+    if (expandedVideo === null) return;
+
+    const closeWithEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setExpandedVideo(null);
+    };
+    window.addEventListener("keydown", closeWithEscape);
+    return () => window.removeEventListener("keydown", closeWithEscape);
+  }, [expandedVideo]);
+
+  const moveVideo = (direction: number) => {
+    setActiveVideo(
+      (current) =>
+        (current + direction + stayVideos.length) % stayVideos.length,
+    );
+  };
+
+  return (
+    <div className="stay-video-coverflow" aria-label="Vídeos da pousada">
+      <div className="stay-video-coverflow-heading">
+        <span>Veja de perto</span>
+        <strong>
+          0{activeVideo + 1} <small>/ 03</small>
+        </strong>
+      </div>
+      <div className="stay-video-coverflow-stage" ref={stageRef}>
+        {stayVideos.map((video, index) => {
+          const distance =
+            (index - activeVideo + stayVideos.length) % stayVideos.length;
+          const position =
+            distance === 0 ? "active" : distance === 1 ? "next" : "previous";
+
+          return (
+            <article
+              key={video.title}
+              className={`stay-video-card is-${position}`}
+              onClick={() => setActiveVideo(index)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setActiveVideo(index);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-label={`Visualizar vídeo: ${video.title}`}
+              aria-pressed={index === activeVideo}
+            >
+              <video
+                src={video.source}
+                poster={video.poster}
+                muted
+                loop
+                playsInline
+                preload={index === activeVideo ? "auto" : "metadata"}
+                autoPlay={index === activeVideo}
+                controls={index === activeVideo}
+                controlsList="nofullscreen"
+              />
+              <span>{video.title}</span>
+              {index !== activeVideo && <i>Selecionar</i>}
+              {index === activeVideo && (
+                <button
+                  type="button"
+                  className="stay-video-expand"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    setExpandedVideo(index);
+                  }}
+                  aria-label={`Ampliar vídeo: ${video.title}`}
+                >
+                  <Maximize2 size={15} />
+                </button>
+              )}
+            </article>
+          );
+        })}
+        <div className="stay-video-coverflow-controls">
+          <button
+            type="button"
+            onClick={() => moveVideo(-1)}
+            aria-label="Vídeo anterior"
+          >
+            <ChevronLeft size={17} />
+          </button>
+          <div aria-label="Selecionar vídeo">
+            {stayVideos.map((video, index) => (
+              <button
+                type="button"
+                key={video.title}
+                className={index === activeVideo ? "is-active" : ""}
+                onClick={() => setActiveVideo(index)}
+                aria-label={`Vídeo ${index + 1}`}
+                aria-current={index === activeVideo ? "true" : undefined}
+              />
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => moveVideo(1)}
+            aria-label="Próximo vídeo"
+          >
+            <ChevronRight size={17} />
+          </button>
+        </div>
+      </div>
+      {expandedVideo !== null && (
+        <div
+          className="stay-video-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Vídeo ampliado: ${stayVideos[expandedVideo].title}`}
+          onClick={() => setExpandedVideo(null)}
+        >
+          <div
+            className="stay-video-lightbox-content"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="stay-video-lightbox-close"
+              onClick={() => setExpandedVideo(null)}
+              aria-label="Fechar vídeo ampliado"
+            >
+              <X size={18} />
+            </button>
+            <video
+              src={stayVideos[expandedVideo].source}
+              poster={stayVideos[expandedVideo].poster}
+              autoPlay
+              controls
+              controlsList="nofullscreen"
+              playsInline
+            />
+            <strong>{stayVideos[expandedVideo].title}</strong>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function HomeRoomSearch() {
   const [, setLocation] = useLocation();
   const [capacity, setCapacity] = useState("");
@@ -77,7 +262,7 @@ function HomeRoomSearch() {
   return (
     <section
       className="home-room-search page-width"
-      aria-label="Buscar quartos"
+      aria-label="Buscar hospedagem"
     >
       <form className="home-room-search-card" onSubmit={searchRooms}>
         <div className="home-room-search-intro">
@@ -126,7 +311,7 @@ function HomeRoomSearch() {
           </select>
         </label>
         <button className="button home-room-search-submit" type="submit">
-          Buscar quartos <Search size={16} />
+          Buscar hospedagem <Search size={16} />
         </button>
       </form>
     </section>
@@ -190,38 +375,32 @@ export function Home() {
       </section>
       <HomeRoomSearch />
       <section className="intro-section page-width" id="experiencia">
-        <div className="intro-number">
-          01 <span>—</span> a experiência
+        <div className="intro-content">
+          <div className="intro-number">
+            01 <span>—</span> a experiência
+          </div>
+          <div className="intro-copy">
+            <h2>
+              Tem lugar que
+              <br />
+              <em>desacelera a gente.</em>
+            </h2>
+            <p>
+              Entre o verde que abraça e a água que convida, a Beira D’Água é
+              feita para quem quer sair do automático. Aqui, cada acomodação
+              abre para um pedaço de natureza, cada refeição chega com gosto de
+              litoral e cada tarde pode durar o quanto quiser.
+            </p>
+            <a
+              href="#ritmo"
+              className="text-link"
+              data-testid="link-intro-ritmo"
+            >
+              Sinta o lugar <ArrowDownRight size={17} />
+            </a>
+          </div>
         </div>
-        <div className="intro-copy">
-          <h2>
-            Tem lugar que
-            <br />
-            <em>desacelera a gente.</em>
-          </h2>
-          <p>
-            Entre o verde que abraça e a água que convida, a Beira D’Água é
-            feita para quem quer sair do automático. Aqui, cada quarto abre para
-            um pedaço de natureza, cada refeição chega com gosto de litoral e
-            cada tarde pode durar o quanto quiser.
-          </p>
-          <a href="#ritmo" className="text-link" data-testid="link-intro-ritmo">
-            Sinta o lugar <ArrowDownRight size={17} />
-          </a>
-        </div>
-        <div className="intro-stamp">
-          <span>
-            Pequeno
-            <br />
-            por escolha
-          </span>
-          <strong>BD</strong>
-          <span>
-            Desde sempre
-            <br />
-            perto da água
-          </span>
-        </div>
+        <StayVideoCoverflow />
       </section>
       <section className="atmosphere-section" id="ritmo">
         <AtmosphereCarousel />
@@ -280,7 +459,7 @@ export function Home() {
             className="text-link"
             data-testid="link-home-quartos"
           >
-            Ver todos os quartos <ArrowRight size={16} />
+            Ver toda a hospedagem <ArrowRight size={16} />
           </Link>
         </div>
         <div className="rooms-feature">
@@ -289,7 +468,7 @@ export function Home() {
             <span className="image-index">01 / 03</span>
           </div>
           <div className="room-feature-copy">
-            <span className="room-type">Quarto · para dois</span>
+            <span className="room-type">Acomodação · para dois</span>
             <h3>
               Janela para
               <br />
@@ -304,7 +483,7 @@ export function Home() {
               className="button button-dark"
               data-testid="button-conhecer-quarto"
             >
-              Conhecer os quartos <ArrowRight size={16} />
+              Conhecer a hospedagem <ArrowRight size={16} />
             </Link>
           </div>
         </div>
@@ -327,7 +506,7 @@ export function Home() {
             className="button button-outline-light"
             data-testid="button-home-cardapio"
           >
-            Abrir o cardápio <ArrowRight size={16} />
+            Conhecer a gastronomia <ArrowRight size={16} />
           </Link>
         </div>
         <FoodCarousel />
