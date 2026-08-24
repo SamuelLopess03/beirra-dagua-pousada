@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Clock3, Utensils } from "lucide-react";
 import { SectionLabel } from "@/components/layout/section-label";
+import { useBooking } from "@/hooks/booking-context";
 import { menuCategories, menuItems, type MenuCategory } from "@/data/menu";
 import plateImage from "@assets/grilled-meal.png";
 import seafoodImage from "@assets/seafood-platter.png";
 
 export function Cardapio() {
+  const { openBooking } = useBooking();
   const [category, setCategory] = useState<MenuCategory>("Tudo");
   const [page, setPage] = useState(0);
   const ITEMS_PER_PAGE = 5;
@@ -178,12 +180,22 @@ export function Cardapio() {
       <section className="menu-image-break">
         <img src={seafoodImage} alt="Seleção de frutos do mar na brasa" />
         <div>
-          <span>Da nossa cozinha</span>
-          <h2>
-            O melhor tempero
-            <br />
-            <em>é ficar.</em>
-          </h2>
+          <div className="menu-image-break-copy">
+            <span>Da nossa cozinha</span>
+            <h2>
+              O melhor tempero
+              <br />
+              <em>é ficar.</em>
+            </h2>
+          </div>
+          <button
+            type="button"
+            className="button menu-image-break-cta"
+            onClick={() => openBooking()}
+            data-testid="button-cardapio-cta"
+          >
+            Enviar minha preferência <ArrowRight size={16} />
+          </button>
         </div>
       </section>
     </main>

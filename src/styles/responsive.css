@@ -809,6 +809,12 @@
   }
   .menu-image-break > div {
     left: 18px;
+    width: calc(100% - 36px);
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  .menu-image-break-cta {
+    justify-self: start;
   }
   .menu-image-break h2 {
     font-size: 56px;
