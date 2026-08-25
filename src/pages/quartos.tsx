@@ -86,6 +86,12 @@ export function Quartos() {
     roomsPerPage: ROOMS_PER_PAGE,
     searchQuery,
     updateSearch,
+    adults,
+    updateAdults,
+    children,
+    updateChildren,
+    mealPrice,
+    updateMealPrice,
     selectedCapacities,
     toggleCapacity,
     selectedMeals,
@@ -200,14 +206,61 @@ export function Quartos() {
             </div>
 
             <div className="filter-group">
-              <span className="filter-title">Pessoas:</span>
+              <span className="filter-title">Adultos:</span>
+              <div className="filter-number-input">
+                <button type="button" onClick={() => updateAdults(Math.max(0, adults - 1))}>-</button>
+                <input
+                  type="number"
+                  min="0"
+                  max="20"
+                  value={adults}
+                  onChange={(e) => updateAdults(Math.max(0, Number(e.target.value)))}
+                  aria-label="Filtrar por quantidade de adultos"
+                />
+                <button type="button" onClick={() => updateAdults(Math.min(20, adults + 1))}>+</button>
+              </div>
+              {adults === 0 && <span className="filter-note">Sem filtro</span>}
+            </div>
+
+            <div className="filter-group">
+              <span className="filter-title">Crianças:</span>
+              <div className="filter-number-input">
+                <button type="button" onClick={() => updateChildren(Math.max(0, children - 1))}>-</button>
+                <input
+                  type="number"
+                  min="0"
+                  max="20"
+                  value={children}
+                  onChange={(e) => updateChildren(Math.max(0, Number(e.target.value)))}
+                  aria-label="Filtrar por quantidade de crianças"
+                />
+                <button type="button" onClick={() => updateChildren(Math.min(20, children + 1))}>+</button>
+              </div>
+            </div>
+
+            <div className="filter-group">
+              <span className="filter-title">Valor da Refeição:</span>
+              <select
+                value={mealPrice}
+                onChange={(e) => updateMealPrice(e.target.value)}
+                aria-label="Filtrar por valor ou tipo de refeição"
+              >
+                <option value="">Qualquer opção</option>
+                <option value="incluso">Café incluso (R$ 0)</option>
+                <option value="80">Meia pensão (R$ 80 / pessoa)</option>
+                <option value="150">Pensão completa (R$ 150 / pessoa)</option>
+              </select>
+            </div>
+
+            <div className="filter-group">
+              <span className="filter-title">Capacidade da Acomodação:</span>
               <label>
                 <input
                   type="checkbox"
                   checked={selectedCapacities.includes(2)}
                   onChange={() => toggleCapacity(2)}
                 />{" "}
-                2 pessoas
+                Até 2 pessoas
               </label>
               <label>
                 <input
@@ -215,12 +268,12 @@ export function Quartos() {
                   checked={selectedCapacities.includes(4)}
                   onChange={() => toggleCapacity(4)}
                 />{" "}
-                4 pessoas
+                Até 4 pessoas
               </label>
             </div>
 
             <div className="filter-group">
-              <span className="filter-title">Refeições:</span>
+              <span className="filter-title">Refeições inclusas:</span>
               <label>
                 <input
                   type="checkbox"
@@ -248,7 +301,7 @@ export function Quartos() {
             </div>
 
             <div className="filter-group">
-              <span className="filter-title">Valor máx (R$ {maxPrice}):</span>
+              <span className="filter-title">Valor máx por diária (R$ {maxPrice}):</span>
               <input
                 type="range"
                 min="300"

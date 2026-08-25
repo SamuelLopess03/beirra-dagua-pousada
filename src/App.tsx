@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, type ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Route, Switch, useLocation, Router as WouterRouter } from "wouter";
+import { Route, Switch, useLocation, useRoute, Router as WouterRouter } from "wouter";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -33,6 +33,12 @@ function RoutedErrorBoundary({ children }: { children: ReactNode }) {
   return <ErrorBoundary resetKey={location}>{children}</ErrorBoundary>;
 }
 
+function QuartoRoute() {
+  const [, params] = useRoute<{ slug: string }>("/quartos/:slug");
+  if (!params) return <NotFound />;
+  return <QuartoDetalhe slug={params.slug} />;
+}
+
 function Shell() {
   return (
     <BookingProvider>
@@ -41,9 +47,7 @@ function Shell() {
         <Suspense fallback={null}>
           <Switch>
             <Route path="/" component={Home} />
-            <Route path="/quartos/:slug">
-              {(params) => <QuartoDetalhe slug={params.slug} />}
-            </Route>
+            <Route path="/quartos/:slug" component={QuartoRoute} />
             <Route path="/quartos" component={Quartos} />
             <Route path="/cardapio" component={Cardapio} />
             <Route path="/little-beach" component={LittleBeach} />

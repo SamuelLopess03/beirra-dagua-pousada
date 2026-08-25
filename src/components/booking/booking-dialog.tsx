@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, Check, Coffee, Moon, Users, X } from "lucide-react";
+import { ArrowRight, Check, Coffee, Moon, Users, Utensils, X } from "lucide-react";
 import type { Room } from "@/data/rooms";
 
 type BookingDialogProps = {
@@ -13,7 +13,9 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
   const [form, setForm] = useState({
     arrival: "",
     departure: "",
-    guests: "2",
+    adults: "2",
+    children: "0",
+    mealPlan: "incluso",
     name: "",
     email: "",
     note: "",
@@ -45,6 +47,23 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
       currency: "BRL",
       maximumFractionDigits: 0,
     }).format(value);
+
+  const adultsCount = Number(form.adults) || 1;
+  const childrenCount = Number(form.children) || 0;
+  const totalGuests = adultsCount + childrenCount;
+
+  const mealPricePerPersonDay =
+    form.mealPlan === "meia" ? 80 : form.mealPlan === "completa" ? 150 : 0;
+  const mealPlanName =
+    form.mealPlan === "meia"
+      ? "Meia pensão (R$ 80 / pessoa / dia)"
+      : form.mealPlan === "completa"
+        ? "Pensão completa (R$ 150 / pessoa / dia)"
+        : "Café da manhã incluso (R$ 0)";
+
+  const mealTotal = mealPricePerPersonDay * totalGuests * (nights || 1);
+  const roomTotal = room ? room.price * (nights || 1) : 0;
+  const totalEstimate = roomTotal + (mealPricePerPersonDay > 0 ? mealTotal : 0);
 
   return (
     <div
@@ -146,19 +165,46 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
                 </label>
               </div>
               {dateError && <p className="booking-date-error">{dateError}</p>}
+              
+              <div className="form-grid">
+                <label>
+                  Adultos
+                  <input
+                    required
+                    type="number"
+                    min="1"
+                    max="20"
+                    value={form.adults}
+                    onChange={(event) => update("adults", event.target.value)}
+                    data-testid="input-adultos"
+                  />
+                </label>
+                <label>
+                  Crianças
+                  <input
+                    type="number"
+                    min="0"
+                    max="20"
+                    value={form.children}
+                    onChange={(event) => update("children", event.target.value)}
+                    data-testid="input-criancas"
+                  />
+                </label>
+              </div>
+
               <label>
-                Hóspedes
+                Plano e Valor da Refeição
                 <select
-                  value={form.guests}
-                  onChange={(event) => update("guests", event.target.value)}
-                  data-testid="select-hospedes"
+                  value={form.mealPlan}
+                  onChange={(event) => update("mealPlan", event.target.value)}
+                  data-testid="select-refeicao"
                 >
-                  <option value="1">1 hóspede</option>
-                  <option value="2">2 hóspedes</option>
-                  <option value="3">3 hóspedes</option>
-                  <option value="4">4 hóspedes</option>
+                  <option value="incluso">Café da manhã incluso (R$ 0)</option>
+                  <option value="meia">Meia pensão (R$ 80 / pessoa por dia)</option>
+                  <option value="completa">Pensão completa (R$ 150 / pessoa por dia)</option>
                 </select>
               </label>
+
               <div className="form-grid">
                 <label>
                   Seu nome
@@ -187,7 +233,7 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
                 Alguma preferência? <span className="optional">(opcional)</span>
                 <textarea
                   rows={3}
-                  placeholder="Uma ocasião especial, dúvidas ou vontade de conhecer..."
+                  placeholder="Uma ocasião especial, dúvidas ou restrições alimentares..."
                   value={form.note}
                   onChange={(event) => update("note", event.target.value)}
                   data-testid="input-preferencia"
@@ -242,23 +288,28 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
                   <Users size={14} /> Hóspedes
                 </span>
                 <strong>
-                  {form.guests} {form.guests === "1" ? "hóspede" : "hóspedes"}
+                  {adultsCount} {adultsCount === 1 ? "adulto" : "adultos"}
+                  {childrenCount > 0 && `, ${childrenCount} ${childrenCount === 1 ? "criança" : "crianças"}`}
                 </strong>
+              </div>
+              <div>
+                <span>
+                  <Utensils size={14} /> Refeições
+                </span>
+                <strong>{mealPlanName}</strong>
               </div>
               {room && (
                 <div>
                   <span>
-                    <Coffee size={14} /> Inclui
+                    <Coffee size={14} /> Quarto inclui
                   </span>
                   <strong>{room.meals.join(" · ")}</strong>
                 </div>
               )}
-              {room && (
-                <div className="booking-summary-total">
-                  <span>Total estimado</span>
-                  <strong>{formatPrice(room.price * nights)}</strong>
-                </div>
-              )}
+              <div className="booking-summary-total">
+                <span>Total estimado</span>
+                <strong>{formatPrice(totalEstimate)}</strong>
+              </div>
             </div>
             <p className="booking-review-contact">
               A confirmação será enviada para <strong>{form.email}</strong>.

@@ -82,6 +82,7 @@
     grid-column: 1 / -1;
   }
   .home-room-search-submit {
+    grid-column: 1 / -1;
     width: 100%;
   }
   .intro-section {

@@ -243,16 +243,18 @@ function StayVideoCoverflow() {
 
 function HomeRoomSearch() {
   const [, setLocation] = useLocation();
-  const [capacity, setCapacity] = useState("");
-  const [meal, setMeal] = useState("");
+  const [adults, setAdults] = useState("2");
+  const [children, setChildren] = useState("0");
+  const [mealPrice, setMealPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("2000");
 
   const searchRooms = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const params = new URLSearchParams();
 
-    if (capacity) params.set("capacity", capacity);
-    if (meal) params.set("meal", meal);
+    if (adults) params.set("adults", adults);
+    if (children && children !== "0") params.set("children", children);
+    if (mealPrice) params.set("mealPrice", mealPrice);
     if (maxPrice !== "2000") params.set("maxPrice", maxPrice);
 
     const query = params.toString();
@@ -273,32 +275,44 @@ function HomeRoomSearch() {
           <p>Escolha o que combina com os seus dias por aqui.</p>
         </div>
         <label className="home-room-search-field">
-          <span>Pessoas</span>
-          <select
-            value={capacity}
-            onChange={(event) => setCapacity(event.target.value)}
-            aria-label="Quantidade de pessoas"
-          >
-            <option value="">Qualquer quantidade</option>
-            <option value="2">2 pessoas</option>
-            <option value="4">Até 4 pessoas</option>
-          </select>
+          <span>Adultos</span>
+          <input
+            type="number"
+            min="1"
+            max="20"
+            value={adults}
+            onChange={(event) => setAdults(event.target.value)}
+            aria-label="Quantidade de adultos"
+            className="home-room-search-number"
+          />
         </label>
         <label className="home-room-search-field">
-          <span>Refeições</span>
+          <span>Crianças</span>
+          <input
+            type="number"
+            min="0"
+            max="20"
+            value={children}
+            onChange={(event) => setChildren(event.target.value)}
+            aria-label="Quantidade de crianças"
+            className="home-room-search-number"
+          />
+        </label>
+        <label className="home-room-search-field">
+          <span>Valor da Refeição</span>
           <select
-            value={meal}
-            onChange={(event) => setMeal(event.target.value)}
-            aria-label="Preferência de refeições"
+            value={mealPrice}
+            onChange={(event) => setMealPrice(event.target.value)}
+            aria-label="Valor ou tipo de refeição"
           >
             <option value="">Qualquer opção</option>
-            <option value="Café da manhã">Café da manhã</option>
-            <option value="Meia pensão">Meia pensão</option>
-            <option value="Pensão completa">Pensão completa</option>
+            <option value="incluso">Café incluso (R$ 0)</option>
+            <option value="80">Meia pensão (R$ 80 / pessoa)</option>
+            <option value="150">Pensão completa (R$ 150 / pessoa)</option>
           </select>
         </label>
         <label className="home-room-search-field">
-          <span>Valor máximo</span>
+          <span>Valor Máximo</span>
           <select
             value={maxPrice}
             onChange={(event) => setMaxPrice(event.target.value)}
@@ -308,6 +322,7 @@ function HomeRoomSearch() {
             <option value="600">Até R$ 600</option>
             <option value="900">Até R$ 900</option>
             <option value="1200">Até R$ 1.200</option>
+            <option value="1800">Até R$ 1.800</option>
           </select>
         </label>
         <button className="button home-room-search-submit" type="submit">
