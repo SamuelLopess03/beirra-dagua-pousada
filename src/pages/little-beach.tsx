@@ -15,6 +15,7 @@ import { parkSlides } from "@/data/slides";
 import { useBooking } from "@/hooks/booking-context";
 import { ParkPackagesDialog } from "@/components/booking/park-packages-dialog";
 import { ParkPackageCarousel } from "@/components/booking/park-packages-carousel";
+import { TicketSearchCard } from "@/components/booking/ticket-search-card";
 
 export function LittleBeach() {
   const { openBooking } = useBooking();
@@ -82,6 +83,8 @@ export function LittleBeach() {
         </div>
         <div className="park-hero-wave" />
       </section>
+
+      <TicketSearchCard />
 
       <section className="park-intro page-width">
         <div className="park-intro-copy">
