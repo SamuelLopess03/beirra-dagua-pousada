@@ -22,6 +22,9 @@ const Cardapio = lazy(() =>
 const LittleBeach = lazy(() =>
   import("@/pages/little-beach").then((m) => ({ default: m.LittleBeach })),
 );
+const TicketCheckout = lazy(() =>
+  import("@/pages/ticket-checkout").then((m) => ({ default: m.TicketCheckout })),
+);
 
 const queryClient = new QueryClient();
 
@@ -51,6 +54,7 @@ function Shell() {
             <Route path="/quartos" component={Quartos} />
             <Route path="/cardapio" component={Cardapio} />
             <Route path="/little-beach" component={LittleBeach} />
+            <Route path="/ingressos" component={TicketCheckout} />
             <Route component={NotFound} />
           </Switch>
         </Suspense>
