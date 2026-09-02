@@ -19,6 +19,13 @@
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
   color: #2a6fa8;
 }
+/* Checkout page header: seamlessly matches sand page background with no border/shadow */
+.site-header.is-checkout {
+  background-color: hsl(39 62% 91%);
+  box-shadow: none;
+  border-bottom: none;
+  color: #2a6fa8;
+}
 .site-header.is-internal:not(.is-scrolled) {
   color: #2a6fa8;
 }
