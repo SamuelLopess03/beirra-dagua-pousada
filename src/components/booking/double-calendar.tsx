@@ -76,23 +76,6 @@ export function DoubleCalendar({ selectedDate, onSelectDate, initialDate }: Doub
 
             const dateStr = thisDate.toDateString();
             const isSelected = selectedDate?.toDateString() === dateStr;
-            const dayOfWeek = thisDate.getDay();
-            let price = 250;
-            let priceClass = "price-normal";
-
-            if (dayOfWeek === 2 || dayOfWeek === 3) {
-              // Terça e Quarta: Promoção / Menor preço
-              price = 220;
-              priceClass = "price-low";
-            } else if (dayOfWeek === 0 || dayOfWeek === 6) {
-              // Domingo e Sábado: Finais de semana / Alta temporada
-              price = 295;
-              priceClass = "price-high";
-            } else {
-              // Segunda, Quinta e Sexta: Preço regular
-              price = 250;
-              priceClass = "price-normal";
-            }
 
             if (isPast) {
               return (
@@ -100,6 +83,18 @@ export function DoubleCalendar({ selectedDate, onSelectDate, initialDate }: Doub
                   <span className="ticket-day-number">{day}</span>
                 </div>
               );
+            }
+
+            const dayOfWeek = thisDate.getDay();
+            let price = 250;
+            let priceClass = "price-normal";
+
+            if (dayOfWeek === 2 || dayOfWeek === 3) {
+              price = 220;
+              priceClass = "price-low";
+            } else if (dayOfWeek === 0 || dayOfWeek === 6) {
+              price = 295;
+              priceClass = "price-high";
             }
 
             return (

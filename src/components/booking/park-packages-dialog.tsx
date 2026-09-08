@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ArrowRight, Check, MessageCircle, Ticket, X } from "lucide-react";
 import { parkPackages } from "@/data/park-packages";
 
@@ -19,11 +19,15 @@ export function ParkPackagesDialog({
   const selectedPackage =
     parkPackages.find((item) => item.id === selectedId) ?? parkPackages[0];
   const isFocused = Boolean(initialPackageId);
-  const message = [
-    `Olá! Quero saber como comprar o pacote "${selectedPackage.name}" do Little Beach.`,
-    `Valor de referência: R$ ${selectedPackage.price.toLocaleString("pt-BR")}.`,
-    "Gostaria de confirmar disponibilidade, regras de acesso e formas de pagamento.",
-  ].join("\n");
+  const message = useMemo(
+    () =>
+      [
+        `Olá! Quero saber como comprar o pacote "${selectedPackage.name}" do Little Beach.`,
+        `Valor de referência: R$ ${selectedPackage.price.toLocaleString("pt-BR")}.`,
+        "Gostaria de confirmar disponibilidade, regras de acesso e formas de pagamento.",
+      ].join("\n"),
+    [selectedPackage],
+  );
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
   return (

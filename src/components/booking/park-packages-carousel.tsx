@@ -26,12 +26,12 @@ export function ParkPackageCarousel({
   const viewportRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Array<HTMLElement | null>>([]);
 
-  const move = (direction: number) => {
+  const move = useCallback((direction: number) => {
     setActiveIndex(
       (current) =>
         (current + direction + parkPackages.length) % parkPackages.length,
     );
-  };
+  }, []);
 
   const centerActiveCard = useCallback(() => {
     const viewport = viewportRef.current;

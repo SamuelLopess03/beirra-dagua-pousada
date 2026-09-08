@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Mail, CreditCard, Lock, CheckCircle2, ChevronRight } from "lucide-react";
 
 interface CustomerData {
@@ -38,9 +38,9 @@ export function PersonalDataStep({ onBackToSelection, onCompleteOrder, totalPix 
 
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleChange = (field: keyof CustomerData, value: string) => {
+  const handleChange = useCallback((field: keyof CustomerData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-  };
+  }, []);
 
   const handleNextSubStep = (e: React.FormEvent) => {
     e.preventDefault();

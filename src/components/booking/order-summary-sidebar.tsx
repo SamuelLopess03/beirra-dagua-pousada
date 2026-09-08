@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Check, ArrowRight } from "lucide-react";
 
 interface Ticket {
@@ -34,12 +35,19 @@ export function OrderSummarySidebar({
   onAdvance,
   isPersonalDataStep
 }: OrderSummarySidebarProps) {
-  const selectedItems = allTickets
-    .filter(t => ticketSelections[t.id] !== undefined)
-    .map(t => ({ ...t, qty: ticketSelections[t.id] }));
+  const selectedItems = useMemo(
+    () =>
+      allTickets
+        .filter((t) => ticketSelections[t.id] !== undefined)
+        .map((t) => ({ ...t, qty: ticketSelections[t.id] })),
+    [allTickets, ticketSelections],
+  );
 
-  const totalPix = selectedItems.reduce((sum, t) => sum + t.price * t.qty, 0);
-  const total10x = totalPix * 1.1;
+  const totalPix = useMemo(
+    () => selectedItems.reduce((sum, t) => sum + t.price * t.qty, 0),
+    [selectedItems],
+  );
+  const total10x = useMemo(() => totalPix * 1.1, [totalPix]);
 
   return (
     <aside className="ticket-summary-sidebar">

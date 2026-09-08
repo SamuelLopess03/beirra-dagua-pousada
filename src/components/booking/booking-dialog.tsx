@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ArrowRight, Check, Coffee, Moon, Users, Utensils, X } from "lucide-react";
 import type { Room } from "@/data/rooms";
 
@@ -6,6 +6,22 @@ type BookingDialogProps = {
   onClose: () => void;
   room?: Room;
 };
+
+function formatDate(value: string) {
+  return new Date(`${value}T12:00:00`).toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+}
+
+function formatPrice(value: number) {
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    maximumFractionDigits: 0,
+  }).format(value);
+}
 
 export function BookingDialog({ onClose, room }: BookingDialogProps) {
   const [step, setStep] = useState<"form" | "review" | "sent">("form");
@@ -24,46 +40,49 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
     setDateError("");
     setForm((current) => ({ ...current, [field]: value }));
   };
-  const nights =
-    form.arrival && form.departure
-      ? Math.max(
-          0,
-          Math.round(
-            (new Date(`${form.departure}T12:00:00`).getTime() -
-              new Date(`${form.arrival}T12:00:00`).getTime()) /
-              86400000,
-          ),
-        )
-      : 0;
-  const formatDate = (value: string) =>
-    new Date(`${value}T12:00:00`).toLocaleDateString("pt-BR", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
-  const formatPrice = (value: number) =>
-    new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-      maximumFractionDigits: 0,
-    }).format(value);
+  const nights = useMemo(
+    () =>
+      form.arrival && form.departure
+        ? Math.max(
+            0,
+            Math.round(
+              (new Date(`${form.departure}T12:00:00`).getTime() -
+                new Date(`${form.arrival}T12:00:00`).getTime()) /
+                86400000,
+            ),
+          )
+        : 0,
+    [form.arrival, form.departure],
+  );
 
   const adultsCount = Number(form.adults) || 1;
   const childrenCount = Number(form.children) || 0;
   const totalGuests = adultsCount + childrenCount;
 
-  const mealPricePerPersonDay =
-    form.mealPlan === "meia" ? 80 : form.mealPlan === "completa" ? 150 : 0;
-  const mealPlanName =
-    form.mealPlan === "meia"
-      ? "Meia pensão (R$ 80 / pessoa / dia)"
-      : form.mealPlan === "completa"
-        ? "Pensão completa (R$ 150 / pessoa / dia)"
-        : "Café da manhã incluso (R$ 0)";
+  const mealPricePerPersonDay = useMemo(
+    () =>
+      form.mealPlan === "meia" ? 80 : form.mealPlan === "completa" ? 150 : 0,
+    [form.mealPlan],
+  );
+  const mealPlanName = useMemo(
+    () =>
+      form.mealPlan === "meia"
+        ? "Meia pensão (R$ 80 / pessoa / dia)"
+        : form.mealPlan === "completa"
+          ? "Pensão completa (R$ 150 / pessoa / dia)"
+          : "Café da manhã incluso (R$ 0)",
+    [form.mealPlan],
+  );
 
-  const mealTotal = mealPricePerPersonDay * totalGuests * (nights || 1);
-  const roomTotal = room ? room.price * (nights || 1) : 0;
-  const totalEstimate = roomTotal + (mealPricePerPersonDay > 0 ? mealTotal : 0);
+  const mealTotal = useMemo(
+    () => mealPricePerPersonDay * totalGuests * (nights || 1),
+    [mealPricePerPersonDay, totalGuests, nights],
+  );
+  const roomTotal = useMemo(() => (room ? room.price * (nights || 1) : 0), [room, nights]);
+  const totalEstimate = useMemo(
+    () => roomTotal + (mealPricePerPersonDay > 0 ? mealTotal : 0),
+    [roomTotal, mealPricePerPersonDay, mealTotal],
+  );
 
   return (
     <div

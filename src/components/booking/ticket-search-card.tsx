@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useCallback, useMemo, useState, useRef, useEffect } from "react";
 import {
   CalendarDays,
   Ticket,
@@ -7,6 +7,21 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useLocation } from "wouter";
+
+const monthNames = [
+  "Janeiro",
+  "Fevereiro",
+  "Março",
+  "Abril",
+  "Maio",
+  "Junho",
+  "Julho",
+  "Agosto",
+  "Setembro",
+  "Outubro",
+  "Novembro",
+  "Dezembro",
+];
 
 export function TicketSearchCard() {
   const [, setLocation] = useLocation();
@@ -30,38 +45,35 @@ export function TicketSearchCard() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const monthNames = [
-    "Janeiro",
-    "Fevereiro",
-    "Março",
-    "Abril",
-    "Maio",
-    "Junho",
-    "Julho",
-    "Agosto",
-    "Setembro",
-    "Outubro",
-    "Novembro",
-    "Dezembro",
-  ];
+  const daysInMonth = useMemo(
+    () => new Date(currentYear, currentMonth + 1, 0).getDate(),
+    [currentYear, currentMonth],
+  );
+  const firstDay = useMemo(
+    () => new Date(currentYear, currentMonth, 1).getDay(),
+    [currentYear, currentMonth],
+  );
 
-  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const selectDate = useCallback(
+    (day: number) => {
+      setDate(new Date(currentYear, currentMonth, day));
+      setIsCalendarOpen(false);
+    },
+    [currentYear, currentMonth],
+  );
 
-  const selectDate = (day: number) => {
-    setDate(new Date(currentYear, currentMonth, day));
-    setIsCalendarOpen(false);
-  };
-
-  const nextMonth = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (currentMonth === 11) {
-      setCurrentMonth(0);
-      setCurrentYear(currentYear + 1);
-    } else {
-      setCurrentMonth(currentMonth + 1);
-    }
-  };
+  const nextMonth = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (currentMonth === 11) {
+        setCurrentMonth(0);
+        setCurrentYear(currentYear + 1);
+      } else {
+        setCurrentMonth(currentMonth + 1);
+      }
+    },
+    [currentMonth, currentYear],
+  );
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -70,16 +82,19 @@ export function TicketSearchCard() {
     currentYear < today.getFullYear() ||
     (currentYear === today.getFullYear() && currentMonth <= today.getMonth());
 
-  const prevMonth = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (isCurrentMonthOrPast) return;
-    if (currentMonth === 0) {
-      setCurrentMonth(11);
-      setCurrentYear(currentYear - 1);
-    } else {
-      setCurrentMonth(currentMonth - 1);
-    }
-  };
+  const prevMonth = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (isCurrentMonthOrPast) return;
+      if (currentMonth === 0) {
+        setCurrentMonth(11);
+        setCurrentYear(currentYear - 1);
+      } else {
+        setCurrentMonth(currentMonth - 1);
+      }
+    },
+    [isCurrentMonthOrPast, currentMonth, currentYear],
+  );
 
   return (
     <div className="park-ticket-search page-width">
