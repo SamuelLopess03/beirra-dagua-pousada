@@ -18,7 +18,7 @@ const TICKET_CATEGORIES = [
           "Acesso ilimitado a todas as atrações",
           "Preço exclusivo para compras online",
         ],
-        price: 325.00,
+        price: 325.0,
       },
       {
         id: "infantil",
@@ -28,17 +28,18 @@ const TICKET_CATEGORIES = [
           "Acesso ilimitado a todas as atrações adequadas",
           "Diversão garantida para os pequenos",
         ],
-        price: 250.00,
+        price: 250.0,
       },
       {
         id: "meia",
         name: "Meia-entrada",
-        description: "Estudantes, idosos e professores. Necessária comprovação.",
+        description:
+          "Estudantes, idosos e professores. Necessária comprovação.",
         features: [
           "Acesso ilimitado a todas as atrações",
           "Aproveite com desconto garantido",
         ],
-        price: 162.50,
+        price: 162.5,
       },
     ],
   },
@@ -50,32 +51,35 @@ const TICKET_CATEGORIES = [
       {
         id: "pcd",
         name: "Ingresso Pessoa com Deficiência",
-        description: "Aproveite as atrações do parque aquático com conforto e acesso facilitado.",
+        description:
+          "Aproveite as atrações do parque aquático com conforto e acesso facilitado.",
         features: [
           "Aproveite as atrações do parque aquático com conforto e acesso ilimitado",
           "Ingresso que dá direito a 1 (uma) entrada para pessoas com deficiência física, auditiva e portador de síndrome de down",
         ],
-        price: 162.50,
+        price: 162.5,
       },
       {
         id: "idoso",
         name: "Ingresso Idoso",
-        description: "Aproveite um dia de diversão nas atrações do parque aquático.",
+        description:
+          "Aproveite um dia de diversão nas atrações do parque aquático.",
         features: [
           "Aproveite um dia de diversão nas atrações do parque aquático",
           "Ingresso que dá direito a 1 (uma) entrada para pessoas acima de 60 anos",
         ],
-        price: 162.50,
+        price: 162.5,
       },
       {
         id: "gestante",
         name: "Ingresso Gestante",
-        description: "Aproveite momentos de lazer e relaxamento nas atrações do parque aquático.",
+        description:
+          "Aproveite momentos de lazer e relaxamento nas atrações do parque aquático.",
         features: [
           "Aproveite momentos de lazer e relaxamento nas atrações do parque aquático",
           "Ingresso que dá direito a 1 (uma) entrada para gestantes",
         ],
-        price: 162.50,
+        price: 162.5,
       },
     ],
   },
@@ -92,7 +96,7 @@ const TICKET_CATEGORIES = [
           "Ingresso que dá direito a 2 (duas) entradas no preço de 1,5 dias, a partir do primeiro acesso",
           "Aproveite ao máximo sem pressa",
         ],
-        price: 419.00,
+        price: 419.0,
         badge: "Melhor custo benefício",
       },
       {
@@ -103,7 +107,7 @@ const TICKET_CATEGORIES = [
           "Ingresso que dá direito a 5 entradas para a mesma pessoa no preço de 3 dias",
           "A partir do primeiro acesso no Little Beach",
         ],
-        price: 750.00,
+        price: 750.0,
         badge: "Super economia",
       },
       {
@@ -114,7 +118,7 @@ const TICKET_CATEGORIES = [
           "Ingresso que dá direito a 10 (dez) entradas para a mesma pessoa no preço de 1,5 dias",
           "A partir do primeiro acesso no Little Beach",
         ],
-        price: 510.00,
+        price: 510.0,
         badge: "10 entradas no dia",
       },
     ],
@@ -124,7 +128,10 @@ const TICKET_CATEGORIES = [
 const ALL_TICKETS = TICKET_CATEGORIES.flatMap((c) => c.tickets);
 
 export function TicketCheckout() {
-  const queryParams = useMemo(() => new URLSearchParams(window.location.search), []);
+  const queryParams = useMemo(
+    () => new URLSearchParams(window.location.search),
+    [],
+  );
 
   const initialDate = useMemo(() => {
     const raw = queryParams.get("data");
@@ -142,11 +149,16 @@ export function TicketCheckout() {
   }, [queryParams]);
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(initialDate);
-  const [ticketSelections, setTicketSelections] = useState<Record<string, number>>({});
-  const [checkoutStep, setCheckoutStep] = useState<"selection" | "personal_data">("selection");
+  const [ticketSelections, setTicketSelections] = useState<
+    Record<string, number>
+  >({});
+  const [checkoutStep, setCheckoutStep] = useState<
+    "selection" | "personal_data"
+  >("selection");
 
   const hasTickets = Object.keys(ticketSelections).length > 0;
-  const currentStep: 1 | 2 | 3 = checkoutStep === "personal_data" ? 3 : selectedDate && hasTickets ? 2 : 1;
+  const currentStep: 1 | 2 | 3 =
+    checkoutStep === "personal_data" ? 3 : selectedDate && hasTickets ? 2 : 1;
 
   const handleToggleTicket = (id: string) => {
     setTicketSelections((prev) => {
