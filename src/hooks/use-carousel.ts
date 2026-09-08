@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type UseCarouselOptions = {
   slideCount: number;
@@ -16,8 +16,9 @@ export function useCarousel({
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeSlide, setActiveSlide] = useState(0);
   const pausedRef = useRef(false);
+  const pauseTimeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
 
-  const updateActiveSlide = () => {
+  const updateActiveSlide = useCallback(() => {
     const track = trackRef.current;
     if (!track) return;
     const cards = Array.from(track.children) as HTMLElement[];
@@ -29,27 +30,39 @@ export function useCarousel({
       return currentDistance < closestDistance ? index : closest;
     }, 0);
     setActiveSlide(closestIndex);
-  };
+  }, []);
 
-  const goToSlide = (index: number, userInteraction = false) => {
-    const track = trackRef.current;
-    const card = track?.children[index] as HTMLElement | undefined;
-    if (!track || !card) return;
-    track.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
-    setActiveSlide(index);
-    if (userInteraction) {
-      pausedRef.current = true;
-      setTimeout(() => {
-        pausedRef.current = false;
-      }, pauseDuration);
-    }
-  };
+  const goToSlide = useCallback(
+    (index: number, userInteraction = false) => {
+      const track = trackRef.current;
+      const card = track?.children[index] as HTMLElement | undefined;
+      if (!track || !card) return;
+      track.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+      setActiveSlide(index);
+      if (userInteraction) {
+        pausedRef.current = true;
+        if (pauseTimeoutRef.current) {
+          clearTimeout(pauseTimeoutRef.current);
+        }
+        pauseTimeoutRef.current = setTimeout(() => {
+          pausedRef.current = false;
+        }, pauseDuration);
+      }
+    },
+    [pauseDuration],
+  );
 
-  const goToPrevious = (userInteraction = false) =>
-    goToSlide((activeSlide - 1 + slideCount) % slideCount, userInteraction);
+  const goToPrevious = useCallback(
+    (userInteraction = false) =>
+      goToSlide((activeSlide - 1 + slideCount) % slideCount, userInteraction),
+    [activeSlide, slideCount, goToSlide],
+  );
 
-  const goToNext = (userInteraction = false) =>
-    goToSlide((activeSlide + 1) % slideCount, userInteraction);
+  const goToNext = useCallback(
+    (userInteraction = false) =>
+      goToSlide((activeSlide + 1) % slideCount, userInteraction),
+    [activeSlide, slideCount, goToSlide],
+  );
 
   useEffect(() => {
     if (autoPlayInterval <= 0) return;
@@ -67,6 +80,14 @@ export function useCarousel({
     }, autoPlayInterval);
     return () => clearInterval(interval);
   }, [autoPlayInterval, slideCount]);
+
+  useEffect(() => {
+    return () => {
+      if (pauseTimeoutRef.current) {
+        clearTimeout(pauseTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return {
     trackRef,
