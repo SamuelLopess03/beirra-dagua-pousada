@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, Clock3, Utensils } from "lucide-react";
 import { SectionLabel } from "@/components/layout/section-label";
 import { useBooking } from "@/hooks/booking-context";
@@ -6,29 +6,37 @@ import { menuCategories, menuItems, type MenuCategory } from "@/data/menu";
 import plateImage from "@assets/grilled-meal.png";
 import seafoodImage from "@assets/seafood-platter.png";
 
+const ITEMS_PER_PAGE = 5;
+
 export function Cardapio() {
   const { openBooking } = useBooking();
   const [category, setCategory] = useState<MenuCategory>("Tudo");
   const [page, setPage] = useState(0);
-  const ITEMS_PER_PAGE = 5;
-  const filtered =
-    category === "Tudo"
-      ? menuItems
-      : menuItems.filter((item) => item.category === category);
-  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
-  const visibleItems = filtered.slice(
-    page * ITEMS_PER_PAGE,
-    page * ITEMS_PER_PAGE + ITEMS_PER_PAGE,
+  const filtered = useMemo(
+    () =>
+      category === "Tudo"
+        ? menuItems
+        : menuItems.filter((item) => item.category === category),
+    [category],
+  );
+  const totalPages = useMemo(
+    () => Math.ceil(filtered.length / ITEMS_PER_PAGE),
+    [filtered],
+  );
+  const visibleItems = useMemo(
+    () =>
+      filtered.slice(page * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE + ITEMS_PER_PAGE),
+    [filtered, page],
   );
 
-  const selectCategory = (nextCategory: MenuCategory) => {
+  const selectCategory = useCallback((nextCategory: MenuCategory) => {
     setCategory(nextCategory);
     setPage(0);
-  };
+  }, []);
 
-  const selectPage = (nextPage: number) => {
+  const selectPage = useCallback((nextPage: number) => {
     setPage(Math.max(0, Math.min(nextPage, totalPages - 1)));
-  };
+  }, [totalPages]);
 
   return (
     <main className="inner-page menu-page">

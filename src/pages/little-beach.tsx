@@ -163,9 +163,7 @@ export function LittleBeach() {
           <p>{slide.description}</p>
           <div className="park-progress">
             <span
-              style={{
-                width: `${((activeSlide + 1) / parkSlides.length) * 100}%`,
-              }}
+              style={{ width: `${((activeSlide + 1) / parkSlides.length) * 100}%` }}
             />
           </div>
           <span className="park-swipe-note">

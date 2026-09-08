@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowDownRight,
   ArrowRight,
@@ -109,12 +109,15 @@ function StayVideoCoverflow() {
     return () => window.removeEventListener("keydown", closeWithEscape);
   }, [expandedVideo]);
 
-  const moveVideo = (direction: number) => {
-    setActiveVideo(
-      (current) =>
-        (current + direction + stayVideos.length) % stayVideos.length,
-    );
-  };
+  const moveVideo = useCallback(
+    (direction: number) => {
+      setActiveVideo(
+        (current) =>
+          (current + direction + stayVideos.length) % stayVideos.length,
+      );
+    },
+    [],
+  );
 
   return (
     <div className="stay-video-coverflow" aria-label="Vídeos da pousada">

@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useMemo, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCarousel } from "@/hooks/use-carousel";
 
@@ -38,6 +38,11 @@ export function Carousel<T extends CarouselSlide>({
     goToNext,
   } = useCarousel({ slideCount: slides.length, autoPlayInterval });
 
+  const controlsStyle = useMemo(
+    () => (renderSlideOverlay ? { zIndex: 10 } : undefined),
+    [renderSlideOverlay],
+  );
+
   return (
     <div className={`atmosphere-carousel ${className}`.trim()}>
       <div
@@ -66,7 +71,7 @@ export function Carousel<T extends CarouselSlide>({
       {floatingTag}
       <div
         className="atmosphere-carousel-controls"
-        style={renderSlideOverlay ? { zIndex: 10 } : undefined}
+        style={controlsStyle}
       >
         <div className="atmosphere-carousel-dots" aria-label="Escolher imagem">
           {slides.map((slide, index) => (
