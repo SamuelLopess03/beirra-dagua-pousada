@@ -14,21 +14,18 @@ export function Header() {
   const isCheckout = location === "/ingressos";
 
   useEffect(() => {
-    // On checkout page, never apply scroll behaviour
-    if (isCheckout) {
-      setIsScrolled(false);
-      return;
-    }
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isCheckout]);
+  }, []);
+
+  const showScrolled = isCheckout ? false : isScrolled;
 
   return (
     <header
-      className={`site-header ${isScrolled ? "is-scrolled" : ""} ${isInternal ? "is-internal" : ""} ${isPark ? "is-park" : ""} ${isCheckout ? "is-checkout" : ""}`}
+      className={`site-header ${showScrolled ? "is-scrolled" : ""} ${isInternal ? "is-internal" : ""} ${isPark ? "is-park" : ""} ${isCheckout ? "is-checkout" : ""}`}
       data-testid="header-site"
     >
       <div className="header-inner">
