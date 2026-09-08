@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { roomOptions, type Room } from "@/data/rooms";
 
 const ROOMS_PER_PAGE = 5;
@@ -28,7 +28,7 @@ function getInitialFilters() {
     capacities = [capacityParam];
   }
 
-  let meals: string[] = [];
+  const meals: string[] = [];
   if (meal) {
     meals.push(meal);
   } else if (mealPrice) {
@@ -65,17 +65,17 @@ export function useRoomFilters() {
   );
   const [maxPrice, setMaxPrice] = useState<number>(initialFilters.maxPrice);
 
-  const updateAdults = (val: number) => {
+  const updateAdults = useCallback((val: number) => {
     setAdults(val);
     setPage(0);
-  };
+  }, []);
 
-  const updateChildren = (val: number) => {
+  const updateChildren = useCallback((val: number) => {
     setChildren(val);
     setPage(0);
-  };
+  }, []);
 
-  const updateMealPrice = (val: string) => {
+  const updateMealPrice = useCallback((val: string) => {
     setMealPrice(val);
     if (val === "incluso") {
       setSelectedMeals(["Café da manhã"]);
@@ -87,69 +87,89 @@ export function useRoomFilters() {
       setSelectedMeals([]);
     }
     setPage(0);
-  };
+  }, []);
 
-  const toggleCapacity = (cap: number) => {
+  const toggleCapacity = useCallback((cap: number) => {
     setSelectedCapacities((prev) =>
       prev.includes(cap) ? prev.filter((c) => c !== cap) : [...prev, cap],
     );
     setPage(0);
-  };
+  }, []);
 
-  const toggleMeal = (meal: string) => {
+  const toggleMeal = useCallback((meal: string) => {
     setSelectedMeals((prev) =>
       prev.includes(meal) ? prev.filter((m) => m !== meal) : [...prev, meal],
     );
     setPage(0);
-  };
+  }, []);
 
-  const updateSearch = (query: string) => {
+  const updateSearch = useCallback((query: string) => {
     setSearchQuery(query);
     setPage(0);
-  };
+  }, []);
 
-  const updateMaxPrice = (price: number) => {
+  const updateMaxPrice = useCallback((price: number) => {
     setMaxPrice(price);
     setPage(0);
-  };
+  }, []);
 
   const totalGuests = adults + children;
 
-  const filteredRooms = roomOptions.filter((room) => {
-    const matchesSearch = room.name
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
+  const filteredRooms = useMemo(() => {
+    return roomOptions.filter((room) => {
+      const matchesSearch = room.name
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
 
-    const matchesGuestCount = totalGuests === 0 || room.capacity >= totalGuests;
+      const matchesGuestCount =
+        totalGuests === 0 || room.capacity >= totalGuests;
 
-    const matchesCapacity =
-      selectedCapacities.length === 0 ||
-      selectedCapacities.includes(room.capacity);
+      const matchesCapacity =
+        selectedCapacities.length === 0 ||
+        selectedCapacities.includes(room.capacity);
 
-    const matchesMeal =
-      selectedMeals.length === 0 ||
-      selectedMeals.some((meal) => room.meals.includes(meal));
+      const matchesMeal =
+        selectedMeals.length === 0 ||
+        selectedMeals.some((meal) => room.meals.includes(meal));
 
-    const matchesPrice = room.price <= maxPrice;
+      const matchesPrice = room.price <= maxPrice;
 
-    return matchesSearch && matchesGuestCount && matchesCapacity && matchesMeal && matchesPrice;
-  });
+      return (
+        matchesSearch &&
+        matchesGuestCount &&
+        matchesCapacity &&
+        matchesMeal &&
+        matchesPrice
+      );
+    });
+  }, [searchQuery, totalGuests, selectedCapacities, selectedMeals, maxPrice]);
 
-  const totalPages = Math.ceil(filteredRooms.length / ROOMS_PER_PAGE);
-  const visibleRooms: Room[] = filteredRooms.slice(
-    page * ROOMS_PER_PAGE,
-    page * ROOMS_PER_PAGE + ROOMS_PER_PAGE,
+  const totalPages = useMemo(
+    () => Math.ceil(filteredRooms.length / ROOMS_PER_PAGE),
+    [filteredRooms],
   );
 
-  const activeFilterCount =
-    (adults > 0 ? 1 : 0) +
-    (children > 0 ? 1 : 0) +
-    selectedCapacities.length +
-    selectedMeals.length +
-    (mealPrice ? 1 : 0) +
-    (maxPrice < MAX_PRICE ? 1 : 0);
+  const visibleRooms: Room[] = useMemo(
+    () =>
+      filteredRooms.slice(
+        page * ROOMS_PER_PAGE,
+        page * ROOMS_PER_PAGE + ROOMS_PER_PAGE,
+      ),
+    [filteredRooms, page],
+  );
 
-  const clearFilters = () => {
+  const activeFilterCount = useMemo(
+    () =>
+      (adults > 0 ? 1 : 0) +
+      (children > 0 ? 1 : 0) +
+      selectedCapacities.length +
+      selectedMeals.length +
+      (mealPrice ? 1 : 0) +
+      (maxPrice < MAX_PRICE ? 1 : 0),
+    [adults, children, selectedCapacities, selectedMeals, mealPrice, maxPrice],
+  );
+
+  const clearFilters = useCallback(() => {
     setSearchQuery("");
     setAdults(0);
     setChildren(0);
@@ -158,7 +178,7 @@ export function useRoomFilters() {
     setSelectedMeals([]);
     setMaxPrice(MAX_PRICE);
     setPage(0);
-  };
+  }, []);
 
   return {
     page,

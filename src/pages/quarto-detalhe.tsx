@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import { ArrowRight, Check, MessageCircle } from "lucide-react";
 import { SectionLabel } from "@/components/layout/section-label";
@@ -11,14 +11,21 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
   const room = roomOptions.find((item) => item.slug === slug);
   const [selectedImage, setSelectedImage] = useState(0);
 
+  const whatsappMessage = useMemo(
+    () =>
+      room
+        ? [
+            `Olá! Tenho interesse no ${room.name}.`,
+            `Gostaria de saber mais sobre disponibilidade, valores e detalhes da acomodação.`,
+            `Capacidade: ${room.capacity} ${room.capacity === 1 ? "hóspede" : "hóspedes"}.`,
+            `Inclui: ${room.meals.join(" e ")}.`,
+          ].join("\n")
+        : "",
+    [room],
+  );
+
   if (!room) return <NotFound />;
 
-  const whatsappMessage = [
-    `Olá! Tenho interesse no ${room.name}.`,
-    `Gostaria de saber mais sobre disponibilidade, valores e detalhes da acomodação.`,
-    `Capacidade: ${room.capacity} ${room.capacity === 1 ? "hóspede" : "hóspedes"}.`,
-    `Inclui: ${room.meals.join(" e ")}.`,
-  ].join("\n");
   const whatsappUrl = `https://wa.me/5588981338506?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
