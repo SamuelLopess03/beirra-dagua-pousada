@@ -112,13 +112,18 @@
 }
 .home-room-search-card {
   display: grid;
-  grid-template-columns: 1.15fr minmax(95px, 0.6fr) minmax(95px, 0.6fr) minmax(145px, 0.95fr) minmax(115px, 0.75fr) auto;
+  grid-template-columns: 1fr minmax(116px, 0.65fr) minmax(
+      116px,
+      0.65fr
+    ) minmax(190px, 1.1fr) minmax(125px, 0.75fr) auto;
   align-items: end;
-  gap: 14px;
-  padding: 24px 26px 22px;
-  background: #f5edda;
-  border-top: 4px solid #ff8c2a;
-  box-shadow: 0 12px 30px rgba(42, 111, 168, 0.13);
+  gap: 16px;
+  padding: 26px 28px 24px;
+  background: rgba(239, 229, 204, 0.97);
+  border: 1px solid rgba(42, 111, 168, 0.18);
+  border-top: 3px solid #ff8c2a;
+  border-radius: 18px;
+  box-shadow: 0 18px 38px rgba(42, 75, 76, 0.14);
 }
 .home-room-search-intro {
   padding-right: 8px;
@@ -148,55 +153,251 @@
   display: flex;
   min-width: 0;
   flex-direction: column;
-  gap: 8px;
+  gap: 9px;
 }
-.home-room-search-field > span {
+.home-room-search-field > span,
+.home-room-search-field > label {
   color: #2a6fa8;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-family: var(--app-font-mono);
-  font-size: 9px;
+  font-size: 10px;
+  font-weight: 600;
 }
 .home-room-search-field select {
   width: 100%;
-  min-height: 43px;
-  padding: 0 29px 0 12px;
+  min-height: 48px;
+  padding: 0 28px 0 12px;
   border: 1px solid #d8cab5;
-  border-radius: 0;
+  border-radius: 11px;
   outline: none;
-  background: #efe5cc;
-  color: #5e6e69;
-  font-size: 12px;
-  cursor: pointer;
-}
-.home-room-search-field select:focus {
-  border-color: #ff8c2a;
-}
-.home-room-search-number {
-  width: 100%;
-  min-height: 43px;
-  padding: 0 12px;
-  border: 1px solid #d8cab5;
-  border-radius: 0;
-  outline: none;
-  background: #efe5cc;
+  background-color: #efe5cc;
   color: #5e6e69;
   font-size: 13px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+.home-room-search-field select:focus {
+  background-color: #efe5cc;
+  border-color: #ff8c2a;
+  box-shadow: none;
+}
+.home-room-search-field select:hover {
+  border-color: #ff8c2a;
+}
+.home-room-search-stepper {
+  align-items: center;
+  background: #efe5cc;
+  border: 1px solid #d8cab5;
+  border-radius: 11px;
+  display: flex;
+  min-height: 48px;
+  overflow: hidden;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+.home-room-search-stepper:focus-within {
+  border-color: #ff8c2a;
+  box-shadow: none;
+}
+.home-room-search-stepper-button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  color: #2d7180;
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 30px;
+  height: 30px;
+  justify-content: center;
+  margin: 0 6px;
+  padding: 0;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+.home-room-search-stepper-button:hover {
+  background: #e3f1ed;
+  color: #1d5d6d;
+  transform: scale(1.05);
+}
+.home-room-search-stepper-button:active {
+  transform: scale(0.96);
+}
+.home-room-search-number {
+  appearance: textfield;
+  background: transparent;
+  border: 0;
+  border-left: 1px solid rgba(157, 133, 101, 0.18);
+  border-radius: 0;
+  border-right: 1px solid rgba(157, 133, 101, 0.18);
+  color: #5e6e69;
+  flex: 1;
+  font-family: var(--app-font-serif);
+  font-size: 18px;
   font-weight: 600;
+  height: 46px;
+  min-width: 0;
+  outline: none;
+  padding: 0 4px;
   text-align: center;
-  -moz-appearance: textfield;
 }
 .home-room-search-number::-webkit-inner-spin-button,
 .home-room-search-number::-webkit-outer-spin-button {
-  opacity: 1;
-}
-.home-room-search-number:focus {
-  border-color: #ff8c2a;
+  appearance: none;
+  margin: 0;
 }
 .home-room-search-submit {
-  min-height: 43px;
+  align-items: center;
+  background: #d77b39;
+  border: 0;
+  border-radius: 11px;
+  box-shadow: 0 7px 15px rgba(174, 91, 42, 0.2);
+  display: inline-flex;
+  gap: 10px;
+  justify-content: center;
+  min-height: 48px;
+  padding-inline: 19px;
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+.home-room-search-submit:hover {
+  background: #bd682f;
+  box-shadow: 0 10px 20px rgba(174, 91, 42, 0.27);
+  transform: translateY(-1px);
+}
+.home-room-search-submit:active {
+  transform: translateY(0);
+}
+/* Keep the original number-input rules scoped away from the custom stepper. */
+.home-room-search-number:focus {
+  border-color: transparent;
+}
+.home-room-search-number {
+  width: 100%;
   white-space: nowrap;
-  padding-inline: 17px;
+}
+
+/* ===== Lodging search: square editorial geometry ===== */
+.home-room-search-card {
+  border-radius: 0;
+}
+
+.home-room-search-field select,
+.home-room-search-stepper,
+.home-room-search-submit {
+  border-radius: 0;
+}
+
+.home-room-search-stepper-button {
+  background: #edf3ee;
+  border: 1px solid rgba(45, 113, 128, 0.16);
+  border-radius: 0;
+  color: #28697a;
+  margin: 0 5px;
+}
+
+.home-room-search-stepper-button:hover {
+  background: #2d7180;
+  border-color: #2d7180;
+  color: #fffdf7;
+  transform: none;
+}
+
+.home-room-search-stepper-button:focus-visible {
+  outline: 2px solid #d98343;
+  outline-offset: 2px;
+}
+
+.home-room-search-stepper-button:active {
+  background: #1e5968;
+  border-color: #1e5968;
+  color: #fffdf7;
+  transform: none;
+}
+
+.home-room-search-submit {
+  background: #2a6fa8;
+  box-shadow: 0 7px 15px rgba(42, 111, 168, 0.25);
+  color: #f5edda;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-shadow: none;
+}
+
+.home-room-search-submit:hover,
+.home-room-search-submit:focus-visible {
+  background: #3d8fd1;
+  box-shadow: 0 10px 20px rgba(42, 111, 168, 0.32);
+  color: #ffffff;
+}
+
+/* ===== Minimal, independent stepper controls ===== */
+.home-room-search-stepper {
+  border-color: #d8cab5;
+  box-shadow: none;
+}
+
+.home-room-search-stepper:focus-within {
+  border-color: #ff8c2a;
+  box-shadow: none;
+}
+
+.home-room-search-stepper-button,
+.home-room-search-stepper-button:hover,
+.home-room-search-stepper-button:active {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+  transform: none;
+}
+
+.home-room-search-stepper-button {
+  background: #e8d9be;
+  color: #2a6fa8;
+  flex-basis: 36px;
+  height: 100%;
+  min-height: 46px;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.home-room-search-stepper-button:hover {
+  background: #d4c9a8;
+  color: #2a6fa8;
+}
+
+.home-room-search-stepper-button:active {
+  background: #d4c9a8;
+  color: #2a6fa8;
+}
+
+.home-room-search-stepper-button:focus {
+  outline: none;
+}
+
+.home-room-search-stepper-button:focus-visible {
+  background: #d4c9a8;
+  box-shadow: inset 0 0 0 2px #ff8c2a;
+  outline: none;
+}
+
+.home-room-search-number {
+  border-left: 0;
+  border-right: 0;
 }
 
 /* ===== Home: intro ===== */

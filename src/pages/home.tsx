@@ -1,11 +1,13 @@
 import { Link, useLocation } from "wouter";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowDownRight,
   ArrowRight,
   ChevronLeft,
   ChevronRight,
   Maximize2,
+  Minus,
+  Plus,
   Search,
   Sparkles,
   Waves,
@@ -109,15 +111,12 @@ function StayVideoCoverflow() {
     return () => window.removeEventListener("keydown", closeWithEscape);
   }, [expandedVideo]);
 
-  const moveVideo = useCallback(
-    (direction: number) => {
-      setActiveVideo(
-        (current) =>
-          (current + direction + stayVideos.length) % stayVideos.length,
-      );
-    },
-    [],
-  );
+  const moveVideo = (direction: number) => {
+    setActiveVideo(
+      (current) =>
+        (current + direction + stayVideos.length) % stayVideos.length,
+    );
+  };
 
   return (
     <div className="stay-video-coverflow" aria-label="Vídeos da pousada">
@@ -251,6 +250,19 @@ function HomeRoomSearch() {
   const [mealPrice, setMealPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("2000");
 
+  const updateGuestCount = (
+    value: string,
+    onChange: (nextValue: string) => void,
+    direction: -1 | 1,
+    minimum: number,
+  ) => {
+    const currentValue = Number(value);
+    const nextValue = Number.isFinite(currentValue)
+      ? currentValue + direction
+      : minimum;
+    onChange(String(Math.max(minimum, Math.min(20, nextValue))));
+  };
+
   const searchRooms = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const params = new URLSearchParams();
@@ -277,41 +289,88 @@ function HomeRoomSearch() {
           </h2>
           <p>Escolha o que combina com os seus dias por aqui.</p>
         </div>
-        <label className="home-room-search-field">
-          <span>Adultos</span>
-          <input
-            type="number"
-            min="1"
-            max="20"
-            value={adults}
-            onChange={(event) => setAdults(event.target.value)}
-            aria-label="Quantidade de adultos"
-            className="home-room-search-number"
-          />
-        </label>
-        <label className="home-room-search-field">
-          <span>Crianças</span>
-          <input
-            type="number"
-            min="0"
-            max="20"
-            value={children}
-            onChange={(event) => setChildren(event.target.value)}
-            aria-label="Quantidade de crianças"
-            className="home-room-search-number"
-          />
-        </label>
+        <div className="home-room-search-field">
+          <label htmlFor="home-adults-input">Adultos</label>
+          <div className="home-room-search-stepper">
+            <button
+              type="button"
+              className="home-room-search-stepper-button"
+              onClick={() => updateGuestCount(adults, setAdults, -1, 1)}
+              aria-label="Diminuir quantidade de adultos"
+            >
+              <Minus size={14} />
+            </button>
+            <input
+              id="home-adults-input"
+              type="number"
+              min="1"
+              max="20"
+              value={adults}
+              onChange={(event) => setAdults(event.target.value)}
+              aria-label="Quantidade de adultos"
+              className="home-room-search-number"
+            />
+            <button
+              type="button"
+              className="home-room-search-stepper-button"
+              onClick={() => updateGuestCount(adults, setAdults, 1, 1)}
+              aria-label="Aumentar quantidade de adultos"
+            >
+              <Plus size={14} />
+            </button>
+          </div>
+        </div>
+        <div className="home-room-search-field">
+          <label htmlFor="home-children-input">Crianças</label>
+          <div className="home-room-search-stepper">
+            <button
+              type="button"
+              className="home-room-search-stepper-button"
+              onClick={() => updateGuestCount(children, setChildren, -1, 0)}
+              aria-label="Diminuir quantidade de crianças"
+            >
+              <Minus size={14} />
+            </button>
+            <input
+              id="home-children-input"
+              type="number"
+              min="0"
+              max="20"
+              value={children}
+              onChange={(event) => setChildren(event.target.value)}
+              aria-label="Quantidade de crianças"
+              className="home-room-search-number"
+            />
+            <button
+              type="button"
+              className="home-room-search-stepper-button"
+              onClick={() => updateGuestCount(children, setChildren, 1, 0)}
+              aria-label="Aumentar quantidade de crianças"
+            >
+              <Plus size={14} />
+            </button>
+          </div>
+        </div>
         <label className="home-room-search-field">
           <span>Valor da Refeição</span>
           <select
             value={mealPrice}
             onChange={(event) => setMealPrice(event.target.value)}
             aria-label="Valor ou tipo de refeição"
+            title={
+              mealPrice === "incluso"
+                ? "Café incluso (R$ 0)"
+                : mealPrice === "80"
+                  ? "Meia pensão (R$ 80 / pessoa)"
+                  : mealPrice === "150"
+                    ? "Pensão completa (R$ 150 / pessoa)"
+                    : "Qualquer opção"
+            }
           >
             <option value="">Qualquer opção</option>
-            <option value="incluso">Café incluso (R$ 0)</option>
-            <option value="80">Meia pensão (R$ 80 / pessoa)</option>
-            <option value="150">Pensão completa (R$ 150 / pessoa)</option>
+            <option value="incluso">Café incluso</option>
+            <option value="80">Meia pensão · R$ 80</option>
+            <option value="150">Pensão completa · R$ 150</option>
           </select>
         </label>
         <label className="home-room-search-field">
