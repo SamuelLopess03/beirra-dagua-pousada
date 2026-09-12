@@ -43,30 +43,20 @@ export const foodSlides: FoodSlide[] = [
 
 export type ParkSlide = {
   image: string;
-  label: string;
-  title: string;
-  description: string;
+  key: "attraction01" | "attraction02" | "attraction03";
 };
 
 export const parkSlides: ParkSlide[] = [
   {
     image: parkSlideOne,
-    label: "Atração 01",
-    title: "Desça no grito.",
-    description:
-      "Curvas, velocidade e água gelada para transformar qualquer tarde em história.",
+    key: "attraction01",
   },
   {
     image: parkSlideTwo,
-    label: "Atração 02",
-    title: "Mergulhe na aventura.",
-    description: "Espaço para brincar, relaxar e deixar o sol fazer o resto.",
+    key: "attraction02",
   },
   {
     image: parkSlideThree,
-    label: "Atração 03",
-    title: "Vá mais longe.",
-    description:
-      "A lagoa é o ponto de encontro entre a pousada e a sua próxima lembrança.",
+    key: "attraction03",
   },
 ];

@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 import { Menu, X, ShieldCheck, Zap, Sparkles } from "lucide-react";
 import { navItems } from "@/data/navigation";
+import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import logo from "@assets/logo-little-beach.jpg";
 
 export function Header() {
+  const { t } = useTranslation();
   const [location] = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -41,15 +44,15 @@ export function Header() {
           <div className="checkout-header-benefits">
             <div className="checkout-benefit-item">
               <ShieldCheck size={16} />
-              <span>Desconto para pagamento via Pix</span>
+              <span>{t("common.checkoutBenefits.pix")}</span>
             </div>
             <div className="checkout-benefit-item">
               <Zap size={16} />
-              <span>Economize comprando pelo site</span>
+              <span>{t("common.checkoutBenefits.site")}</span>
             </div>
             <div className="checkout-benefit-item">
               <Sparkles size={16} />
-              <span>Parcele em até 10x sem juros</span>
+              <span>{t("common.checkoutBenefits.installments")}</span>
             </div>
           </div>
         )}
@@ -61,18 +64,19 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 className={`nav-link ${item.special ? "nav-link-special" : ""} ${location === item.href ? "is-active" : ""}`}
-                data-testid={`link-nav-${item.label.toLowerCase().replaceAll(" ", "-")}`}
+                data-testid={`link-nav-${item.href === "/" ? "home" : item.href.replace(/\//g, "")}`}
               >
-                {item.label}
+                {t(item.labelKey)}
               </Link>
             ))}
           </nav>
         )}
+        <LanguageSwitcher />
         {!isCheckout && (
           <button
             className="menu-toggle"
             onClick={() => setMobileOpen((value) => !value)}
-            aria-label="Abrir menu"
+            aria-label={t("common.menu.open")}
             data-testid="button-menu-mobile"
           >
             {mobileOpen ? <X size={23} /> : <Menu size={23} />}
@@ -87,9 +91,9 @@ export function Header() {
               href={item.href}
               onClick={() => setMobileOpen(false)}
               className={`mobile-nav-link ${item.special ? "mobile-nav-link-special" : ""} ${location === item.href ? "is-active" : ""}`}
-              data-testid={`link-mobile-${item.label.toLowerCase().replaceAll(" ", "-")}`}
+              data-testid={`link-mobile-${item.href === "/" ? "home" : item.href.replace(/\//g, "")}`}
             >
-              {item.label}
+              {t(item.labelKey)}
             </Link>
           ))}
         </div>

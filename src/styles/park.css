@@ -63,7 +63,7 @@
   letter-spacing: -0.055em;
   margin: 28px 0;
   /* Sombra laranja forte */
-  text-shadow: 5px 6px 0 #ff8c2a;
+  text-shadow: 2px 3px 0 #ff8c2a;
 }
 .park-hero h1 em {
   color: #ffad49;
@@ -651,6 +651,9 @@
 }
 .park-cta h2 {
   margin-bottom: 0;
+}
+.park-cta h2 em {
+  color: #fff;
 }
 
 /* ===== Pacotes de acesso ===== */

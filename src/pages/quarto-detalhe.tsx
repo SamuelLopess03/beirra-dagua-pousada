@@ -1,27 +1,35 @@
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import { ArrowRight, Check, MessageCircle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { SectionLabel } from "@/components/layout/section-label";
 import { useBooking } from "@/hooks/booking-context";
 import NotFound from "@/pages/not-found";
 import { roomOptions } from "@/data/rooms";
 
 export function QuartoDetalhe({ slug }: { slug: string }) {
+  const { t } = useTranslation();
   const { openBooking } = useBooking();
   const room = roomOptions.find((item) => item.slug === slug);
   const [selectedImage, setSelectedImage] = useState(0);
+
+  const roomName = room ? t(`rooms.items.${room.slug}.name`) : "";
+  const roomType = room ? t(`rooms.items.${room.slug}.type`) : "";
+  const roomDesc = room ? t(`rooms.items.${room.slug}.desc`) : "";
+  const mealLabels = room ? room.mealKeys.map((key) => t(`mealPlans.${key}`)) : [];
+  const detailLabels = room ? room.detailKeys.map((key) => t(`roomDetails.${key}`)) : [];
 
   const whatsappMessage = useMemo(
     () =>
       room
         ? [
-            `Olá! Tenho interesse no ${room.name}.`,
-            `Gostaria de saber mais sobre disponibilidade, valores e detalhes da acomodação.`,
-            `Capacidade: ${room.capacity} ${room.capacity === 1 ? "hóspede" : "hóspedes"}.`,
-            `Inclui: ${room.meals.join(" e ")}.`,
+            t("quartoDetalhe.whatsappInterest", { name: roomName }),
+            t("quartoDetalhe.whatsappDetails"),
+            t("quartoDetalhe.whatsappCapacity", { count: room.capacity }),
+            t("quartoDetalhe.whatsappIncludes", { meals: mealLabels.join(" e ") }),
           ].join("\n")
         : "",
-    [room],
+    [room, roomName, mealLabels, t],
   );
 
   if (!room) return <NotFound />;
@@ -32,17 +40,17 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
     <main className="room-detail-page inner-page">
       <section className="room-detail-header page-width">
         <Link href="/quartos" className="room-back-link">
-          <ArrowRight size={15} /> Voltar para hospedagem
+          <ArrowRight size={15} /> {t("quartoDetalhe.back")}
         </Link>
         <div className="room-detail-heading">
           <div>
             <SectionLabel>
-              Beira D’Água · {room.type.toLowerCase()}
+              Beira D’Água · {roomType.toLowerCase()}
             </SectionLabel>
-            <h1>{room.name}</h1>
-            <p>{room.desc}</p>
+            <h1>{roomName}</h1>
+            <p>{roomDesc}</p>
           </div>
-          <span className="room-detail-index">01 · acomodação</span>
+          <span className="room-detail-index">{t("quartoDetalhe.indexLabel")}</span>
         </div>
       </section>
 
@@ -50,7 +58,7 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
         <div className="room-detail-main-image">
           <img
             src={room.gallery[selectedImage]}
-            alt={`${room.name} - vista ${selectedImage + 1}`}
+            alt={`${roomName} - vista ${selectedImage + 1}`}
           />
           <span>
             {String(selectedImage + 1).padStart(2, "0")} /{" "}
@@ -59,7 +67,7 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
         </div>
         <div
           className="room-detail-thumbs"
-          aria-label={`Galeria de ${room.name}`}
+          aria-label={t("quartoDetalhe.galleryAriaLabel", { name: roomName })}
         >
           {room.gallery.map((image, index) => (
             <button
@@ -67,7 +75,7 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
               key={image}
               className={selectedImage === index ? "is-active" : ""}
               onClick={() => setSelectedImage(index)}
-              aria-label={`Ver imagem ${index + 1}`}
+              aria-label={t("quartoDetalhe.viewImage", { number: index + 1 })}
               aria-current={selectedImage === index ? "true" : undefined}
             >
               <img src={image} alt="" />
@@ -78,29 +86,27 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
 
       <section className="room-detail-info page-width">
         <div className="room-detail-copy">
-          <span className="side-note">Um canto para ficar</span>
-          <h2>O essencial bem pensado para viver devagar.</h2>
+          <span className="side-note">{t("quartoDetalhe.sideNote")}</span>
+          <h2>{t("quartoDetalhe.title")}</h2>
           <p>
-            Luz natural, silêncio e espaço para deixar o tempo correr no seu
-            ritmo. Cada detalhe foi escolhido para que a estadia seja simples,
-            confortável e perto da natureza.
+            {t("quartoDetalhe.copy")}
           </p>
         </div>
         <div className="room-detail-features">
           <div className="room-detail-feature">
-            <span>Capacidade</span>
+            <span>{t("quartoDetalhe.capacity")}</span>
             <strong>
-              {room.capacity} {room.capacity === 1 ? "hóspede" : "hóspedes"}
+              {t("quartoDetalhe.guest", { count: room.capacity })}
             </strong>
           </div>
           <div className="room-detail-feature">
-            <span>Inclui</span>
-            <strong>{room.meals.join(" · ")}</strong>
+            <span>{t("quartoDetalhe.includes")}</span>
+            <strong>{mealLabels.join(" · ")}</strong>
           </div>
           <div className="room-detail-feature room-detail-feature-wide">
-            <span>A acomodação oferece</span>
+            <span>{t("quartoDetalhe.offers")}</span>
             <div>
-              {room.details.map((detail) => (
+              {detailLabels.map((detail) => (
                 <span key={detail}>
                   <Check size={14} /> {detail}
                 </span>
@@ -112,7 +118,7 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
               onClick={() => openBooking(room)}
               data-testid="button-reservar-quarto"
             >
-              Reservar esta hospedagem <ArrowRight size={16} />
+              {t("quartoDetalhe.reserve")} <ArrowRight size={16} />
             </button>
           </div>
         </div>
@@ -121,8 +127,8 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
       <section className="room-detail-booking">
         <div className="page-width room-detail-booking-inner">
           <div>
-            <span className="section-label">Consulte sua estadia</span>
-            <h2>Seu lugar perto da água.</h2>
+            <span className="section-label">{t("quartoDetalhe.consultStay")}</span>
+            <h2>{t("quartoDetalhe.consultTitle")}</h2>
           </div>
           <a
             href={whatsappUrl}
@@ -131,7 +137,7 @@ export function QuartoDetalhe({ slug }: { slug: string }) {
             className="button button-dark"
             data-testid="button-whatsapp-quarto"
           >
-            Falar sobre esta hospedagem <MessageCircle size={16} />
+            {t("quartoDetalhe.talkAboutStay")} <MessageCircle size={16} />
           </a>
         </div>
       </section>

@@ -2,102 +2,93 @@ import galleryOne from "@assets/room-blue-bed.png";
 import galleryTwo from "@assets/room-white-bed.png";
 import heroImage from "@assets/pousada-aerea.jpeg";
 
+export type MealPlanKey = "breakfast" | "halfBoard" | "fullBoard";
+export type RoomDetailKey =
+  | "queenBed"
+  | "kingBed"
+  | "privateBalcony"
+  | "largeBalcony"
+  | "hammockBalcony"
+  | "gardenView"
+  | "lagoonView"
+  | "livingRoom"
+  | "twoRooms"
+  | "lagoonAccess"
+  | "supportKitchen";
+
 export type Room = {
   slug: string;
-  name: string;
-  type: string;
-  desc: string;
-  image: string;
-  details: string[];
-  gallery: string[];
+  capacity: 2 | 4;
   price: number;
-  capacity: number;
-  meals: string[];
+  image: string;
+  gallery: string[];
+  detailKeys: RoomDetailKey[];
+  mealKeys: MealPlanKey[];
 };
 
 export const roomOptions: Room[] = [
   {
     slug: "quarto-brisa",
-    name: "Quarto Brisa",
-    type: "Para dois",
-    desc: "Intimidade, luz natural e a sensação gostosa de acordar perto da água.",
     image: galleryOne,
-    details: ["Cama queen", "Varanda privativa", "Vista para o jardim"],
+    detailKeys: ["queenBed", "privateBalcony", "gardenView"],
     gallery: [galleryOne, heroImage, galleryTwo],
     price: 450,
     capacity: 2,
-    meals: ["Café da manhã"],
+    mealKeys: ["breakfast"],
   },
   {
     slug: "suite-mare",
-    name: "Suíte Maré",
-    type: "Para dois",
-    desc: "Mais espaço para esticar o tempo, com um canto de descanso só seu.",
     image: galleryTwo,
-    details: ["Cama queen", "Sala de estar", "Vista para a lagoa"],
+    detailKeys: ["queenBed", "livingRoom", "lagoonView"],
     gallery: [galleryTwo, galleryOne, heroImage],
     price: 850,
     capacity: 2,
-    meals: ["Café da manhã", "Meia pensão"],
+    mealKeys: ["breakfast", "halfBoard"],
   },
   {
     slug: "casa-areia",
-    name: "Casa Areia",
-    type: "Para até quatro",
-    desc: "Um jeito inteiro de viver a pousada, com espaço para reunir quem você gosta.",
     image: heroImage,
-    details: ["Dois ambientes", "Varanda ampla", "Acesso à lagoa"],
+    detailKeys: ["twoRooms", "largeBalcony", "lagoonAccess"],
     gallery: [heroImage, galleryTwo, galleryOne],
     price: 1200,
     capacity: 4,
-    meals: ["Café da manhã", "Pensão completa"],
+    mealKeys: ["breakfast", "fullBoard"],
   },
   {
     slug: "quarto-vento",
-    name: "Quarto Vento",
-    type: "Para dois",
-    desc: "Um quarto claro e silencioso para desacelerar sem pressa.",
     image: galleryOne,
-    details: ["Cama queen", "Rede na varanda", "Vista para o jardim"],
+    detailKeys: ["queenBed", "hammockBalcony", "gardenView"],
     gallery: [galleryOne, galleryTwo, heroImage],
     price: 560,
     capacity: 2,
-    meals: ["Café da manhã", "Meia pensão"],
+    mealKeys: ["breakfast", "halfBoard"],
   },
   {
     slug: "suite-sol",
-    name: "Suíte Sol",
-    type: "Para dois",
-    desc: "Luz entrando devagar, espaço para ficar e uma varanda só sua.",
     image: galleryTwo,
-    details: ["Cama king", "Varanda privativa", "Vista para a lagoa"],
+    detailKeys: ["kingBed", "privateBalcony", "lagoonView"],
     gallery: [galleryTwo, heroImage, galleryOne],
     price: 980,
     capacity: 2,
-    meals: ["Café da manhã", "Pensão completa"],
+    mealKeys: ["breakfast", "fullBoard"],
   },
   {
     slug: "casa-mar",
-    name: "Casa Mar",
-    type: "Para até quatro",
-    desc: "Um espaço generoso para compartilhar dias leves perto da água.",
     image: heroImage,
-    details: ["Dois ambientes", "Cozinha de apoio", "Acesso à lagoa"],
+    detailKeys: ["twoRooms", "supportKitchen", "lagoonAccess"],
     gallery: [heroImage, galleryOne, galleryTwo],
     price: 1450,
     capacity: 4,
-    meals: ["Café da manhã", "Meia pensão", "Pensão completa"],
+    mealKeys: ["breakfast", "halfBoard", "fullBoard"],
   },
   {
     slug: "bangalo-lua",
-    name: "Bangalo Lua",
-    type: "Para dois",
-    desc: "Um refúgio reservado para ouvir a água e deixar o tempo passar.",
     image: galleryTwo,
-    details: ["Cama queen", "Sala de estar", "Varanda privativa"],
+    detailKeys: ["queenBed", "livingRoom", "privateBalcony"],
     gallery: [galleryTwo, galleryOne, heroImage],
     price: 1750,
     capacity: 2,
-    meals: ["Café da manhã", "Pensão completa"],
+    mealKeys: ["breakfast", "fullBoard"],
   },
 ];
+

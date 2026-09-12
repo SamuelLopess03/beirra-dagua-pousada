@@ -1,0 +1,567 @@
+{
+  "common": {
+    "nav": {
+      "home": "Home",
+      "stays": "Stays",
+      "gastronomy": "Dining",
+      "littleBeach": "Little Beach"
+    },
+    "language": {
+      "label": "Language",
+      "pt": "Portuguese",
+      "en": "English",
+      "es": "Spanish"
+    },
+    "menu": {
+      "open": "Open menu"
+    },
+    "checkoutBenefits": {
+      "pix": "Discount for Pix payment",
+      "site": "Save by booking on the website",
+      "installments": "Pay in up to 10 interest-free installments"
+    },
+    "footer": {
+      "tagline": "A small pause",
+      "taglineHighlight": "by the water.",
+      "exploreHeading": "Explore",
+      "contactHeading": "Talk to us",
+      "reserveButton": "Ask about a stay",
+      "rhythmHeading": "Find your rhythm",
+      "location": "Brazilian coastline",
+      "schedule": "Every day, at your own pace",
+      "copyright": "Beira D’Água Little Beach",
+      "madeFor": "Made for days that stay with you"
+    }
+  },
+  "home": {
+    "hero": {
+      "overline": "Beira D’Água Little Beach",
+      "overlineSuffix": "a Brazilian retreat",
+      "titleLine1": "Let the day",
+      "titleLine2": "grow light.",
+      "copy": "A small inn, a clear-water lagoon, and just enough time to hear what really matters again.",
+      "planStay": "Plan my stay",
+      "knowPousada": "discover the inn",
+      "caption": "Calm water, good shade, a table set."
+    },
+    "search": {
+      "kicker": "Your stay",
+      "titleLine1": "Find your",
+      "titleHighlight": "corner.",
+      "subtitle": "Choose what fits your days here.",
+      "adults": "Adults",
+      "children": "Children",
+      "mealPrice": "Meal Plan",
+      "maxPrice": "Max Price",
+      "mealAny": "Any option",
+      "mealIncluded": "Breakfast included",
+      "mealHalf": "Half board · $80",
+      "mealFull": "Full board · $150",
+      "mealIncludedTitle": "Breakfast included ($0)",
+      "mealHalfTitle": "Half board ($80 / person)",
+      "mealFullTitle": "Full board ($150 / person)",
+      "maxPriceUnlimited": "No limit",
+      "maxPrice600": "Up to $600",
+      "maxPrice900": "Up to $900",
+      "maxPrice1200": "Up to $1,200",
+      "maxPrice1800": "Up to $1,800",
+      "submit": "Search stays",
+      "decreaseAdults": "Decrease number of adults",
+      "increaseAdults": "Increase number of adults",
+      "decreaseChildren": "Decrease number of children",
+      "increaseChildren": "Increase number of children",
+      "adultsLabel": "Number of adults",
+      "childrenLabel": "Number of children",
+      "mealAriaLabel": "Meal plan or price",
+      "maxPriceAriaLabel": "Maximum price per night",
+      "ariaLabel": "Search stays"
+    },
+    "intro": {
+      "number": "01",
+      "kicker": "the experience",
+      "titleLine1": "Some places",
+      "titleHighlight": "slow you down.",
+      "copy": "Between the embracing green and the inviting water, Beira D’Água is made for those who want to break the routine. Here, every room opens onto a piece of nature, every meal tastes of the coast, and every afternoon can last as long as you want.",
+      "link": "Feel the place"
+    },
+    "stayVideos": {
+      "ariaLabel": "Inn videos",
+      "watchClosely": "Take a closer look",
+      "select": "Select",
+      "previous": "Previous video",
+      "next": "Next video",
+      "selectVideo": "Select video",
+      "video": "Video",
+      "watch": "Watch video",
+      "expand": "Expand video",
+      "expanded": "Expanded video",
+      "close": "Close expanded video",
+      "video1Title": "The lagoon at dawn",
+      "video2Title": "Days by the water",
+      "video3Title": "The rhythm of the inn"
+    },
+    "atmosphere": {
+      "sectionLabel": "02 · the rhythm here",
+      "ariaLabel": "Images of the inn’s rhythm",
+      "hint": "swipe to see more",
+      "photoTag": "our backyard",
+      "titleLine1": "Mornings by the water.",
+      "titleLine2": "Afternoons in the shade.",
+      "copy": "There’s no mandatory schedule, no early alarm clock. There’s a long shower, a book open on the porch, and the chance to do nothing — with great pleasure.",
+      "item1Title": "Water close by",
+      "item1Copy": "For a swim before breakfast.",
+      "item2Title": "A room that welcomes you",
+      "item2Copy": "Simple, beautiful, and full of quiet.",
+      "item3Title": "A table with memory",
+      "item3Copy": "Fresh flavors from our coast."
+    },
+    "roomsTeaser": {
+      "sectionLabel": "03 · sleep well",
+      "titleLine1": "A break",
+      "titleHighlight": "your way.",
+      "seeAll": "See all stays",
+      "roomType": "Room · for two",
+      "titleFeatureLine1": "A window to",
+      "titleFeatureHighlight": "the green.",
+      "copy": "A quiet corner to wake up without a rush. A comfortable bed, natural light, and nature as company.",
+      "cta": "Discover the stays"
+    },
+    "food": {
+      "sectionLabel": "04 · dining here",
+      "ariaLabel": "Images of the inn’s cuisine",
+      "titleLine1": "The sea also",
+      "titleHighlight": "reaches the table.",
+      "copy": "Recipes that respect the ingredient and the place. Fish, seafood, the warmth of the grill, and that urge to stay a little longer after lunch.",
+      "cta": "Discover the dining"
+    },
+    "park": {
+      "kicker": "05 · adventure mode",
+      "titleLine1": "A dive",
+      "titleHighlight": "off the beaten path.",
+      "copy": "When it’s time to play, Little Beach takes over: water slides, a lagoon, and a whole day to laugh without watching the clock.",
+      "cta": "Discover Little Beach",
+      "stampLine1": "water",
+      "stampLine2": "+ adventure"
+    },
+    "gallery": {
+      "sectionLabel": "06 · to remember",
+      "titleLine1": "Leave with",
+      "titleHighlight": "water in your eyes.",
+      "copy": "Or come back soon. Some views feel just like home.",
+      "detailLine1": "simple days",
+      "detailLine2": "are big days"
+    }
+  },
+  "location": {
+    "eyebrow": "07 · How to get there",
+    "title": "Where to find",
+    "highlight": "Beira D'água.",
+    "description": "Just steps from the sea, in a quiet corner of the coast.",
+    "address": "Praia de Barrinha - Aranau",
+    "city": "Acaraú - CE",
+    "zip": "ZIP 62580-000",
+    "cta": "View map"
+  },
+  "contact": {
+    "kicker": "Talk to us",
+    "titleLine1": "Still have",
+    "titleHighlight": "a question?",
+    "copy": "Your trip starts with the first question. Talk to our team and find the perfect itinerary for your family — no commitment, with the patience of people who love what they do.",
+    "whatsappCta": "Chat on WhatsApp",
+    "whatsappDefaultMessage": "Hi! I'd like to know more about the inn.",
+    "whatsappGreeting": "Hi! My name is {{name}} ({{email}}).\n\nWhat I want to experience: {{message}}",
+    "formTitle": "Let's talk?",
+    "formSubtitle": "We reply within 24 hours.",
+    "nameLabel": "Your name",
+    "namePlaceholder": "What should we call you?",
+    "emailLabel": "Your email",
+    "emailPlaceholder": "you@email.com",
+    "messageLabel": "What do you want to experience?",
+    "messagePlaceholder": "Tell us what you're looking for...",
+    "submit": "Send message",
+    "errors": {
+      "nameRequired": "Tell us what to call you.",
+      "nameTooLong": "Name too long (max. 100 characters).",
+      "emailInvalid": "Enter a valid email.",
+      "emailTooLong": "Email too long (max. 255 characters).",
+      "messageRequired": "Tell us a bit about what you're looking for.",
+      "messageTooLong": "Message too long (max. 1000 characters).",
+      "generic": "Please review the form fields."
+    }
+  },
+  "quartosPage": {
+    "eyebrow": "Beira D’Água · stay",
+    "titleLine1": "Choose your",
+    "titleHighlight": "corner of calm.",
+    "heroCopy": "Rooms with the essentials thought through, surrounded by greenery and the good sound of water.",
+    "heroNoteNumber": "02",
+    "heroNoteLine1": "rooms to",
+    "heroNoteLine2": "live slowly",
+    "guideKicker": "Rooms",
+    "guideCopy": "There's no such thing as a better room. There's the room that fits how you want to rest. Browse our corners and send us your preference — prices are quoted case by case.",
+    "resultsKicker": "Your stay",
+    "resultsFound_one": "{{count}} room found",
+    "resultsFound_other": "{{count}} rooms found",
+    "resultsNote": "Prices per night · check availability",
+    "closeFilters": "Close filters",
+    "openFilters": "Filter rooms",
+    "filtersAriaLabel": "Room filters",
+    "filterHeading": "Filter",
+    "clear": "Clear",
+    "searchPlaceholder": "Search room...",
+    "adultsLabel": "Adults:",
+    "adultsAriaLabel": "Filter by number of adults",
+    "noFilter": "No filter",
+    "childrenLabel": "Children:",
+    "childrenAriaLabel": "Filter by number of children",
+    "mealPriceLabel": "Meal Plan:",
+    "mealPriceAriaLabel": "Filter by meal plan or price",
+    "mealAny": "Any option",
+    "mealIncluded": "Breakfast included ($0)",
+    "mealHalf": "Half board ($80 / person)",
+    "mealFull": "Full board ($150 / person)",
+    "capacityLabel": "Room Capacity:",
+    "capacity2": "Up to 2 people",
+    "capacity4": "Up to 4 people",
+    "mealsIncludedLabel": "Meals included:",
+    "maxPriceLabel": "Max price per night ($ {{price}}):",
+    "emptyState": "No rooms found with these filters. Try clearing them.",
+    "accommodationLabel": "room {{number}}",
+    "fromPrice": "From",
+    "perNight": "/ night",
+    "included": "included",
+    "consult": "Inquire",
+    "previousRooms": "Previous rooms",
+    "nextRooms": "Next rooms",
+    "pageLabel": "Page {{number}}",
+    "stillInDoubt": "Still in doubt?",
+    "bottomTitleLine1": "Talk to us.",
+    "bottomTitleHighlight": "It's simpler that way.",
+    "sendPreference": "Send my preference",
+    "previousImage": "Previous image of {{name}}",
+    "nextImage": "Next image of {{name}}",
+    "galleryAriaLabel": "Room images",
+    "viewImage": "View image {{number}}"
+  },
+  "roomDetails": {
+    "queenBed": "Queen bed",
+    "kingBed": "King bed",
+    "privateBalcony": "Private balcony",
+    "largeBalcony": "Large balcony",
+    "hammockBalcony": "Hammock on the balcony",
+    "gardenView": "Garden view",
+    "lagoonView": "Lagoon view",
+    "livingRoom": "Living room",
+    "twoRooms": "Two rooms",
+    "lagoonAccess": "Lagoon access",
+    "supportKitchen": "Support kitchen"
+  },
+  "mealPlans": {
+    "breakfast": "Breakfast",
+    "halfBoard": "Half board",
+    "fullBoard": "Full board"
+  },
+  "rooms": {
+    "items": {
+      "quarto-brisa": {
+        "name": "Breeze Room",
+        "type": "For two",
+        "desc": "Privacy, natural light, and the pleasant feeling of waking up near the water."
+      },
+      "suite-mare": {
+        "name": "Tide Suite",
+        "type": "For two",
+        "desc": "More room to stretch out time, with a resting corner all your own."
+      },
+      "casa-areia": {
+        "name": "Sand House",
+        "type": "For up to four",
+        "desc": "A whole new way to experience the inn, with room to gather those you love."
+      },
+      "quarto-vento": {
+        "name": "Wind Room",
+        "type": "For two",
+        "desc": "A bright, quiet room to slow down without a rush."
+      },
+      "suite-sol": {
+        "name": "Sun Suite",
+        "type": "For two",
+        "desc": "Light coming in slowly, room to stay, and a balcony all your own."
+      },
+      "casa-mar": {
+        "name": "Sea House",
+        "type": "For up to four",
+        "desc": "A generous space to share light days near the water."
+      },
+      "bangalo-lua": {
+        "name": "Moon Bungalow",
+        "type": "For two",
+        "desc": "A private retreat to listen to the water and let time pass."
+      }
+    }
+  },
+  "quartoDetalhe": {
+    "back": "Back to rooms",
+    "indexLabel": "01 · room",
+    "galleryAriaLabel": "{{name}} gallery",
+    "viewImage": "View image {{number}}",
+    "sideNote": "A corner to stay",
+    "title": "The essentials, thought through, to live slowly.",
+    "copy": "Natural light, quiet, and space to let time flow at your own pace. Every detail was chosen to make the stay simple, comfortable, and close to nature.",
+    "capacity": "Capacity",
+    "guest_one": "{{count}} guest",
+    "guest_other": "{{count}} guests",
+    "includes": "Includes",
+    "offers": "The room offers",
+    "reserve": "Book this room",
+    "consultStay": "Ask about your stay",
+    "consultTitle": "Your place by the water.",
+    "talkAboutStay": "Ask about this room",
+    "whatsappInterest": "Hi! I'm interested in the {{name}}.",
+    "whatsappDetails": "I'd like to know more about availability, prices, and room details.",
+    "whatsappCapacity_one": "Capacity: {{count}} guest.",
+    "whatsappCapacity_other": "Capacity: {{count}} guests.",
+    "whatsappIncludes": "Includes: {{meals}}."
+  },
+  "cardapioPage": {
+    "eyebrow": "Beira D’Água · at the table",
+    "titleLine1": "Eating is part",
+    "titleHighlight": "of the rest.",
+    "heroCopy": "A coastal cuisine, made to keep up with the changing sky and a conversation that lingers.",
+    "heroImageAlt": "Fish served at the table by the water",
+    "heroImageLabel": "05 · taste of the sea",
+    "introKicker": "Beira D’Água Kitchen",
+    "introTitleLine1": "Fresh, local,",
+    "introTitleHighlight": "no ceremony.",
+    "introCopy": "We cook with what we find beautiful and fresh. The cuisine follows the season, the catch, and the mood of the day — so here you'll find a direction of flavors, not a rigid list.",
+    "serviceLine1": "Lunch and late afternoon",
+    "serviceLine2": "Check availability on the day",
+    "categoriesAriaLabel": "Dining categories",
+    "paginationAriaLabel": "Dining pagination",
+    "previousDishes": "Previous dishes",
+    "nextDishes": "Next dishes",
+    "pageLabel": "Page {{number}}",
+    "resultsRange": "{{from}}–{{to}} of {{total}} dishes",
+    "emptyTitle": "This tide is still empty.",
+    "emptyCopy": "Choose another category to keep discovering the house table.",
+    "breakImageAlt": "Selection of grilled seafood",
+    "breakKicker": "From our kitchen",
+    "breakTitleLine1": "The best seasoning",
+    "breakTitleHighlight": "is staying.",
+    "sendPreference": "Send my preference"
+  },
+  "menuCategories": {
+    "all": "All",
+    "starters": "To start",
+    "sea": "From the sea",
+    "grill": "From the grill",
+    "drinks": "To drink"
+  },
+  "menu": {
+    "items": {
+      "tapioca-crisp": {
+        "name": "Tapioca crisp",
+        "description": "With cured fish, fresh herbs, and a citrus touch.",
+        "mark": "house special"
+      },
+      "fish-of-the-day": {
+        "name": "Fish of the day",
+        "description": "Grilled, with sides that change with the tide."
+      },
+      "tide-moqueca": {
+        "name": "Tide moqueca",
+        "description": "Coconut milk, mild palm oil, and fresh herbs."
+      },
+      "seafood-rice": {
+        "name": "Seafood rice",
+        "description": "Shrimp, octopus, and our kitchen's slow-cooked broth."
+      },
+      "coastal-grill": {
+        "name": "Coastal grill",
+        "description": "Whole fish, shrimp, and octopus to share.",
+        "mark": "to share"
+      },
+      "grilled-vegetables": {
+        "name": "Grilled vegetables",
+        "description": "Pumpkin, onion, and greens with a cashew sauce."
+      },
+      "cashew-coconut-water": {
+        "name": "Cashew with coconut water",
+        "description": "Fresh, cold, and unhurried."
+      },
+      "house-caipirinha": {
+        "name": "House caipirinha",
+        "description": "Seasonal fruit, cachaça, and a bit of sun."
+      }
+    }
+  },
+  "littleBeachPage": {
+    "kicker": "A day of pure adventure",
+    "titleLine1": "Sun, water",
+    "titleHighlight": "and thrills.",
+    "heroCopy": "Beira D’Água's Little Beach was made for those who like to laugh out loud, get soaked, and go back to the inn with a new story.",
+    "exploreAttractions": "Explore attractions",
+    "viewPackages": "View access packages",
+    "modeLine1": "Adventure",
+    "modeLine2": "mode",
+    "modeOn": "ON",
+    "introKicker": "The park is yours",
+    "introTitleLine1": "Get ready for",
+    "introTitleHighlight": "the best dive.",
+    "introCopy": "Between one slide and another, there's shade, breeze, and the kind of joy that needs no caption. Choose your pace — the adventure starts with the next wave.",
+    "stickerLine1": "More",
+    "stickerLine2": "energy",
+    "stickerLine3": "per m²",
+    "previousAttraction": "Previous attraction",
+    "nextAttraction": "Next attraction",
+    "viewAttraction": "View {{label}}",
+    "swipeNote": "Switch attraction",
+    "whyJoinKicker": "Why join in?",
+    "whyJoinTitleLine1": "A whole park",
+    "whyJoinTitleHighlight": "of good reasons.",
+    "highlight1Title": "Water all around",
+    "highlight1Copy": "To run, float, slide, or just get your feet wet.",
+    "highlight2Title": "Just the right thrill",
+    "highlight2Copy": "Attractions for those who want to speed up and those who prefer to take it slow.",
+    "highlight3Title": "Everyone plays",
+    "highlight3Copy": "A space designed to bring together families, friends, and lots of laughter.",
+    "nextSplashKicker": "Your next splash",
+    "nextSplashTitleLine1": "The day calls for",
+    "nextSplashTitleHighlight": "a bit more.",
+    "consultStay": "Ask about a stay"
+  },
+  "parkAttractions": {
+    "attraction01Label": "Attraction 01",
+    "attraction01Title": "Scream on the way down.",
+    "attraction01Description": "Curves, speed, and cold water turn any afternoon into a story.",
+    "attraction02Label": "Attraction 02",
+    "attraction02Title": "Dive into adventure.",
+    "attraction02Description": "Room to play, relax, and let the sun do the rest.",
+    "attraction03Label": "Attraction 03",
+    "attraction03Title": "Go further.",
+    "attraction03Description": "The lagoon is where the inn meets your next memory."
+  },
+  "parkPackagesUi": {
+    "carouselAriaLabel": "Little Beach access packages",
+    "chooseAccess": "Choose your access",
+    "littleBeachBadge": "Little Beach",
+    "viewDetails": "View package details",
+    "previousPackage": "Previous package",
+    "nextPackage": "Next package",
+    "viewPackage": "View package {{number}}",
+    "browseHint": "Browse the packages",
+    "accessKicker": "Little Beach Access",
+    "yourPackageLine1": "Your package",
+    "yourPackageHighlight": "in detail.",
+    "chooseAdventureLine1": "Choose your",
+    "chooseAdventureHighlight": "adventure package.",
+    "focusedIntro": "Everything you need to know about the {{name}}. Talk to our team to confirm availability.",
+    "generalIntro": "Check the access options, compare what each one includes, and talk to our team to confirm availability.",
+    "includedLabel": "What's included",
+    "chosenPackage": "Chosen package",
+    "closePackages": "Close packages",
+    "continueWhatsapp": "Continue on WhatsApp",
+    "whatsappInterest": "Hi! I want to know how to buy the \"{{name}}\" package for Little Beach.",
+    "whatsappPrice": "Reference price: $ {{price}}.",
+    "whatsappConfirm": "I'd like to confirm availability, access rules, and payment methods."
+  },
+  "parkPackages": {
+    "items": {
+      "day-pass": {
+        "name": "Day Pass",
+        "description": "A whole day to enjoy Little Beach.",
+        "note": "per person",
+        "benefits": [
+          "Park access during the day",
+          "Use of leisure areas",
+          "Valid Monday through Sunday"
+        ]
+      },
+      "family": {
+        "name": "Family in the Water",
+        "description": "Fun to bring everyone together, unhurried.",
+        "note": "up to 4 people",
+        "benefits": [
+          "Park access during the day",
+          "Reserved family area",
+          "One non-alcoholic drink per person"
+        ]
+      },
+      "sunset": {
+        "name": "Late Afternoon",
+        "description": "The day's last wave, calm and under a beautiful sky.",
+        "note": "per person",
+        "benefits": [
+          "Access from 3pm",
+          "Use of leisure areas",
+          "Experience subject to availability"
+        ]
+      }
+    }
+  },
+  "ticketSearch": {
+    "chooseDateLabel": "Choose the date of your park visit",
+    "placeholder": "When do you want to enjoy the park?",
+    "buyTickets": "Buy Tickets",
+    "months": [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ],
+    "weekdays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+  },
+  "bookingDialog": {
+    "close": "Close",
+    "kickerWithRoom": "Book your room",
+    "kickerWithoutRoom": "Tailor-made booking",
+    "titleWithRoomLine1": "Your rest",
+    "titleWithRoomHighlight": "starts here.",
+    "titleWithoutRoomLine1": "Let's find",
+    "titleWithoutRoomHighlight": "your place.",
+    "introWithRoom": "Choose your dates and review all the details before confirming your booking.",
+    "introWithoutRoom": "Tell us how you imagine your days here. We'll reply calmly, with details and the best options.",
+    "fromPricePerNight": "From {{price}} / night",
+    "arrival": "Arrival",
+    "departure": "Departure",
+    "dateError": "Departure must be after arrival.",
+    "adults": "Adults",
+    "children": "Children",
+    "mealPlanLabel": "Meal Plan and Price",
+    "mealIncludedOption": "Breakfast included ($0)",
+    "mealHalfOption": "Half board ($80 / person per day)",
+    "mealFullOption": "Full board ($150 / person per day)",
+    "mealIncludedName": "Breakfast included ($0)",
+    "mealHalfName": "Half board ($80 / person / day)",
+    "mealFullName": "Full board ($150 / person / day)",
+    "name": "Your name",
+    "namePlaceholder": "What should we call you?",
+    "email": "Email",
+    "emailPlaceholder": "you@email.com",
+    "notePreference": "Any preference?",
+    "optional": "(optional)",
+    "notePlaceholder": "A special occasion, questions, or dietary restrictions...",
+    "reviewBooking": "Review booking",
+    "confirmKicker": "Review your booking",
+    "confirmTitleLine1": "All set",
+    "confirmTitleHighlight": "with your plan?",
+    "stay": "Stay",
+    "nightsLabel": "Nights",
+    "night_one": "{{count}} night",
+    "night_other": "{{count}} nights",
+    "guests": "Guests",
+    "adult_one": "{{count}} adult",
+    "adult_other": "{{count}} adults",
+    "childSuffix_one": ", {{count}} child",
+    "childSuffix_other": ", {{count}} children",
+    "meals": "Meals",
+    "roomIncludes": "Room includes",
+    "totalEstimate": "Estimated total",
+    "confirmationSentTo": "Confirmation will be sent to {{email}}.",
+    "editData": "Edit details",
+    "confirmBooking": "Confirm booking",
+    "receivedKicker": "Request received",
+    "seeYouSoon": "See you soon,",
+    "traveler": "traveler",
+    "receivedCopy": "We've received your preference. We'll take care of the details and get back to you at the email provided.",
+    "backToSite": "Back to the site"
+  }
+}

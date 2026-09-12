@@ -1,0 +1,567 @@
+{
+  "common": {
+    "nav": {
+      "home": "Inicio",
+      "stays": "Hospedaje",
+      "gastronomy": "Gastronomía",
+      "littleBeach": "Little Beach"
+    },
+    "language": {
+      "label": "Idioma",
+      "pt": "Portugués",
+      "en": "Inglés",
+      "es": "Español"
+    },
+    "menu": {
+      "open": "Abrir menú"
+    },
+    "checkoutBenefits": {
+      "pix": "Descuento pagando con Pix",
+      "site": "Ahorra reservando en el sitio",
+      "installments": "Paga hasta en 10 cuotas sin intereses"
+    },
+    "footer": {
+      "tagline": "Una pequeña pausa",
+      "taglineHighlight": "junto al agua.",
+      "exploreHeading": "Explorar",
+      "contactHeading": "Habla con nosotros",
+      "reserveButton": "Consultar estadía",
+      "rhythmHeading": "Encuentra tu ritmo",
+      "location": "Litoral brasileño",
+      "schedule": "Todos los días, sin prisa",
+      "copyright": "Beira D’Água Little Beach",
+      "madeFor": "Hecho para días que perduran"
+    }
+  },
+  "home": {
+    "hero": {
+      "overline": "Beira D’Água Little Beach",
+      "overlineSuffix": "un refugio brasileño",
+      "titleLine1": "Deja que el día",
+      "titleLine2": "se sienta ligero.",
+      "copy": "Una posada pequeña, una laguna transparente y el tiempo justo para volver a escuchar lo que importa.",
+      "planStay": "Planear mi estadía",
+      "knowPousada": "conocer la posada",
+      "caption": "Agua tranquila, buena sombra, mesa servida."
+    },
+    "search": {
+      "kicker": "Tu estadía",
+      "titleLine1": "Encuentra tu",
+      "titleHighlight": "rincón.",
+      "subtitle": "Elige lo que combine con tus días aquí.",
+      "adults": "Adultos",
+      "children": "Niños",
+      "mealPrice": "Plan de comidas",
+      "maxPrice": "Precio máximo",
+      "mealAny": "Cualquier opción",
+      "mealIncluded": "Desayuno incluido",
+      "mealHalf": "Media pensión · R$ 80",
+      "mealFull": "Pensión completa · R$ 150",
+      "mealIncludedTitle": "Desayuno incluido (R$ 0)",
+      "mealHalfTitle": "Media pensión (R$ 80 / persona)",
+      "mealFullTitle": "Pensión completa (R$ 150 / persona)",
+      "maxPriceUnlimited": "Sin límite",
+      "maxPrice600": "Hasta R$ 600",
+      "maxPrice900": "Hasta R$ 900",
+      "maxPrice1200": "Hasta R$ 1.200",
+      "maxPrice1800": "Hasta R$ 1.800",
+      "submit": "Buscar hospedaje",
+      "decreaseAdults": "Disminuir cantidad de adultos",
+      "increaseAdults": "Aumentar cantidad de adultos",
+      "decreaseChildren": "Disminuir cantidad de niños",
+      "increaseChildren": "Aumentar cantidad de niños",
+      "adultsLabel": "Cantidad de adultos",
+      "childrenLabel": "Cantidad de niños",
+      "mealAriaLabel": "Valor o tipo de comida",
+      "maxPriceAriaLabel": "Precio máximo por noche",
+      "ariaLabel": "Buscar hospedaje"
+    },
+    "intro": {
+      "number": "01",
+      "kicker": "la experiencia",
+      "titleLine1": "Hay lugares que",
+      "titleHighlight": "nos hacen desacelerar.",
+      "copy": "Entre el verde que abraza y el agua que invita, Beira D’Água está hecha para quienes quieren salir del automático. Aquí, cada habitación se abre a un pedazo de naturaleza, cada comida llega con sabor a litoral y cada tarde puede durar lo que quieras.",
+      "link": "Siente el lugar"
+    },
+    "stayVideos": {
+      "ariaLabel": "Videos de la posada",
+      "watchClosely": "Mira de cerca",
+      "select": "Seleccionar",
+      "previous": "Video anterior",
+      "next": "Video siguiente",
+      "selectVideo": "Seleccionar video",
+      "video": "Video",
+      "watch": "Ver video",
+      "expand": "Ampliar video",
+      "expanded": "Video ampliado",
+      "close": "Cerrar video ampliado",
+      "video1Title": "La laguna al amanecer",
+      "video2Title": "Días junto al agua",
+      "video3Title": "El ritmo de la posada"
+    },
+    "atmosphere": {
+      "sectionLabel": "02 · el ritmo de aquí",
+      "ariaLabel": "Imágenes del ritmo de la posada",
+      "hint": "desliza para ver más",
+      "photoTag": "nuestro patio",
+      "titleLine1": "Mañanas de agua.",
+      "titleLine2": "Tardes de sombra.",
+      "copy": "No hay programación obligatoria, ni despertador temprano. Hay una ducha larga, un libro abierto en la terraza y la oportunidad de no hacer nada — con mucho gusto.",
+      "item1Title": "Agua cerca",
+      "item1Copy": "Para nadar antes del desayuno.",
+      "item2Title": "Una habitación que acoge",
+      "item2Copy": "Simple, bonita y llena de silencio.",
+      "item3Title": "Una mesa con memoria",
+      "item3Copy": "Sabores frescos de nuestro litoral."
+    },
+    "roomsTeaser": {
+      "sectionLabel": "03 · dormir bien",
+      "titleLine1": "Una pausa",
+      "titleHighlight": "a tu manera.",
+      "seeAll": "Ver todo el hospedaje",
+      "roomType": "Habitación · para dos",
+      "titleFeatureLine1": "Una ventana hacia",
+      "titleFeatureHighlight": "el verde.",
+      "copy": "Un rincón silencioso para despertar sin prisa. Cama cómoda, luz natural y la naturaleza como compañía.",
+      "cta": "Conocer el hospedaje"
+    },
+    "food": {
+      "sectionLabel": "04 · comer por aquí",
+      "ariaLabel": "Imágenes de la gastronomía de la posada",
+      "titleLine1": "El mar también",
+      "titleHighlight": "llega a la mesa.",
+      "copy": "Recetas que respetan el ingrediente y el lugar. Pescados, mariscos, calor de brasa y esas ganas de quedarse un poco más después del almuerzo.",
+      "cta": "Conocer la gastronomía"
+    },
+    "park": {
+      "kicker": "05 · modo aventura",
+      "titleLine1": "Una zambullida",
+      "titleHighlight": "fuera de lo común.",
+      "copy": "Cuando las ganas son de jugar, Little Beach entra en escena: toboganes, laguna y un día entero para reír sin mirar el reloj.",
+      "cta": "Conocer Little Beach",
+      "stampLine1": "agua",
+      "stampLine2": "+ aventura"
+    },
+    "gallery": {
+      "sectionLabel": "06 · para recordar",
+      "titleLine1": "Vete con",
+      "titleHighlight": "agua en los ojos.",
+      "copy": "O vuelve pronto. Algunos paisajes los reconocemos como el hogar.",
+      "detailLine1": "los días simples",
+      "detailLine2": "son grandes días"
+    }
+  },
+  "location": {
+    "eyebrow": "07 · Cómo llegar",
+    "title": "Dónde encontrar",
+    "highlight": "Beira D'água.",
+    "description": "A pocos pasos del mar, en un rincón tranquilo del litoral.",
+    "address": "Praia de Barrinha - Aranau",
+    "city": "Acaraú - CE",
+    "zip": "CP 62580-000",
+    "cta": "Ver mapa"
+  },
+  "contact": {
+    "kicker": "Habla con nosotros",
+    "titleLine1": "¿Todavía tienes",
+    "titleHighlight": "alguna duda?",
+    "copy": "Tu viaje comienza con la primera pregunta. Habla con nuestro equipo y descubre el itinerario perfecto para tu familia — sin compromiso, con la paciencia de quienes aman lo que hacen.",
+    "whatsappCta": "Hablar por WhatsApp",
+    "whatsappDefaultMessage": "¡Hola! Me gustaría saber más sobre la posada.",
+    "whatsappGreeting": "¡Hola! Mi nombre es {{name}} ({{email}}).\n\nLo que quiero vivir: {{message}}",
+    "formTitle": "¿Conversamos?",
+    "formSubtitle": "Respondemos en un plazo de 24 horas.",
+    "nameLabel": "Tu nombre",
+    "namePlaceholder": "¿Cómo podemos llamarte?",
+    "emailLabel": "Tu correo",
+    "emailPlaceholder": "tu@correo.com",
+    "messageLabel": "¿Qué quieres vivir?",
+    "messagePlaceholder": "Cuéntanos qué buscas...",
+    "submit": "Enviar mensaje",
+    "errors": {
+      "nameRequired": "Cuéntanos cómo llamarte.",
+      "nameTooLong": "Nombre muy largo (máx. 100 caracteres).",
+      "emailInvalid": "Indica un correo válido.",
+      "emailTooLong": "Correo muy largo (máx. 255 caracteres).",
+      "messageRequired": "Cuéntanos un poco qué buscas.",
+      "messageTooLong": "Mensaje muy largo (máx. 1000 caracteres).",
+      "generic": "Revisa los campos del formulario."
+    }
+  },
+  "quartosPage": {
+    "eyebrow": "Beira D’Água · quedarse",
+    "titleLine1": "Elige tu",
+    "titleHighlight": "rincón de calma.",
+    "heroCopy": "Hospedajes con lo esencial bien pensado, rodeados de verde y del buen sonido del agua.",
+    "heroNoteNumber": "02",
+    "heroNoteLine1": "hospedajes para",
+    "heroNoteLine2": "vivir despacio",
+    "guideKicker": "Alojamientos",
+    "guideCopy": "No existe el mejor alojamiento. Existe el que combina con la forma en que quieres descansar. Mira nuestros rincones y envíanos tu preferencia — los valores se consultan caso por caso.",
+    "resultsKicker": "Tu estadía",
+    "resultsFound_one": "{{count}} hospedaje encontrado",
+    "resultsFound_other": "{{count}} hospedajes encontrados",
+    "resultsNote": "Valores por noche · consulta disponibilidad",
+    "closeFilters": "Cerrar filtros",
+    "openFilters": "Filtrar hospedajes",
+    "filtersAriaLabel": "Filtros de hospedaje",
+    "filterHeading": "Filtrar",
+    "clear": "Limpiar",
+    "searchPlaceholder": "Buscar alojamiento...",
+    "adultsLabel": "Adultos:",
+    "adultsAriaLabel": "Filtrar por cantidad de adultos",
+    "noFilter": "Sin filtro",
+    "childrenLabel": "Niños:",
+    "childrenAriaLabel": "Filtrar por cantidad de niños",
+    "mealPriceLabel": "Plan de comidas:",
+    "mealPriceAriaLabel": "Filtrar por valor o tipo de comida",
+    "mealAny": "Cualquier opción",
+    "mealIncluded": "Desayuno incluido (R$ 0)",
+    "mealHalf": "Media pensión (R$ 80 / persona)",
+    "mealFull": "Pensión completa (R$ 150 / persona)",
+    "capacityLabel": "Capacidad del alojamiento:",
+    "capacity2": "Hasta 2 personas",
+    "capacity4": "Hasta 4 personas",
+    "mealsIncludedLabel": "Comidas incluidas:",
+    "maxPriceLabel": "Precio máx por noche (R$ {{price}}):",
+    "emptyState": "No se encontraron hospedajes con esos criterios. Intenta limpiar los filtros.",
+    "accommodationLabel": "alojamiento {{number}}",
+    "fromPrice": "Desde",
+    "perNight": "/ noche",
+    "included": "incluido",
+    "consult": "Consultar",
+    "previousRooms": "Hospedajes anteriores",
+    "nextRooms": "Próximos hospedajes",
+    "pageLabel": "Página {{number}}",
+    "stillInDoubt": "¿Todavía tienes dudas?",
+    "bottomTitleLine1": "Habla con nosotros.",
+    "bottomTitleHighlight": "Así es más simple.",
+    "sendPreference": "Enviar mi preferencia",
+    "previousImage": "Imagen anterior de {{name}}",
+    "nextImage": "Siguiente imagen de {{name}}",
+    "galleryAriaLabel": "Imágenes del alojamiento",
+    "viewImage": "Ver imagen {{number}}"
+  },
+  "roomDetails": {
+    "queenBed": "Cama queen",
+    "kingBed": "Cama king",
+    "privateBalcony": "Balcón privado",
+    "largeBalcony": "Balcón amplio",
+    "hammockBalcony": "Hamaca en el balcón",
+    "gardenView": "Vista al jardín",
+    "lagoonView": "Vista a la laguna",
+    "livingRoom": "Sala de estar",
+    "twoRooms": "Dos ambientes",
+    "lagoonAccess": "Acceso a la laguna",
+    "supportKitchen": "Cocina de apoyo"
+  },
+  "mealPlans": {
+    "breakfast": "Desayuno",
+    "halfBoard": "Media pensión",
+    "fullBoard": "Pensión completa"
+  },
+  "rooms": {
+    "items": {
+      "quarto-brisa": {
+        "name": "Habitación Brisa",
+        "type": "Para dos",
+        "desc": "Intimidad, luz natural y la agradable sensación de despertar cerca del agua."
+      },
+      "suite-mare": {
+        "name": "Suite Marea",
+        "type": "Para dos",
+        "desc": "Más espacio para estirar el tiempo, con un rincón de descanso solo para ti."
+      },
+      "casa-areia": {
+        "name": "Casa Arena",
+        "type": "Para hasta cuatro",
+        "desc": "Una forma completa de vivir la posada, con espacio para reunir a quienes quieres."
+      },
+      "quarto-vento": {
+        "name": "Habitación Viento",
+        "type": "Para dos",
+        "desc": "Una habitación clara y silenciosa para desacelerar sin prisa."
+      },
+      "suite-sol": {
+        "name": "Suite Sol",
+        "type": "Para dos",
+        "desc": "Luz que entra despacio, espacio para quedarse y un balcón solo para ti."
+      },
+      "casa-mar": {
+        "name": "Casa Mar",
+        "type": "Para hasta cuatro",
+        "desc": "Un espacio generoso para compartir días ligeros cerca del agua."
+      },
+      "bangalo-lua": {
+        "name": "Bungaló Luna",
+        "type": "Para dos",
+        "desc": "Un refugio reservado para escuchar el agua y dejar pasar el tiempo."
+      }
+    }
+  },
+  "quartoDetalhe": {
+    "back": "Volver al hospedaje",
+    "indexLabel": "01 · alojamiento",
+    "galleryAriaLabel": "Galería de {{name}}",
+    "viewImage": "Ver imagen {{number}}",
+    "sideNote": "Un rincón para quedarse",
+    "title": "Lo esencial bien pensado para vivir despacio.",
+    "copy": "Luz natural, silencio y espacio para dejar que el tiempo corra a tu ritmo. Cada detalle fue elegido para que la estadía sea simple, cómoda y cerca de la naturaleza.",
+    "capacity": "Capacidad",
+    "guest_one": "{{count}} huésped",
+    "guest_other": "{{count}} huéspedes",
+    "includes": "Incluye",
+    "offers": "El alojamiento ofrece",
+    "reserve": "Reservar este alojamiento",
+    "consultStay": "Consulta tu estadía",
+    "consultTitle": "Tu lugar cerca del agua.",
+    "talkAboutStay": "Hablar sobre este alojamiento",
+    "whatsappInterest": "¡Hola! Tengo interés en {{name}}.",
+    "whatsappDetails": "Me gustaría saber más sobre disponibilidad, precios y detalles del alojamiento.",
+    "whatsappCapacity_one": "Capacidad: {{count}} huésped.",
+    "whatsappCapacity_other": "Capacidad: {{count}} huéspedes.",
+    "whatsappIncludes": "Incluye: {{meals}}."
+  },
+  "cardapioPage": {
+    "eyebrow": "Beira D’Água · en la mesa",
+    "titleLine1": "Comer es parte",
+    "titleHighlight": "del descanso.",
+    "heroCopy": "Una cocina litoral, hecha para acompañar el cielo cambiando de color y la conversación que se extiende.",
+    "heroImageAlt": "Pescado servido en la mesa junto al agua",
+    "heroImageLabel": "05 · sabor a mar",
+    "introKicker": "Cocina Beira D’Água",
+    "introTitleLine1": "Fresco, local,",
+    "introTitleHighlight": "sin ceremonia.",
+    "introCopy": "Cocinamos con lo que encontramos hermoso y fresco. La gastronomía sigue la temporada, la pesca y las ganas del día — por eso, aquí encontrarás una dirección de sabores, no una lista rígida.",
+    "serviceLine1": "Almuerzo y última hora de la tarde",
+    "serviceLine2": "Consulta la disponibilidad del día",
+    "categoriesAriaLabel": "Categorías de la gastronomía",
+    "paginationAriaLabel": "Paginación de la gastronomía",
+    "previousDishes": "Platos anteriores",
+    "nextDishes": "Próximos platos",
+    "pageLabel": "Página {{number}}",
+    "resultsRange": "{{from}}–{{to}} de {{total}} platos",
+    "emptyTitle": "Esta marea todavía está vacía.",
+    "emptyCopy": "Elige otra categoría para seguir descubriendo la mesa de la casa.",
+    "breakImageAlt": "Selección de mariscos a la brasa",
+    "breakKicker": "De nuestra cocina",
+    "breakTitleLine1": "El mejor condimento",
+    "breakTitleHighlight": "es quedarse.",
+    "sendPreference": "Enviar mi preferencia"
+  },
+  "menuCategories": {
+    "all": "Todo",
+    "starters": "Para empezar",
+    "sea": "Del mar",
+    "grill": "De la brasa",
+    "drinks": "Para beber"
+  },
+  "menu": {
+    "items": {
+      "tapioca-crisp": {
+        "name": "Crujiente de tapioca",
+        "description": "Con pescado curado, hierbas frescas y un toque cítrico.",
+        "mark": "de la casa"
+      },
+      "fish-of-the-day": {
+        "name": "Pescado del día",
+        "description": "A la parrilla, con acompañamientos que cambian con la marea."
+      },
+      "tide-moqueca": {
+        "name": "Moqueca de marea",
+        "description": "Leche de coco, aceite de palma suave y hierbas frescas."
+      },
+      "seafood-rice": {
+        "name": "Arroz de mariscos",
+        "description": "Camarones, pulpo y el caldo de cocción lenta de nuestra cocina."
+      },
+      "coastal-grill": {
+        "name": "Brasa del litoral",
+        "description": "Pescado entero, camarones y pulpo para compartir.",
+        "mark": "para compartir"
+      },
+      "grilled-vegetables": {
+        "name": "Verduras a la brasa",
+        "description": "Calabaza, cebolla y hojas verdes con salsa de anacardo."
+      },
+      "cashew-coconut-water": {
+        "name": "Jugo de marañón con agua de coco",
+        "description": "Fresco, helado y sin prisa."
+      },
+      "house-caipirinha": {
+        "name": "Caipiriña de la casa",
+        "description": "Fruta de temporada, cachaça y un poco de sol."
+      }
+    }
+  },
+  "littleBeachPage": {
+    "kicker": "Un día de pura aventura",
+    "titleLine1": "Sol, agua",
+    "titleHighlight": "y emoción.",
+    "heroCopy": "El Little Beach de Beira D’Água fue hecho para quienes disfrutan reír a carcajadas, salir mojados y volver a la posada con una historia nueva.",
+    "exploreAttractions": "Explorar atracciones",
+    "viewPackages": "Ver paquetes de acceso",
+    "modeLine1": "Modo",
+    "modeLine2": "aventura",
+    "modeOn": "ON",
+    "introKicker": "El parque es tuyo",
+    "introTitleLine1": "Prepárate para",
+    "introTitleHighlight": "la mejor zambullida.",
+    "introCopy": "Entre un tobogán y otro, hay sombra, brisa y ese tipo de alegría que no necesita explicación. Elige tu ritmo — la aventura comienza en la próxima ola.",
+    "stickerLine1": "Más",
+    "stickerLine2": "energía",
+    "stickerLine3": "por m²",
+    "previousAttraction": "Atracción anterior",
+    "nextAttraction": "Siguiente atracción",
+    "viewAttraction": "Ver {{label}}",
+    "swipeNote": "Cambiar de atracción",
+    "whyJoinKicker": "¿Por qué entrarle?",
+    "whyJoinTitleLine1": "Un parque entero",
+    "whyJoinTitleHighlight": "de buenos motivos.",
+    "highlight1Title": "Agua por todos lados",
+    "highlight1Copy": "Para correr, flotar, deslizarse o simplemente mojarse los pies.",
+    "highlight2Title": "Adrenalina en su justa medida",
+    "highlight2Copy": "Atracciones para quienes quieren acelerar y también para quienes prefieren ir despacio.",
+    "highlight3Title": "Todos juegan",
+    "highlight3Copy": "Un espacio pensado para reunir a familias, amigos y muchas risas.",
+    "nextSplashKicker": "Tu próximo splash",
+    "nextSplashTitleLine1": "El día pide",
+    "nextSplashTitleHighlight": "un poco más.",
+    "consultStay": "Consultar estadía"
+  },
+  "parkAttractions": {
+    "attraction01Label": "Atracción 01",
+    "attraction01Title": "Grita en la bajada.",
+    "attraction01Description": "Curvas, velocidad y agua helada que transforman cualquier tarde en una historia.",
+    "attraction02Label": "Atracción 02",
+    "attraction02Title": "Sumérgete en la aventura.",
+    "attraction02Description": "Espacio para jugar, relajarse y dejar que el sol haga el resto.",
+    "attraction03Label": "Atracción 03",
+    "attraction03Title": "Ve más lejos.",
+    "attraction03Description": "La laguna es el punto de encuentro entre la posada y tu próximo recuerdo."
+  },
+  "parkPackagesUi": {
+    "carouselAriaLabel": "Paquetes de acceso a Little Beach",
+    "chooseAccess": "Elige tu acceso",
+    "littleBeachBadge": "Little Beach",
+    "viewDetails": "Ver detalles del paquete",
+    "previousPackage": "Paquete anterior",
+    "nextPackage": "Próximo paquete",
+    "viewPackage": "Ver paquete {{number}}",
+    "browseHint": "Navega por los paquetes",
+    "accessKicker": "Acceso Little Beach",
+    "yourPackageLine1": "Tu paquete",
+    "yourPackageHighlight": "en detalle.",
+    "chooseAdventureLine1": "Elige tu",
+    "chooseAdventureHighlight": "paquete de aventura.",
+    "focusedIntro": "Todo lo que necesitas saber sobre {{name}}. Habla con el equipo para confirmar disponibilidad.",
+    "generalIntro": "Consulta las opciones de acceso, compara lo que incluye cada una y habla con el equipo para confirmar disponibilidad.",
+    "includedLabel": "Qué está incluido",
+    "chosenPackage": "Paquete elegido",
+    "closePackages": "Cerrar paquetes",
+    "continueWhatsapp": "Continuar por WhatsApp",
+    "whatsappInterest": "¡Hola! Quiero saber cómo comprar el paquete \"{{name}}\" de Little Beach.",
+    "whatsappPrice": "Precio de referencia: R$ {{price}}.",
+    "whatsappConfirm": "Me gustaría confirmar disponibilidad, reglas de acceso y formas de pago."
+  },
+  "parkPackages": {
+    "items": {
+      "day-pass": {
+        "name": "Day Pass",
+        "description": "Un día entero para disfrutar Little Beach.",
+        "note": "por persona",
+        "benefits": [
+          "Acceso al parque durante el día",
+          "Uso de las áreas de ocio",
+          "Válido de lunes a domingo"
+        ]
+      },
+      "family": {
+        "name": "Familia en el agua",
+        "description": "Diversión para reunir a todos sin prisa.",
+        "note": "hasta 4 personas",
+        "benefits": [
+          "Acceso al parque durante el día",
+          "Área reservada para la familia",
+          "Una bebida sin alcohol por persona"
+        ]
+      },
+      "sunset": {
+        "name": "Fin de tarde",
+        "description": "La última ola del día, con calma y un cielo hermoso.",
+        "note": "por persona",
+        "benefits": [
+          "Acceso a partir de las 15h",
+          "Uso de las áreas de ocio",
+          "Experiencia sujeta a disponibilidad"
+        ]
+      }
+    }
+  },
+  "ticketSearch": {
+    "chooseDateLabel": "Elige la fecha de tu visita al parque",
+    "placeholder": "¿Cuándo quieres disfrutar el parque?",
+    "buyTickets": "Comprar Entradas",
+    "months": [
+      "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ],
+    "weekdays": ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"]
+  },
+  "bookingDialog": {
+    "close": "Cerrar",
+    "kickerWithRoom": "Reserva tu habitación",
+    "kickerWithoutRoom": "Reserva a medida",
+    "titleWithRoomLine1": "Tu descanso",
+    "titleWithRoomHighlight": "empieza aquí.",
+    "titleWithoutRoomLine1": "Vamos a encontrar",
+    "titleWithoutRoomHighlight": "tu lugar.",
+    "introWithRoom": "Elige tus fechas y revisa todos los detalles antes de confirmar tu reserva.",
+    "introWithoutRoom": "Cuéntanos cómo imaginas tus días aquí. Te responderemos con calma, detalles y las mejores opciones.",
+    "fromPricePerNight": "Desde {{price}} / noche",
+    "arrival": "Llegada",
+    "departure": "Salida",
+    "dateError": "La salida debe ser posterior a la llegada.",
+    "adults": "Adultos",
+    "children": "Niños",
+    "mealPlanLabel": "Plan y valor de las comidas",
+    "mealIncludedOption": "Desayuno incluido (R$ 0)",
+    "mealHalfOption": "Media pensión (R$ 80 / persona por día)",
+    "mealFullOption": "Pensión completa (R$ 150 / persona por día)",
+    "mealIncludedName": "Desayuno incluido (R$ 0)",
+    "mealHalfName": "Media pensión (R$ 80 / persona / día)",
+    "mealFullName": "Pensión completa (R$ 150 / persona / día)",
+    "name": "Tu nombre",
+    "namePlaceholder": "¿Cómo podemos llamarte?",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "tu@correo.com",
+    "notePreference": "¿Alguna preferencia?",
+    "optional": "(opcional)",
+    "notePlaceholder": "Una ocasión especial, dudas o restricciones alimentarias...",
+    "reviewBooking": "Revisar reserva",
+    "confirmKicker": "Revisa tu reserva",
+    "confirmTitleLine1": "¿Todo listo",
+    "confirmTitleHighlight": "con tu plan?",
+    "stay": "Estadía",
+    "nightsLabel": "Noches",
+    "night_one": "{{count}} noche",
+    "night_other": "{{count}} noches",
+    "guests": "Huéspedes",
+    "adult_one": "{{count}} adulto",
+    "adult_other": "{{count}} adultos",
+    "childSuffix_one": ", {{count}} niño",
+    "childSuffix_other": ", {{count}} niños",
+    "meals": "Comidas",
+    "roomIncludes": "La habitación incluye",
+    "totalEstimate": "Total estimado",
+    "confirmationSentTo": "La confirmación se enviará a {{email}}.",
+    "editData": "Editar datos",
+    "confirmBooking": "Confirmar reserva",
+    "receivedKicker": "Solicitud recibida",
+    "seeYouSoon": "Hasta pronto,",
+    "traveler": "viajero",
+    "receivedCopy": "Recibimos tu preferencia. Nos encargaremos de los detalles y te responderemos al correo indicado.",
+    "backToSite": "Volver al sitio"
+  }
+}

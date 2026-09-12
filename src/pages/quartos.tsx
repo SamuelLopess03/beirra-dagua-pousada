@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import { useTranslation } from "react-i18next";
 import {
   Armchair,
   ArrowLeft,
@@ -13,19 +14,29 @@ import { SectionLabel } from "@/components/layout/section-label";
 import { useRoomFilters } from "@/hooks/use-room-filters";
 import { useBooking } from "@/hooks/booking-context";
 import { useState } from "react";
-import type { Room } from "@/data/rooms";
+import type { Room, RoomDetailKey } from "@/data/rooms";
 
-function DetailIcon({ detail }: { detail: string }) {
-  const normalizedDetail = detail.toLowerCase();
+const detailIcons: Record<RoomDetailKey, typeof Waves> = {
+  queenBed: BedDouble,
+  kingBed: BedDouble,
+  privateBalcony: Sun,
+  largeBalcony: Sun,
+  hammockBalcony: Sun,
+  gardenView: Trees,
+  lagoonView: Trees,
+  livingRoom: Armchair,
+  twoRooms: Waves,
+  lagoonAccess: Waves,
+  supportKitchen: Waves,
+};
 
-  if (normalizedDetail.includes("cama")) return <BedDouble size={16} />;
-  if (normalizedDetail.includes("varanda")) return <Sun size={16} />;
-  if (normalizedDetail.includes("vista")) return <Trees size={16} />;
-  if (normalizedDetail.includes("sala")) return <Armchair size={16} />;
-  return <Waves size={16} />;
+function DetailIcon({ detailKey }: { detailKey: RoomDetailKey }) {
+  const Icon = detailIcons[detailKey] ?? Waves;
+  return <Icon size={16} />;
 }
 
-function RoomGallery({ room, roomNumber }: { room: Room; roomNumber: number }) {
+function RoomGallery({ room, roomNumber, roomName }: { room: Room; roomNumber: number; roomName: string }) {
+  const { t } = useTranslation();
   const [activeImage, setActiveImage] = useState(0);
   const imageCount = room.gallery.length;
 
@@ -39,7 +50,7 @@ function RoomGallery({ room, roomNumber }: { room: Room; roomNumber: number }) {
     <div className="room-card-image">
       <img
         src={room.gallery[activeImage]}
-        alt={`${room.name} — imagem ${activeImage + 1}`}
+        alt={`${roomName} — imagem ${activeImage + 1}`}
       />
       <span className="room-card-index">0{roomNumber}</span>
       {imageCount > 1 && (
@@ -48,26 +59,26 @@ function RoomGallery({ room, roomNumber }: { room: Room; roomNumber: number }) {
             <button
               type="button"
               onClick={() => moveImage(-1)}
-              aria-label={`Imagem anterior de ${room.name}`}
+              aria-label={t("quartosPage.previousImage", { name: roomName })}
             >
               <ArrowLeft size={15} />
             </button>
             <button
               type="button"
               onClick={() => moveImage(1)}
-              aria-label={`Próxima imagem de ${room.name}`}
+              aria-label={t("quartosPage.nextImage", { name: roomName })}
             >
               <ArrowRight size={15} />
             </button>
           </div>
-          <div className="room-gallery-dots" aria-label="Imagens da acomodação">
+          <div className="room-gallery-dots" aria-label={t("quartosPage.galleryAriaLabel")}>
             {room.gallery.map((_, index) => (
               <button
                 type="button"
                 key={index}
                 className={index === activeImage ? "is-active" : ""}
                 onClick={() => setActiveImage(index)}
-                aria-label={`Ver imagem ${index + 1}`}
+                aria-label={t("quartosPage.viewImage", { number: index + 1 })}
                 aria-current={index === activeImage ? "true" : undefined}
               />
             ))}
@@ -79,6 +90,7 @@ function RoomGallery({ room, roomNumber }: { room: Room; roomNumber: number }) {
 }
 
 export function Quartos() {
+  const { t } = useTranslation();
   const { openBooking } = useBooking();
   const {
     page,
@@ -110,45 +122,42 @@ export function Quartos() {
     <main className="inner-page">
       <section className="page-hero page-width">
         <div>
-          <SectionLabel>Beira D’Água · ficar</SectionLabel>
+          <SectionLabel>{t("quartosPage.eyebrow")}</SectionLabel>
           <h1>
-            Escolha seu
+            {t("quartosPage.titleLine1")}
             <br />
-            <em>canto de calma.</em>
+            <em>{t("quartosPage.titleHighlight")}</em>
           </h1>
           <p>
-            Hospedagens com o essencial bem pensado, cercadas pelo verde e pelo
-            barulho bom da água.
+            {t("quartosPage.heroCopy")}
           </p>
         </div>
         <div className="page-hero-note">
-          <span>02</span>
+          <span>{t("quartosPage.heroNoteNumber")}</span>
           <i />
           <span>
-            hospedagens para
+            {t("quartosPage.heroNoteLine1")}
             <br />
-            viver devagar
+            {t("quartosPage.heroNoteLine2")}
           </span>
         </div>
       </section>
       <section className="room-guide page-width">
         <div className="room-guide-intro">
-          <span className="side-note">Acomodações</span>
+          <span className="side-note">{t("quartosPage.guideKicker")}</span>
           <p>
-            Não existe acomodação melhor. Existe a acomodação que combina com o
-            jeito que você quer descansar. Veja os nossos cantos e envie sua
-            preferência — os valores são consultados caso a caso.
+            {t("quartosPage.guideCopy")}
           </p>
         </div>
 
         <div className="room-results-toolbar">
           <div>
-            <span className="room-results-kicker">Sua estadia</span>
-            <strong>{filteredRooms.length} hospedagens encontradas</strong>
+            <span className="room-results-kicker">{t("quartosPage.resultsKicker")}</span>
+            <strong>{t("quartosPage.resultsFound", { count: filteredRooms.length })}</strong>
           </div>
           <div className="room-toolbar-actions">
             <span className="room-results-note">
-              Valores por noite · consulte disponibilidade
+              {t("quartosPage.resultsNote")}
             </span>
             <button
               type="button"
@@ -158,7 +167,7 @@ export function Quartos() {
               aria-controls="room-filter-panel"
             >
               <SlidersHorizontal size={15} />
-              {filtersOpen ? "Fechar filtros" : "Filtrar hospedagens"}
+              {filtersOpen ? t("quartosPage.closeFilters") : t("quartosPage.openFilters")}
               {activeFilterCount > 0 && <span>{activeFilterCount}</span>}
             </button>
           </div>
@@ -170,13 +179,13 @@ export function Quartos() {
           <aside
             className="room-filter-panel"
             id="room-filter-panel"
-            aria-label="Filtros de hospedagem"
+            aria-label={t("quartosPage.filtersAriaLabel")}
             aria-hidden={!filtersOpen}
           >
             <div className="room-filter-heading">
               <div>
                 <SlidersHorizontal size={16} />
-                <strong>Filtrar</strong>
+                <strong>{t("quartosPage.filterHeading")}</strong>
                 {activeFilterCount > 0 && <span>{activeFilterCount}</span>}
               </div>
               {activeFilterCount > 0 && (
@@ -185,7 +194,7 @@ export function Quartos() {
                   onClick={clearFilters}
                   className="clear-filters"
                 >
-                  Limpar
+                  {t("quartosPage.clear")}
                 </button>
               )}
             </div>
@@ -194,19 +203,19 @@ export function Quartos() {
               className="room-filter-close"
               onClick={() => setFiltersOpen(false)}
             >
-              Fechar filtros
+              {t("quartosPage.closeFilters")}
             </button>
             <div className="filter-search">
               <input
                 type="text"
-                placeholder="Buscar acomodação..."
+                placeholder={t("quartosPage.searchPlaceholder")}
                 value={searchQuery}
                 onChange={(e) => updateSearch(e.target.value)}
               />
             </div>
 
             <div className="filter-group">
-              <span className="filter-title">Adultos:</span>
+              <span className="filter-title">{t("quartosPage.adultsLabel")}</span>
               <div className="filter-number-input">
                 <button type="button" onClick={() => updateAdults(Math.max(0, adults - 1))}>-</button>
                 <input
@@ -215,15 +224,15 @@ export function Quartos() {
                   max="20"
                   value={adults}
                   onChange={(e) => updateAdults(Math.max(0, Number(e.target.value)))}
-                  aria-label="Filtrar por quantidade de adultos"
+                  aria-label={t("quartosPage.adultsAriaLabel")}
                 />
                 <button type="button" onClick={() => updateAdults(Math.min(20, adults + 1))}>+</button>
               </div>
-              {adults === 0 && <span className="filter-note">Sem filtro</span>}
+              {adults === 0 && <span className="filter-note">{t("quartosPage.noFilter")}</span>}
             </div>
 
             <div className="filter-group">
-              <span className="filter-title">Crianças:</span>
+              <span className="filter-title">{t("quartosPage.childrenLabel")}</span>
               <div className="filter-number-input">
                 <button type="button" onClick={() => updateChildren(Math.max(0, children - 1))}>-</button>
                 <input
@@ -232,35 +241,35 @@ export function Quartos() {
                   max="20"
                   value={children}
                   onChange={(e) => updateChildren(Math.max(0, Number(e.target.value)))}
-                  aria-label="Filtrar por quantidade de crianças"
+                  aria-label={t("quartosPage.childrenAriaLabel")}
                 />
                 <button type="button" onClick={() => updateChildren(Math.min(20, children + 1))}>+</button>
               </div>
             </div>
 
             <div className="filter-group">
-              <span className="filter-title">Valor da Refeição:</span>
+              <span className="filter-title">{t("quartosPage.mealPriceLabel")}</span>
               <select
                 value={mealPrice}
                 onChange={(e) => updateMealPrice(e.target.value)}
-                aria-label="Filtrar por valor ou tipo de refeição"
+                aria-label={t("quartosPage.mealPriceAriaLabel")}
               >
-                <option value="">Qualquer opção</option>
-                <option value="incluso">Café incluso (R$ 0)</option>
-                <option value="80">Meia pensão (R$ 80 / pessoa)</option>
-                <option value="150">Pensão completa (R$ 150 / pessoa)</option>
+                <option value="">{t("quartosPage.mealAny")}</option>
+                <option value="incluso">{t("quartosPage.mealIncluded")}</option>
+                <option value="80">{t("quartosPage.mealHalf")}</option>
+                <option value="150">{t("quartosPage.mealFull")}</option>
               </select>
             </div>
 
             <div className="filter-group">
-              <span className="filter-title">Capacidade da Acomodação:</span>
+              <span className="filter-title">{t("quartosPage.capacityLabel")}</span>
               <label>
                 <input
                   type="checkbox"
                   checked={selectedCapacities.includes(2)}
                   onChange={() => toggleCapacity(2)}
                 />{" "}
-                Até 2 pessoas
+                {t("quartosPage.capacity2")}
               </label>
               <label>
                 <input
@@ -268,40 +277,40 @@ export function Quartos() {
                   checked={selectedCapacities.includes(4)}
                   onChange={() => toggleCapacity(4)}
                 />{" "}
-                Até 4 pessoas
+                {t("quartosPage.capacity4")}
               </label>
             </div>
 
             <div className="filter-group">
-              <span className="filter-title">Refeições inclusas:</span>
+              <span className="filter-title">{t("quartosPage.mealsIncludedLabel")}</span>
               <label>
                 <input
                   type="checkbox"
-                  checked={selectedMeals.includes("Café da manhã")}
-                  onChange={() => toggleMeal("Café da manhã")}
+                  checked={selectedMeals.includes("breakfast")}
+                  onChange={() => toggleMeal("breakfast")}
                 />{" "}
-                Café da manhã
+                {t("mealPlans.breakfast")}
               </label>
               <label>
                 <input
                   type="checkbox"
-                  checked={selectedMeals.includes("Meia pensão")}
-                  onChange={() => toggleMeal("Meia pensão")}
+                  checked={selectedMeals.includes("halfBoard")}
+                  onChange={() => toggleMeal("halfBoard")}
                 />{" "}
-                Meia pensão
+                {t("mealPlans.halfBoard")}
               </label>
               <label>
                 <input
                   type="checkbox"
-                  checked={selectedMeals.includes("Pensão completa")}
-                  onChange={() => toggleMeal("Pensão completa")}
+                  checked={selectedMeals.includes("fullBoard")}
+                  onChange={() => toggleMeal("fullBoard")}
                 />{" "}
-                Pensão completa
+                {t("mealPlans.fullBoard")}
               </label>
             </div>
 
             <div className="filter-group">
-              <span className="filter-title">Valor máx por diária (R$ {maxPrice}):</span>
+              <span className="filter-title">{t("quartosPage.maxPriceLabel", { price: maxPrice })}</span>
               <input
                 type="range"
                 min="300"
@@ -316,53 +325,56 @@ export function Quartos() {
           <div className="room-results">
             {filteredRooms.length === 0 ? (
               <div className="room-empty-state">
-                Nenhuma hospedagem encontrada com esses critérios. Tente limpar
-                os filtros.
+                {t("quartosPage.emptyState")}
               </div>
             ) : (
               <div className="room-list">
-                {visibleRooms.map((room, index) => (
-                  <article
-                    className="room-card"
-                    key={room.name}
-                    data-testid={`card-quarto-${page * ROOMS_PER_PAGE + index}`}
-                  >
-                    <RoomGallery
-                      room={room}
-                      roomNumber={page * ROOMS_PER_PAGE + index + 1}
-                    />
-                    <div className="room-card-body">
-                      <div className="room-card-top">
-                        <span className="room-type">{room.type}</span>
-                        <span className="room-number">
-                          acomodação {page * ROOMS_PER_PAGE + index + 1}
-                        </span>
-                      </div>
-                      <h2>{room.name}</h2>
-                      <p>{room.desc}</p>
-                      <div className="room-details">
-                        {room.details.map((detail) => (
-                          <span key={detail}>
-                            <DetailIcon detail={detail} /> {detail}
+                {visibleRooms.map((room, index) => {
+                  const roomName = t(`rooms.items.${room.slug}.name`);
+                  return (
+                    <article
+                      className="room-card"
+                      key={room.slug}
+                      data-testid={`card-quarto-${page * ROOMS_PER_PAGE + index}`}
+                    >
+                      <RoomGallery
+                        room={room}
+                        roomNumber={page * ROOMS_PER_PAGE + index + 1}
+                        roomName={roomName}
+                      />
+                      <div className="room-card-body">
+                        <div className="room-card-top">
+                          <span className="room-type">{t(`rooms.items.${room.slug}.type`)}</span>
+                          <span className="room-number">
+                            {t("quartosPage.accommodationLabel", { number: page * ROOMS_PER_PAGE + index + 1 })}
                           </span>
-                        ))}
+                        </div>
+                        <h2>{roomName}</h2>
+                        <p>{t(`rooms.items.${room.slug}.desc`)}</p>
+                        <div className="room-details">
+                          {room.detailKeys.map((detailKey) => (
+                            <span key={detailKey}>
+                              <DetailIcon detailKey={detailKey} /> {t(`roomDetails.${detailKey}`)}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                    <div className="room-card-price">
-                      <span className="room-price-label">A partir de</span>
-                      <strong>R$ {room.price.toLocaleString("pt-BR")}</strong>
-                      <span className="room-price-period">/ noite</span>
-                      <small>{room.meals[0]} incluso</small>
-                      <Link
-                        href={`/quartos/${room.slug}`}
-                        className="button button-dark"
-                        data-testid={`button-reservar-quarto-${page * ROOMS_PER_PAGE + index}`}
-                      >
-                        Consultar <ArrowRight size={15} />
-                      </Link>
-                    </div>
-                  </article>
-                ))}
+                      <div className="room-card-price">
+                        <span className="room-price-label">{t("quartosPage.fromPrice")}</span>
+                        <strong>R$ {room.price.toLocaleString("pt-BR")}</strong>
+                        <span className="room-price-period">{t("quartosPage.perNight")}</span>
+                        <small>{t(`mealPlans.${room.mealKeys[0]}`)} {t("quartosPage.included")}</small>
+                        <Link
+                          href={`/quartos/${room.slug}`}
+                          className="button button-dark"
+                          data-testid={`button-reservar-quarto-${page * ROOMS_PER_PAGE + index}`}
+                        >
+                          {t("quartosPage.consult")} <ArrowRight size={15} />
+                        </Link>
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
             )}
             {totalPages > 1 && (
@@ -371,7 +383,7 @@ export function Quartos() {
                   className="room-pagination-btn"
                   onClick={() => setPage((p) => Math.max(0, p - 1))}
                   disabled={page === 0}
-                  aria-label="Hospedagens anteriores"
+                  aria-label={t("quartosPage.previousRooms")}
                 >
                   <ArrowRight
                     size={16}
@@ -383,7 +395,7 @@ export function Quartos() {
                     key={i}
                     className={`room-pagination-dot${i === page ? " is-active" : ""}`}
                     onClick={() => setPage(i)}
-                    aria-label={`Página ${i + 1}`}
+                    aria-label={t("quartosPage.pageLabel", { number: i + 1 })}
                     aria-current={i === page ? "page" : undefined}
                   />
                 ))}
@@ -393,7 +405,7 @@ export function Quartos() {
                     setPage((p) => Math.min(totalPages - 1, p + 1))
                   }
                   disabled={page === totalPages - 1}
-                  aria-label="Próximas hospedagens"
+                  aria-label={t("quartosPage.nextRooms")}
                 >
                   <ArrowRight size={16} />
                 </button>
@@ -405,11 +417,11 @@ export function Quartos() {
       <section className="room-bottom-cta">
         <div className="room-bottom-cta-inner page-width">
           <div>
-            <span className="section-label">Ainda em dúvida?</span>
+            <span className="section-label">{t("quartosPage.stillInDoubt")}</span>
             <h2>
-              Fale com a gente.
+              {t("quartosPage.bottomTitleLine1")}
               <br />
-              <em>É mais simples assim.</em>
+              <em>{t("quartosPage.bottomTitleHighlight")}</em>
             </h2>
           </div>
           <button
@@ -417,7 +429,7 @@ export function Quartos() {
             className="button button-dark"
             data-testid="button-quartos-cta"
           >
-            Enviar minha preferência <ArrowRight size={16} />
+            {t("quartosPage.sendPreference")} <ArrowRight size={16} />
           </button>
         </div>
       </section>

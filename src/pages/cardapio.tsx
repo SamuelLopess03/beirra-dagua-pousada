@@ -1,22 +1,24 @@
 import { useCallback, useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, Clock3, Utensils } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { SectionLabel } from "@/components/layout/section-label";
 import { useBooking } from "@/hooks/booking-context";
-import { menuCategories, menuItems, type MenuCategory } from "@/data/menu";
+import { menuCategoryKeys, menuItems, type MenuCategoryKey } from "@/data/menu";
 import plateImage from "@assets/grilled-meal.png";
 import seafoodImage from "@assets/seafood-platter.png";
 
 const ITEMS_PER_PAGE = 5;
 
 export function Cardapio() {
+  const { t } = useTranslation();
   const { openBooking } = useBooking();
-  const [category, setCategory] = useState<MenuCategory>("Tudo");
+  const [category, setCategory] = useState<MenuCategoryKey>("all");
   const [page, setPage] = useState(0);
   const filtered = useMemo(
     () =>
-      category === "Tudo"
+      category === "all"
         ? menuItems
-        : menuItems.filter((item) => item.category === category),
+        : menuItems.filter((item) => item.categoryKey === category),
     [category],
   );
   const totalPages = useMemo(
@@ -29,7 +31,7 @@ export function Cardapio() {
     [filtered, page],
   );
 
-  const selectCategory = useCallback((nextCategory: MenuCategory) => {
+  const selectCategory = useCallback((nextCategory: MenuCategoryKey) => {
     setCategory(nextCategory);
     setPage(0);
   }, []);
@@ -42,43 +44,40 @@ export function Cardapio() {
     <main className="inner-page menu-page">
       <section className="menu-hero page-width">
         <div className="menu-hero-copy">
-          <SectionLabel>Beira D’Água · à mesa</SectionLabel>
+          <SectionLabel>{t("cardapioPage.eyebrow")}</SectionLabel>
           <h1>
-            Comer é parte
+            {t("cardapioPage.titleLine1")}
             <br />
-            <em>do descanso.</em>
+            <em>{t("cardapioPage.titleHighlight")}</em>
           </h1>
           <p>
-            Uma cozinha de litoral, feita para acompanhar o céu mudando de cor e
-            a conversa se estendendo.
+            {t("cardapioPage.heroCopy")}
           </p>
         </div>
         <div className="menu-hero-image">
-          <img src={plateImage} alt="Peixe servido na mesa à beira da água" />
-          <span>05 · sabor de mar</span>
+          <img src={plateImage} alt={t("cardapioPage.heroImageAlt")} />
+          <span>{t("cardapioPage.heroImageLabel")}</span>
         </div>
       </section>
       <section className="menu-introduction page-width">
         <div className="menu-intro-statement">
-          <span className="side-note">Cozinha Beira D’Água</span>
+          <span className="side-note">{t("cardapioPage.introKicker")}</span>
           <h2>
-            Fresco, local,
+            {t("cardapioPage.introTitleLine1")}
             <br />
-            <em>sem cerimônia.</em>
+            <em>{t("cardapioPage.introTitleHighlight")}</em>
           </h2>
         </div>
         <div>
           <p>
-            A gente cozinha com o que encontra de bonito e fresco. A gastronomia
-            acompanha a estação, a pesca e a vontade do dia — por isso, aqui
-            você encontra uma direção de sabores, não uma lista engessada.
+            {t("cardapioPage.introCopy")}
           </p>
           <div className="service-note">
             <Clock3 size={16} />
             <span>
-              Almoço e fim de tarde
+              {t("cardapioPage.serviceLine1")}
               <br />
-              <b>Consulte a disponibilidade no dia</b>
+              <b>{t("cardapioPage.serviceLine2")}</b>
             </span>
           </div>
         </div>
@@ -87,18 +86,18 @@ export function Cardapio() {
         <div
           className="category-tabs"
           role="tablist"
-          aria-label="Categorias da gastronomia"
+          aria-label={t("cardapioPage.categoriesAriaLabel")}
         >
-          {menuCategories.map((item) => (
+          {menuCategoryKeys.map((key) => (
             <button
-              key={item}
-              className={category === item ? "is-selected" : ""}
-              onClick={() => selectCategory(item)}
+              key={key}
+              className={category === key ? "is-selected" : ""}
+              onClick={() => selectCategory(key)}
               role="tab"
-              aria-selected={category === item}
-              data-testid={`button-categoria-${item.toLowerCase().replaceAll(" ", "-")}`}
+              aria-selected={category === key}
+              data-testid={`button-categoria-${key}`}
             >
-              {item}
+              {t(`menuCategories.${key}`)}
             </button>
           ))}
         </div>
@@ -108,22 +107,22 @@ export function Cardapio() {
               {visibleItems.map((item, index) => (
                 <article
                   className="menu-item"
-                  key={item.name}
+                  key={item.id}
                   data-testid={`item-cardapio-${page * ITEMS_PER_PAGE + index}`}
                 >
                   <div className="menu-item-content">
                     <div className="menu-item-image">
-                      <img src={item.image} alt={item.name} />
+                      <img src={item.image} alt={t(`menu.items.${item.id}.name`)} />
                     </div>
                     <div className="menu-item-text">
                       <span className="menu-item-category">
-                        {item.category}
+                        {t(`menuCategories.${item.categoryKey}`)}
                       </span>
                       <h3>
-                        {item.name}
-                        {item.mark && <small>{item.mark}</small>}
+                        {t(`menu.items.${item.id}.name`)}
+                        {item.hasMark && <small>{t(`menu.items.${item.id}.mark`)}</small>}
                       </h3>
-                      <p>{item.description}</p>
+                      <p>{t(`menu.items.${item.id}.description`)}</p>
                     </div>
                   </div>
                   <span className="menu-item-line" />
@@ -133,14 +132,14 @@ export function Cardapio() {
             {totalPages > 1 && (
               <nav
                 className="menu-pagination"
-                aria-label="Paginação da gastronomia"
+                aria-label={t("cardapioPage.paginationAriaLabel")}
               >
                 <button
                   type="button"
                   className="menu-pagination-arrow"
                   onClick={() => selectPage(page - 1)}
                   disabled={page === 0}
-                  aria-label="Pratos anteriores"
+                  aria-label={t("cardapioPage.previousDishes")}
                 >
                   <ArrowLeft size={16} />
                 </button>
@@ -151,7 +150,7 @@ export function Cardapio() {
                       key={index}
                       className={index === page ? "is-active" : ""}
                       onClick={() => selectPage(index)}
-                      aria-label={`Página ${index + 1}`}
+                      aria-label={t("cardapioPage.pageLabel", { number: index + 1 })}
                       aria-current={index === page ? "page" : undefined}
                     >
                       0{index + 1}
@@ -163,14 +162,16 @@ export function Cardapio() {
                   className="menu-pagination-arrow"
                   onClick={() => selectPage(page + 1)}
                   disabled={page === totalPages - 1}
-                  aria-label="Próximos pratos"
+                  aria-label={t("cardapioPage.nextDishes")}
                 >
                   <ArrowRight size={16} />
                 </button>
                 <span className="menu-pagination-label">
-                  {page * ITEMS_PER_PAGE + 1}–
-                  {Math.min((page + 1) * ITEMS_PER_PAGE, filtered.length)} de{" "}
-                  {filtered.length} pratos
+                  {t("cardapioPage.resultsRange", {
+                    from: page * ITEMS_PER_PAGE + 1,
+                    to: Math.min((page + 1) * ITEMS_PER_PAGE, filtered.length),
+                    total: filtered.length,
+                  })}
                 </span>
               </nav>
             )}
@@ -178,22 +179,22 @@ export function Cardapio() {
         ) : (
           <div className="menu-empty" data-testid="empty-cardapio">
             <Utensils size={22} />
-            <h3>Essa maré ainda está vazia.</h3>
+            <h3>{t("cardapioPage.emptyTitle")}</h3>
             <p>
-              Escolha outra categoria para continuar a descobrir a mesa da casa.
+              {t("cardapioPage.emptyCopy")}
             </p>
           </div>
         )}
       </section>
       <section className="menu-image-break">
-        <img src={seafoodImage} alt="Seleção de frutos do mar na brasa" />
+        <img src={seafoodImage} alt={t("cardapioPage.breakImageAlt")} />
         <div>
           <div className="menu-image-break-copy">
-            <span>Da nossa cozinha</span>
+            <span>{t("cardapioPage.breakKicker")}</span>
             <h2>
-              O melhor tempero
+              {t("cardapioPage.breakTitleLine1")}
               <br />
-              <em>é ficar.</em>
+              <em>{t("cardapioPage.breakTitleHighlight")}</em>
             </h2>
           </div>
           <button
@@ -202,7 +203,7 @@ export function Cardapio() {
             onClick={() => openBooking()}
             data-testid="button-cardapio-cta"
           >
-            Enviar minha preferência <ArrowRight size={16} />
+            {t("cardapioPage.sendPreference")} <ArrowRight size={16} />
           </button>
         </div>
       </section>

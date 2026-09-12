@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import mapPin from "@/assets/map-pin.png";
 
 export type LocationCardProps = {
@@ -13,21 +14,30 @@ export type LocationCardProps = {
 };
 
 export function LocationCard({
-  eyebrow = "07 · Como chegar",
-  title = "Onde encontrar a",
-  highlight = "Berra D'água.",
-  description = "A poucos passos do mar, num canto tranquilo do litoral.",
-  address = "Praia de Barrinha - Aranau",
-  city = "Acaraú - CE",
-  zip = "CEP 62580-000",
+  eyebrow,
+  title,
+  highlight,
+  description,
+  address,
+  city,
+  zip,
   mapUrl = "https://maps.app.goo.gl/HmK9hrGraFM9mfM1A",
 }: LocationCardProps) {
+  const { t } = useTranslation();
+  const resolvedEyebrow = eyebrow ?? t("location.eyebrow");
+  const resolvedTitle = title ?? t("location.title");
+  const resolvedHighlight = highlight ?? t("location.highlight");
+  const resolvedDescription = description ?? t("location.description");
+  const resolvedAddress = address ?? t("location.address");
+  const resolvedCity = city ?? t("location.city");
+  const resolvedZip = zip ?? t("location.zip");
+
   return (
     <section className="page-width py-24">
       <div className="flex flex-col gap-6">
         <div className="section-label" style={{ marginBottom: 0 }}>
           <span className="eyebrow-dot" />
-          {eyebrow}
+          {resolvedEyebrow}
         </div>
 
         <article
@@ -43,15 +53,15 @@ export function LocationCard({
 
           <div className="flex-1 text-[#f8f3e9]">
             <h2 className="font-serif text-4xl md:text-5xl leading-none text-[#f8f3e9] mb-4">
-              {title} <em className="italic">{highlight}</em>
+              {resolvedTitle} <em className="italic">{resolvedHighlight}</em>
             </h2>
             <p className="text-[14px] text-[#f8f3e9]/80 mb-6 max-w-md leading-relaxed">
-              {description}
+              {resolvedDescription}
             </p>
             <div className="text-[13px] text-[#f8f3e9]/90 space-y-1">
-              <p>{address}</p>
+              <p>{resolvedAddress}</p>
               <p>
-                {city} · {zip}
+                {resolvedCity} · {resolvedZip}
               </p>
             </div>
           </div>
@@ -62,7 +72,7 @@ export function LocationCard({
             rel="noopener noreferrer"
             className="button button-gold shrink-0 self-center"
           >
-            Ver mapa <ArrowUpRight size={16} />
+            {t("location.cta")} <ArrowUpRight size={16} />
           </a>
         </article>
       </div>

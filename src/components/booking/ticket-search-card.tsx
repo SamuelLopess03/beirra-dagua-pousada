@@ -7,23 +7,12 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useLocation } from "wouter";
-
-const monthNames = [
-  "Janeiro",
-  "Fevereiro",
-  "Março",
-  "Abril",
-  "Maio",
-  "Junho",
-  "Julho",
-  "Agosto",
-  "Setembro",
-  "Outubro",
-  "Novembro",
-  "Dezembro",
-];
+import { useTranslation } from "react-i18next";
 
 export function TicketSearchCard() {
+  const { t } = useTranslation();
+  const monthNames = t("ticketSearch.months", { returnObjects: true }) as string[];
+  const weekdayNames = t("ticketSearch.weekdays", { returnObjects: true }) as string[];
   const [, setLocation] = useLocation();
   const [date, setDate] = useState<Date | null>(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
@@ -104,7 +93,7 @@ export function TicketSearchCard() {
           style={{ position: "relative" }}
           ref={calendarRef}
         >
-          <label>Escolha a data da sua visita ao parque</label>
+          <label>{t("ticketSearch.chooseDateLabel")}</label>
           <div
             className="park-ticket-input-container park-ticket-input-clickable"
             onClick={() => setIsCalendarOpen(!isCalendarOpen)}
@@ -113,7 +102,7 @@ export function TicketSearchCard() {
             <span className="park-ticket-input-value">
               {date
                 ? `${date.getDate().toString().padStart(2, "0")}/${(date.getMonth() + 1).toString().padStart(2, "0")}/${date.getFullYear()}`
-                : "Quando você quer curtir o parque?"}
+                : t("ticketSearch.placeholder")}
             </span>
             <ChevronDown size={20} className="park-ticket-input-icon" />
           </div>
@@ -139,13 +128,9 @@ export function TicketSearchCard() {
                 </button>
               </div>
               <div className="park-ticket-calendar-weekdays">
-                <span>Dom</span>
-                <span>Seg</span>
-                <span>Ter</span>
-                <span>Qua</span>
-                <span>Qui</span>
-                <span>Sex</span>
-                <span>Sáb</span>
+                {weekdayNames.map((weekday) => (
+                  <span key={weekday}>{weekday}</span>
+                ))}
               </div>
               <div className="park-ticket-calendar-grid">
                 {Array.from({ length: firstDay }).map((_, i) => (
@@ -199,7 +184,7 @@ export function TicketSearchCard() {
               setLocation(`/ingressos?${params.toString()}`);
             }}
           >
-            Comprar Ingressos <Ticket size={20} />
+            {t("ticketSearch.buyTickets")} <Ticket size={20} />
           </button>
         </div>
       </div>

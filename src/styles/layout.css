@@ -210,6 +210,78 @@
   display: none;
 }
 
+/* ===== Language switcher ===== */
+.language-switcher {
+  position: relative;
+}
+.language-switcher-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: inherit;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.9;
+  cursor: pointer;
+  transition:
+    opacity 0.3s ease,
+    background-color 0.3s ease;
+}
+.language-switcher-trigger:hover {
+  opacity: 1;
+}
+.language-switcher-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 150px;
+  background: #f5edda;
+  color: #2a6fa8;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  padding: 6px;
+  list-style: none;
+  z-index: 30;
+}
+.language-switcher-menu li + li {
+  margin-top: 2px;
+}
+.language-switcher-menu button {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  color: #2a6fa8;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.language-switcher-menu button:hover {
+  background: rgba(42, 111, 168, 0.1);
+}
+.language-switcher-menu button.is-active {
+  background: #2a6fa8;
+  color: #f5edda;
+  font-weight: 700;
+}
+.language-switcher-flag {
+  font-size: 15px;
+  line-height: 1;
+}
+
+
 /* ===== Botões e links compartilhados ===== */
 .button {
   min-height: 51px;

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   ArrowDownRight,
   ArrowRight,
@@ -18,11 +19,15 @@ import { ParkPackageCarousel } from "@/components/booking/park-packages-carousel
 import { TicketSearchCard } from "@/components/booking/ticket-search-card";
 
 export function LittleBeach() {
+  const { t } = useTranslation();
   const { openBooking } = useBooking();
   const [activeSlide, setActiveSlide] = useState(0);
   const [packagesOpen, setPackagesOpen] = useState(false);
   const [selectedPackageId, setSelectedPackageId] = useState<string>();
   const slide = parkSlides[activeSlide];
+  const slideLabel = t(`parkAttractions.${slide.key}Label`);
+  const slideTitle = t(`parkAttractions.${slide.key}Title`);
+  const slideDescription = t(`parkAttractions.${slide.key}Description`);
 
   const openPackageDetails = (packageId?: string) => {
     setSelectedPackageId(packageId);
@@ -45,20 +50,19 @@ export function LittleBeach() {
         <div className="park-hero-content page-width">
           <div className="park-hero-copy">
             <div className="park-kicker">
-              <Sparkles size={14} /> Um dia de pura aventura
+              <Sparkles size={14} /> {t("littleBeachPage.kicker")}
             </div>
             <h1>
-              Sol, água
+              {t("littleBeachPage.titleLine1")}
               <br />
-              <em>e emoção.</em>
+              <em>{t("littleBeachPage.titleHighlight")}</em>
             </h1>
             <p>
-              O Little Beach da Beira D’Água foi feito para quem gosta de rir
-              alto, sair molhado e voltar para a pousada com uma história nova.
+              {t("littleBeachPage.heroCopy")}
             </p>
             <div className="park-hero-actions">
               <a href="#atracoes" className="park-button park-button-orange">
-                Explorar atrações <ArrowDownRight size={17} />
+                {t("littleBeachPage.exploreAttractions")} <ArrowDownRight size={17} />
               </a>
               <div className="park-hero-secondary-actions">
                 <button
@@ -66,7 +70,7 @@ export function LittleBeach() {
                   onClick={() => setPackagesOpen(true)}
                   data-testid="button-ver-pacotes-hero"
                 >
-                  Ver pacotes de acesso <Ticket size={15} />
+                  {t("littleBeachPage.viewPackages")} <Ticket size={15} />
                 </button>
               </div>
             </div>
@@ -74,11 +78,11 @@ export function LittleBeach() {
           <div className="park-hero-badge">
             <Sun size={25} />
             <strong>
-              Modo
+              {t("littleBeachPage.modeLine1")}
               <br />
-              aventura
+              {t("littleBeachPage.modeLine2")}
             </strong>
-            <span>ON</span>
+            <span>{t("littleBeachPage.modeOn")}</span>
           </div>
         </div>
         <div className="park-hero-wave" />
@@ -88,26 +92,24 @@ export function LittleBeach() {
 
       <section className="park-intro page-width">
         <div className="park-intro-copy">
-          <span className="park-label">O parque é seu</span>
+          <span className="park-label">{t("littleBeachPage.introKicker")}</span>
           <h2>
-            Prepare o<br />
-            <em>melhor mergulho.</em>
+            {t("littleBeachPage.introTitleLine1")}<br />
+            <em>{t("littleBeachPage.introTitleHighlight")}</em>
           </h2>
           <p>
-            Entre um escorregador e outro, tem sombra, brisa e aquele tipo de
-            alegria que não precisa de legenda. Escolha seu ritmo — a aventura
-            começa na próxima onda.
+            {t("littleBeachPage.introCopy")}
           </p>
         </div>
         <div className="park-intro-aside">
           <div className="park-sticker">
             <Zap size={19} />
             <span>
-              Mais
+              {t("littleBeachPage.stickerLine1")}
               <br />
-              <b>energia</b>
+              <b>{t("littleBeachPage.stickerLine2")}</b>
               <br />
-              por m²
+              {t("littleBeachPage.stickerLine3")}
             </span>
           </div>
           <ParkPackageCarousel onSelectPackage={openPackageDetails} />
@@ -119,7 +121,7 @@ export function LittleBeach() {
           <img
             key={slide.image}
             src={slide.image}
-            alt={slide.title}
+            alt={slideTitle}
             className="park-slide-image"
           />
           <div className="park-image-overlay" />
@@ -133,17 +135,17 @@ export function LittleBeach() {
                   (activeSlide - 1 + parkSlides.length) % parkSlides.length,
                 )
               }
-              aria-label="Atração anterior"
+              aria-label={t("littleBeachPage.previousAttraction")}
             >
               <ChevronLeft size={19} />
             </button>
             <div className="park-dots">
               {parkSlides.map((item, index) => (
                 <button
-                  key={item.label}
+                  key={item.key}
                   className={activeSlide === index ? "is-active" : ""}
                   onClick={() => setActiveSlide(index)}
-                  aria-label={`Ver ${item.label}`}
+                  aria-label={t("littleBeachPage.viewAttraction", { label: t(`parkAttractions.${item.key}Label`) })}
                 />
               ))}
             </div>
@@ -151,34 +153,34 @@ export function LittleBeach() {
               onClick={() =>
                 setActiveSlide((activeSlide + 1) % parkSlides.length)
               }
-              aria-label="Próxima atração"
+              aria-label={t("littleBeachPage.nextAttraction")}
             >
               <ChevronRight size={19} />
             </button>
           </div>
         </div>
         <div className="park-showcase-copy">
-          <span className="park-label">{slide.label}</span>
-          <h2>{slide.title}</h2>
-          <p>{slide.description}</p>
+          <span className="park-label">{slideLabel}</span>
+          <h2>{slideTitle}</h2>
+          <p>{slideDescription}</p>
           <div className="park-progress">
             <span
               style={{ width: `${((activeSlide + 1) / parkSlides.length) * 100}%` }}
             />
           </div>
           <span className="park-swipe-note">
-            Troque a atração <ArrowRight size={14} />
+            {t("littleBeachPage.swipeNote")} <ArrowRight size={14} />
           </span>
         </div>
       </section>
 
       <section className="park-highlights page-width">
         <div className="park-highlights-heading">
-          <span className="park-label">Por que entrar nessa?</span>
+          <span className="park-label">{t("littleBeachPage.whyJoinKicker")}</span>
           <h2>
-            Um parque inteiro
+            {t("littleBeachPage.whyJoinTitleLine1")}
             <br />
-            <em>de bons motivos.</em>
+            <em>{t("littleBeachPage.whyJoinTitleHighlight")}</em>
           </h2>
         </div>
         <div className="park-highlight-grid">
@@ -186,27 +188,25 @@ export function LittleBeach() {
             <div className="park-icon">
               <Waves size={21} />
             </div>
-            <h3>Água por todos os lados</h3>
-            <p>Para correr, boiar, deslizar ou simplesmente molhar os pés.</p>
+            <h3>{t("littleBeachPage.highlight1Title")}</h3>
+            <p>{t("littleBeachPage.highlight1Copy")}</p>
           </article>
           <article>
             <div className="park-icon">
               <Zap size={21} />
             </div>
-            <h3>Adrenalina na medida</h3>
+            <h3>{t("littleBeachPage.highlight2Title")}</h3>
             <p>
-              Atrações para quem quer acelerar e também para quem prefere ir
-              devagar.
+              {t("littleBeachPage.highlight2Copy")}
             </p>
           </article>
           <article>
             <div className="park-icon">
               <ShieldCheck size={21} />
             </div>
-            <h3>Todo mundo brinca</h3>
+            <h3>{t("littleBeachPage.highlight3Title")}</h3>
             <p>
-              Um espaço pensado para juntar famílias, amigos e muitas
-              gargalhadas.
+              {t("littleBeachPage.highlight3Copy")}
             </p>
           </article>
         </div>
@@ -216,18 +216,18 @@ export function LittleBeach() {
         <div className="park-cta-sun" />
         <div className="page-width park-cta-inner">
           <div>
-            <span className="park-label">Seu próximo splash</span>
+            <span className="park-label">{t("littleBeachPage.nextSplashKicker")}</span>
             <h2>
-              O dia pede
+              {t("littleBeachPage.nextSplashTitleLine1")}
               <br />
-              <em>um pouco mais.</em>
+              <em>{t("littleBeachPage.nextSplashTitleHighlight")}</em>
             </h2>
           </div>
           <button
             className="park-button park-button-blue"
             onClick={() => openBooking()}
           >
-            Consultar estadia <ArrowRight size={17} />
+            {t("littleBeachPage.consultStay")} <ArrowRight size={17} />
           </button>
         </div>
       </section>

@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { ArrowRight, Check, MessageCircle, Ticket, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { parkPackages } from "@/data/park-packages";
 
 const whatsappNumber = "5588981338506";
@@ -13,20 +14,22 @@ export function ParkPackagesDialog({
   onClose,
   initialPackageId,
 }: ParkPackagesDialogProps) {
+  const { t } = useTranslation();
   const [selectedId, setSelectedId] = useState(
     initialPackageId ?? parkPackages[0].id,
   );
   const selectedPackage =
     parkPackages.find((item) => item.id === selectedId) ?? parkPackages[0];
+  const selectedName = t(`parkPackages.items.${selectedPackage.id}.name`);
   const isFocused = Boolean(initialPackageId);
   const message = useMemo(
     () =>
       [
-        `Olá! Quero saber como comprar o pacote "${selectedPackage.name}" do Little Beach.`,
-        `Valor de referência: R$ ${selectedPackage.price.toLocaleString("pt-BR")}.`,
-        "Gostaria de confirmar disponibilidade, regras de acesso e formas de pagamento.",
+        t("parkPackagesUi.whatsappInterest", { name: selectedName }),
+        t("parkPackagesUi.whatsappPrice", { price: selectedPackage.price.toLocaleString("pt-BR") }),
+        t("parkPackagesUi.whatsappConfirm"),
       ].join("\n"),
-    [selectedPackage],
+    [selectedPackage, selectedName, t],
   );
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
@@ -48,33 +51,33 @@ export function ParkPackagesDialog({
         <button
           className="modal-close"
           onClick={onClose}
-          aria-label="Fechar pacotes"
+          aria-label={t("parkPackagesUi.closePackages")}
           data-testid="button-fechar-pacotes"
         >
           <X size={19} />
         </button>
         <div className="panel-kicker">
-          <span className="eyebrow-dot" /> Acesso Little Beach
+          <span className="eyebrow-dot" /> {t("parkPackagesUi.accessKicker")}
         </div>
         <h2 id="park-packages-title">
           {isFocused ? (
             <>
-              Seu pacote
+              {t("parkPackagesUi.yourPackageLine1")}
               <br />
-              <em>em detalhes.</em>
+              <em>{t("parkPackagesUi.yourPackageHighlight")}</em>
             </>
           ) : (
             <>
-              Escolha seu
+              {t("parkPackagesUi.chooseAdventureLine1")}
               <br />
-              <em>pacote de aventura.</em>
+              <em>{t("parkPackagesUi.chooseAdventureHighlight")}</em>
             </>
           )}
         </h2>
         <p className="park-packages-intro">
           {isFocused
-            ? `Tudo o que você precisa saber sobre o ${selectedPackage.name}. Fale com a equipe para confirmar a disponibilidade.`
-            : "Consulte as opções de acesso, compare o que cada uma inclui e fale com a equipe para confirmar a disponibilidade."}
+            ? t("parkPackagesUi.focusedIntro", { name: selectedName })
+            : t("parkPackagesUi.generalIntro")}
         </p>
         {isFocused ? (
           <article className="park-package-detail">
@@ -84,16 +87,16 @@ export function ParkPackagesDialog({
               </span>
               <span className="park-package-price">
                 R$ {selectedPackage.price.toLocaleString("pt-BR")}{" "}
-                <small>{selectedPackage.note}</small>
+                <small>{t(`parkPackages.items.${selectedPackage.id}.note`)}</small>
               </span>
             </div>
-            <h3>{selectedPackage.name}</h3>
-            <p>{selectedPackage.description}</p>
+            <h3>{selectedName}</h3>
+            <p>{t(`parkPackages.items.${selectedPackage.id}.description`)}</p>
             <span className="park-package-detail-label">
-              O que está incluído
+              {t("parkPackagesUi.includedLabel")}
             </span>
             <ul>
-              {selectedPackage.benefits.map((benefit) => (
+              {(t(`parkPackages.items.${selectedPackage.id}.benefits`, { returnObjects: true }) as string[]).map((benefit) => (
                 <li key={benefit}>
                   <Check size={14} /> {benefit}
                 </li>
@@ -118,15 +121,15 @@ export function ParkPackagesDialog({
                     </span>
                     <span className="park-package-price">
                       R$ {item.price.toLocaleString("pt-BR")}{" "}
-                      <small>{item.note}</small>
+                      <small>{t(`parkPackages.items.${item.id}.note`)}</small>
                     </span>
                   </div>
-                  <strong>{item.name}</strong>
+                  <strong>{t(`parkPackages.items.${item.id}.name`)}</strong>
                   <span className="park-package-description">
-                    {item.description}
+                    {t(`parkPackages.items.${item.id}.description`)}
                   </span>
                   <span className="park-package-benefits">
-                    {item.benefits.map((benefit) => (
+                    {(t(`parkPackages.items.${item.id}.benefits`, { returnObjects: true }) as string[]).map((benefit) => (
                       <span key={benefit}>
                         <Check size={13} /> {benefit}
                       </span>
@@ -136,8 +139,8 @@ export function ParkPackagesDialog({
               ))}
             </div>
             <div className="park-package-selected">
-              <span>Pacote escolhido</span>
-              <strong>{selectedPackage.name}</strong>
+              <span>{t("parkPackagesUi.chosenPackage")}</span>
+              <strong>{selectedName}</strong>
             </div>
           </>
         )}
@@ -148,7 +151,7 @@ export function ParkPackagesDialog({
           rel="noreferrer"
           data-testid="button-comprar-pacote-whatsapp"
         >
-          Continuar pelo WhatsApp <MessageCircle size={17} />{" "}
+          {t("parkPackagesUi.continueWhatsapp")} <MessageCircle size={17} />{" "}
           <ArrowRight size={15} />
         </a>
       </section>

@@ -12,6 +12,7 @@ import {
   ChevronRight,
   Ticket,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { parkPackages } from "@/data/park-packages";
 
 type ParkPackageCarouselProps = {
@@ -21,6 +22,7 @@ type ParkPackageCarouselProps = {
 export function ParkPackageCarousel({
   onSelectPackage,
 }: ParkPackageCarouselProps) {
+  const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
   const [trackOffset, setTrackOffset] = useState(0);
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -59,10 +61,10 @@ export function ParkPackageCarousel({
   return (
     <div
       className="park-package-carousel"
-      aria-label="Pacotes de acesso ao Little Beach"
+      aria-label={t("parkPackagesUi.carouselAriaLabel")}
     >
       <div className="park-package-carousel-heading">
-        <span className="park-label">Escolha seu acesso</span>
+        <span className="park-label">{t("parkPackagesUi.chooseAccess")}</span>
         <span className="park-package-count">
           0{activeIndex + 1} <span>/ 03</span>
         </span>
@@ -86,16 +88,16 @@ export function ParkPackageCarousel({
                 <span className="park-package-icon">
                   <Ticket size={19} />
                 </span>
-                <span>Little Beach</span>
+                <span>{t("parkPackagesUi.littleBeachBadge")}</span>
               </div>
-              <h3>{item.name}</h3>
-              <p>{item.description}</p>
+              <h3>{t(`parkPackages.items.${item.id}.name`)}</h3>
+              <p>{t(`parkPackages.items.${item.id}.description`)}</p>
               <strong className="park-package-feature-price">
                 R$ {item.price.toLocaleString("pt-BR")}
-                <small>{item.note}</small>
+                <small>{t(`parkPackages.items.${item.id}.note`)}</small>
               </strong>
               <ul>
-                {item.benefits.map((benefit) => (
+                {(t(`parkPackages.items.${item.id}.benefits`, { returnObjects: true }) as string[]).map((benefit) => (
                   <li key={benefit}>
                     <Check size={13} /> {benefit}
                   </li>
@@ -107,7 +109,7 @@ export function ParkPackageCarousel({
                 onClick={() => onSelectPackage(item.id)}
                 data-testid={`button-ver-pacote-${item.id}`}
               >
-                Ver detalhes do pacote <ArrowRight size={15} />
+                {t("parkPackagesUi.viewDetails")} <ArrowRight size={15} />
               </button>
             </article>
           ))}
@@ -117,7 +119,7 @@ export function ParkPackageCarousel({
         <button
           type="button"
           onClick={() => move(-1)}
-          aria-label="Pacote anterior"
+          aria-label={t("parkPackagesUi.previousPackage")}
         >
           <ChevronLeft size={17} />
         </button>
@@ -128,7 +130,7 @@ export function ParkPackageCarousel({
               key={item.id}
               className={index === activeIndex ? "is-active" : ""}
               onClick={() => setActiveIndex(index)}
-              aria-label={`Ver pacote ${index + 1}`}
+              aria-label={t("parkPackagesUi.viewPackage", { number: index + 1 })}
               aria-current={index === activeIndex ? "true" : undefined}
             />
           ))}
@@ -136,13 +138,13 @@ export function ParkPackageCarousel({
         <button
           type="button"
           onClick={() => move(1)}
-          aria-label="Próximo pacote"
+          aria-label={t("parkPackagesUi.nextPackage")}
         >
           <ChevronRight size={17} />
         </button>
       </div>
       <span className="park-package-carousel-hint">
-        Navegue pelos pacotes <ArrowRight size={13} />
+        {t("parkPackagesUi.browseHint")} <ArrowRight size={13} />
       </span>
     </div>
   );

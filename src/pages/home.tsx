@@ -1,5 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   ArrowDownRight,
   ArrowRight,
@@ -20,6 +21,7 @@ import { Carousel } from "@/components/carousel/carousel";
 import { useBooking } from "@/hooks/booking-context";
 import { atmosphereSlides, foodSlides } from "@/data/slides";
 import heroImage from "@assets/pousada-aerea.jpeg";
+import heroBackgroundImage from "@assets/pousada.png";
 import galleryOne from "@assets/room-blue-bed.png";
 import galleryTwo from "@assets/room-white-bed.png";
 import parkSlideTwo from "@assets/water-park-aerial.png";
@@ -32,26 +34,28 @@ function ArrowUpRightIcon() {
 }
 
 function AtmosphereCarousel() {
+  const { t } = useTranslation();
   return (
     <Carousel
       slides={atmosphereSlides}
-      ariaLabel="Imagens do ritmo da pousada"
+      ariaLabel={t("home.atmosphere.ariaLabel")}
       autoPlayInterval={2000}
       floatingTag={
         <div className="photo-tag">
-          o nosso quintal <ArrowUpRightIcon />
+          {t("home.atmosphere.photoTag")} <ArrowUpRightIcon />
         </div>
       }
-      hint="deslize para ver mais"
+      hint={t("home.atmosphere.hint")}
     />
   );
 }
 
 function FoodCarousel() {
+  const { t } = useTranslation();
   return (
     <Carousel
       slides={foodSlides}
-      ariaLabel="Imagens da gastronomia da pousada"
+      ariaLabel={t("home.food.ariaLabel")}
       autoPlayInterval={4000}
       className="food-carousel"
       renderSlideOverlay={(slide) => (
@@ -65,25 +69,30 @@ function FoodCarousel() {
   );
 }
 
-const stayVideos = [
+const stayVideoAssets = [
   {
-    title: "A lagoa ao amanhecer",
+    titleKey: "video1Title",
     source: videoOne,
     poster: heroImage,
   },
   {
-    title: "Dias perto da água",
+    titleKey: "video2Title",
     source: videoTwo,
     poster: galleryOne,
   },
   {
-    title: "O ritmo da pousada",
+    titleKey: "video3Title",
     source: videoThree,
     poster: galleryTwo,
   },
 ];
 
 function StayVideoCoverflow() {
+  const { t } = useTranslation();
+  const stayVideos = stayVideoAssets.map((video) => ({
+    ...video,
+    title: t(`home.stayVideos.${video.titleKey}`),
+  }));
   const [activeVideo, setActiveVideo] = useState(0);
   const [expandedVideo, setExpandedVideo] = useState<number | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -119,9 +128,9 @@ function StayVideoCoverflow() {
   };
 
   return (
-    <div className="stay-video-coverflow" aria-label="Vídeos da pousada">
+    <div className="stay-video-coverflow" aria-label={t("home.stayVideos.ariaLabel")}>
       <div className="stay-video-coverflow-heading">
-        <span>Veja de perto</span>
+        <span>{t("home.stayVideos.watchClosely")}</span>
         <strong>
           0{activeVideo + 1} <small>/ 03</small>
         </strong>
@@ -146,7 +155,7 @@ function StayVideoCoverflow() {
               }}
               role="button"
               tabIndex={0}
-              aria-label={`Visualizar vídeo: ${video.title}`}
+              aria-label={`${t("home.stayVideos.watch")}: ${video.title}`}
               aria-pressed={index === activeVideo}
             >
               <video
@@ -161,7 +170,7 @@ function StayVideoCoverflow() {
                 controlsList="nofullscreen"
               />
               <span>{video.title}</span>
-              {index !== activeVideo && <i>Selecionar</i>}
+              {index !== activeVideo && <i>{t("home.stayVideos.select")}</i>}
               {index === activeVideo && (
                 <button
                   type="button"
@@ -170,7 +179,7 @@ function StayVideoCoverflow() {
                     event.stopPropagation();
                     setExpandedVideo(index);
                   }}
-                  aria-label={`Ampliar vídeo: ${video.title}`}
+                  aria-label={`${t("home.stayVideos.expand")}: ${video.title}`}
                 >
                   <Maximize2 size={15} />
                 </button>
@@ -182,18 +191,18 @@ function StayVideoCoverflow() {
           <button
             type="button"
             onClick={() => moveVideo(-1)}
-            aria-label="Vídeo anterior"
+            aria-label={t("home.stayVideos.previous")}
           >
             <ChevronLeft size={17} />
           </button>
-          <div aria-label="Selecionar vídeo">
+          <div aria-label={t("home.stayVideos.selectVideo")}>
             {stayVideos.map((video, index) => (
               <button
                 type="button"
                 key={video.title}
                 className={index === activeVideo ? "is-active" : ""}
                 onClick={() => setActiveVideo(index)}
-                aria-label={`Vídeo ${index + 1}`}
+                aria-label={`${t("home.stayVideos.video")} ${index + 1}`}
                 aria-current={index === activeVideo ? "true" : undefined}
               />
             ))}
@@ -201,7 +210,7 @@ function StayVideoCoverflow() {
           <button
             type="button"
             onClick={() => moveVideo(1)}
-            aria-label="Próximo vídeo"
+            aria-label={t("home.stayVideos.next")}
           >
             <ChevronRight size={17} />
           </button>
@@ -212,7 +221,7 @@ function StayVideoCoverflow() {
           className="stay-video-lightbox"
           role="dialog"
           aria-modal="true"
-          aria-label={`Vídeo ampliado: ${stayVideos[expandedVideo].title}`}
+          aria-label={`${t("home.stayVideos.expanded")}: ${stayVideos[expandedVideo].title}`}
           onClick={() => setExpandedVideo(null)}
         >
           <div
@@ -223,7 +232,7 @@ function StayVideoCoverflow() {
               type="button"
               className="stay-video-lightbox-close"
               onClick={() => setExpandedVideo(null)}
-              aria-label="Fechar vídeo ampliado"
+              aria-label={t("home.stayVideos.close")}
             >
               <X size={18} />
             </button>
@@ -244,6 +253,7 @@ function StayVideoCoverflow() {
 }
 
 function HomeRoomSearch() {
+  const { t } = useTranslation();
   const [, setLocation] = useLocation();
   const [adults, setAdults] = useState("2");
   const [children, setChildren] = useState("0");
@@ -279,24 +289,24 @@ function HomeRoomSearch() {
   return (
     <section
       className="home-room-search page-width"
-      aria-label="Buscar hospedagem"
+      aria-label={t("home.search.ariaLabel")}
     >
       <form className="home-room-search-card" onSubmit={searchRooms}>
         <div className="home-room-search-intro">
-          <span className="home-room-search-kicker">Sua estadia</span>
+          <span className="home-room-search-kicker">{t("home.search.kicker")}</span>
           <h2>
-            Encontre seu <em>canto.</em>
+            {t("home.search.titleLine1")} <em>{t("home.search.titleHighlight")}</em>
           </h2>
-          <p>Escolha o que combina com os seus dias por aqui.</p>
+          <p>{t("home.search.subtitle")}</p>
         </div>
         <div className="home-room-search-field">
-          <label htmlFor="home-adults-input">Adultos</label>
+          <label htmlFor="home-adults-input">{t("home.search.adults")}</label>
           <div className="home-room-search-stepper">
             <button
               type="button"
               className="home-room-search-stepper-button"
               onClick={() => updateGuestCount(adults, setAdults, -1, 1)}
-              aria-label="Diminuir quantidade de adultos"
+              aria-label={t("home.search.decreaseAdults")}
             >
               <Minus size={14} />
             </button>
@@ -307,27 +317,27 @@ function HomeRoomSearch() {
               max="20"
               value={adults}
               onChange={(event) => setAdults(event.target.value)}
-              aria-label="Quantidade de adultos"
+              aria-label={t("home.search.adultsLabel")}
               className="home-room-search-number"
             />
             <button
               type="button"
               className="home-room-search-stepper-button"
               onClick={() => updateGuestCount(adults, setAdults, 1, 1)}
-              aria-label="Aumentar quantidade de adultos"
+              aria-label={t("home.search.increaseAdults")}
             >
               <Plus size={14} />
             </button>
           </div>
         </div>
         <div className="home-room-search-field">
-          <label htmlFor="home-children-input">Crianças</label>
+          <label htmlFor="home-children-input">{t("home.search.children")}</label>
           <div className="home-room-search-stepper">
             <button
               type="button"
               className="home-room-search-stepper-button"
               onClick={() => updateGuestCount(children, setChildren, -1, 0)}
-              aria-label="Diminuir quantidade de crianças"
+              aria-label={t("home.search.decreaseChildren")}
             >
               <Minus size={14} />
             </button>
@@ -338,57 +348,57 @@ function HomeRoomSearch() {
               max="20"
               value={children}
               onChange={(event) => setChildren(event.target.value)}
-              aria-label="Quantidade de crianças"
+              aria-label={t("home.search.childrenLabel")}
               className="home-room-search-number"
             />
             <button
               type="button"
               className="home-room-search-stepper-button"
               onClick={() => updateGuestCount(children, setChildren, 1, 0)}
-              aria-label="Aumentar quantidade de crianças"
+              aria-label={t("home.search.increaseChildren")}
             >
               <Plus size={14} />
             </button>
           </div>
         </div>
         <label className="home-room-search-field">
-          <span>Valor da Refeição</span>
+          <span>{t("home.search.mealPrice")}</span>
           <select
             value={mealPrice}
             onChange={(event) => setMealPrice(event.target.value)}
-            aria-label="Valor ou tipo de refeição"
+            aria-label={t("home.search.mealAriaLabel")}
             title={
               mealPrice === "incluso"
-                ? "Café incluso (R$ 0)"
+                ? t("home.search.mealIncludedTitle")
                 : mealPrice === "80"
-                  ? "Meia pensão (R$ 80 / pessoa)"
+                  ? t("home.search.mealHalfTitle")
                   : mealPrice === "150"
-                    ? "Pensão completa (R$ 150 / pessoa)"
-                    : "Qualquer opção"
+                    ? t("home.search.mealFullTitle")
+                    : t("home.search.mealAny")
             }
           >
-            <option value="">Qualquer opção</option>
-            <option value="incluso">Café incluso</option>
-            <option value="80">Meia pensão · R$ 80</option>
-            <option value="150">Pensão completa · R$ 150</option>
+            <option value="">{t("home.search.mealAny")}</option>
+            <option value="incluso">{t("home.search.mealIncluded")}</option>
+            <option value="80">{t("home.search.mealHalf")}</option>
+            <option value="150">{t("home.search.mealFull")}</option>
           </select>
         </label>
         <label className="home-room-search-field">
-          <span>Valor Máximo</span>
+          <span>{t("home.search.maxPrice")}</span>
           <select
             value={maxPrice}
             onChange={(event) => setMaxPrice(event.target.value)}
-            aria-label="Valor máximo por noite"
+            aria-label={t("home.search.maxPriceAriaLabel")}
           >
-            <option value="2000">Sem limite</option>
-            <option value="600">Até R$ 600</option>
-            <option value="900">Até R$ 900</option>
-            <option value="1200">Até R$ 1.200</option>
-            <option value="1800">Até R$ 1.800</option>
+            <option value="2000">{t("home.search.maxPriceUnlimited")}</option>
+            <option value="600">{t("home.search.maxPrice600")}</option>
+            <option value="900">{t("home.search.maxPrice900")}</option>
+            <option value="1200">{t("home.search.maxPrice1200")}</option>
+            <option value="1800">{t("home.search.maxPrice1800")}</option>
           </select>
         </label>
         <button className="button home-room-search-submit" type="submit">
-          Buscar hospedagem <Search size={16} />
+          {t("home.search.submit")} <Search size={16} />
         </button>
       </form>
     </section>
@@ -397,29 +407,28 @@ function HomeRoomSearch() {
 
 export function Home() {
   const { openBooking } = useBooking();
+  const { t } = useTranslation();
 
   return (
     <main>
       <section className="home-hero">
         <img
-          src={heroImage}
+          src={heroBackgroundImage}
           alt="Lagoa de águas claras da Beira D’Água"
           className="hero-image"
         />
         <div className="hero-wash" />
         <div className="hero-content page-width">
           <p className="hero-overline">
-            Beira D’Água Little Beach <span>·</span> um refúgio brasileiro
+            {t("home.hero.overline")} <span>·</span> {t("home.hero.overlineSuffix")}
           </p>
           <h1>
-            Deixe o dia
+            {t("home.hero.titleLine1")}
             <br />
-            <em>ficar leve.</em>
+            <em>{t("home.hero.titleLine2")}</em>
           </h1>
           <p className="hero-copy">
-            Uma pousada pequena, uma lagoa transparente e o tempo
-            <br className="desktop-only" /> necessário para voltar a ouvir o que
-            importa.
+            {t("home.hero.copy")}
           </p>
           <div className="hero-actions">
             <button
@@ -427,7 +436,7 @@ export function Home() {
               onClick={() => openBooking()}
               data-testid="button-hero-reserva"
             >
-              Planejar minha estadia <ArrowRight size={17} />
+              {t("home.hero.planStay")} <ArrowRight size={17} />
             </button>
             <a
               href="#experiencia"
@@ -437,7 +446,7 @@ export function Home() {
               <span className="scroll-ring">
                 <ArrowDownRight size={16} />
               </span>{" "}
-              conhecer a pousada
+              {t("home.hero.knowPousada")}
             </a>
           </div>
         </div>
@@ -447,33 +456,30 @@ export function Home() {
           <span>03</span>
         </div>
         <div className="hero-caption">
-          <Waves size={15} /> Água calma, sombra boa, mesa posta.
+          <Waves size={15} /> {t("home.hero.caption")}
         </div>
       </section>
       <HomeRoomSearch />
       <section className="intro-section page-width" id="experiencia">
         <div className="intro-content">
           <div className="intro-number">
-            01 <span>—</span> a experiência
+            {t("home.intro.number")} <span>—</span> {t("home.intro.kicker")}
           </div>
           <div className="intro-copy">
             <h2>
-              Tem lugar que
+              {t("home.intro.titleLine1")}
               <br />
-              <em>desacelera a gente.</em>
+              <em>{t("home.intro.titleHighlight")}</em>
             </h2>
             <p>
-              Entre o verde que abraça e a água que convida, a Beira D’Água é
-              feita para quem quer sair do automático. Aqui, cada acomodação
-              abre para um pedaço de natureza, cada refeição chega com gosto de
-              litoral e cada tarde pode durar o quanto quiser.
+              {t("home.intro.copy")}
             </p>
             <a
               href="#ritmo"
               className="text-link"
               data-testid="link-intro-ritmo"
             >
-              Sinta o lugar <ArrowDownRight size={17} />
+              {t("home.intro.link")} <ArrowDownRight size={17} />
             </a>
           </div>
         </div>
@@ -482,40 +488,38 @@ export function Home() {
       <section className="atmosphere-section" id="ritmo">
         <AtmosphereCarousel />
         <div className="atmosphere-copy">
-          <SectionLabel>02 · o ritmo daqui</SectionLabel>
+          <SectionLabel>{t("home.atmosphere.sectionLabel")}</SectionLabel>
           <h2>
-            Manhã de água.
+            {t("home.atmosphere.titleLine1")}
             <br />
-            <em>Tarde de sombra.</em>
+            <em>{t("home.atmosphere.titleLine2")}</em>
           </h2>
           <p>
-            Não há programação obrigatória, nem despertador tocando cedo. Há um
-            banho demorado, um livro aberto na varanda e a chance de fazer nada
-            — com muito prazer.
+            {t("home.atmosphere.copy")}
           </p>
           <div className="ritual-list">
             <div>
               <span>01</span>
               <p>
-                <b>Água por perto</b>
+                <b>{t("home.atmosphere.item1Title")}</b>
                 <br />
-                Para mergulhar antes do café.
+                {t("home.atmosphere.item1Copy")}
               </p>
             </div>
             <div>
               <span>02</span>
               <p>
-                <b>Quarto que acolhe</b>
+                <b>{t("home.atmosphere.item2Title")}</b>
                 <br />
-                Simples, bonito e cheio de silêncio.
+                {t("home.atmosphere.item2Copy")}
               </p>
             </div>
             <div>
               <span>03</span>
               <p>
-                <b>Mesa com memória</b>
+                <b>{t("home.atmosphere.item3Title")}</b>
                 <br />
-                Sabores frescos do nosso litoral.
+                {t("home.atmosphere.item3Copy")}
               </p>
             </div>
           </div>
@@ -524,11 +528,11 @@ export function Home() {
       <section className="rooms-teaser page-width">
         <div className="teaser-heading">
           <div>
-            <SectionLabel>03 · dormir bem</SectionLabel>
+            <SectionLabel>{t("home.roomsTeaser.sectionLabel")}</SectionLabel>
             <h2>
-              Uma pausa
+              {t("home.roomsTeaser.titleLine1")}
               <br />
-              <em>do seu jeito.</em>
+              <em>{t("home.roomsTeaser.titleHighlight")}</em>
             </h2>
           </div>
           <Link
@@ -536,7 +540,7 @@ export function Home() {
             className="text-link"
             data-testid="link-home-quartos"
           >
-            Ver toda a hospedagem <ArrowRight size={16} />
+            {t("home.roomsTeaser.seeAll")} <ArrowRight size={16} />
           </Link>
         </div>
         <div className="rooms-feature">
@@ -545,45 +549,42 @@ export function Home() {
             <span className="image-index">01 / 03</span>
           </div>
           <div className="room-feature-copy">
-            <span className="room-type">Acomodação · para dois</span>
+            <span className="room-type">{t("home.roomsTeaser.roomType")}</span>
             <h3>
-              Janela para
+              {t("home.roomsTeaser.titleFeatureLine1")}
               <br />
-              <em>o verde.</em>
+              <em>{t("home.roomsTeaser.titleFeatureHighlight")}</em>
             </h3>
             <p>
-              Um canto silencioso para acordar sem pressa. Cama gostosa, luz
-              natural e a natureza como companhia.
+              {t("home.roomsTeaser.copy")}
             </p>
             <Link
               href="/quartos"
               className="button button-dark"
               data-testid="button-conhecer-quarto"
             >
-              Conhecer a hospedagem <ArrowRight size={16} />
+              {t("home.roomsTeaser.cta")} <ArrowRight size={16} />
             </Link>
           </div>
         </div>
       </section>
       <section className="food-section">
         <div className="food-copy">
-          <SectionLabel>04 · comer por aqui</SectionLabel>
+          <SectionLabel>{t("home.food.sectionLabel")}</SectionLabel>
           <h2>
-            O mar também
+            {t("home.food.titleLine1")}
             <br />
-            <em>chega à mesa.</em>
+            <em>{t("home.food.titleHighlight")}</em>
           </h2>
           <p>
-            Receitas que respeitam o ingrediente e o lugar. Peixes, mariscos,
-            calor de brasa e aquela vontade de ficar mais um pouco depois do
-            almoço.
+            {t("home.food.copy")}
           </p>
           <Link
             href="/cardapio"
             className="button button-outline-light"
             data-testid="button-home-cardapio"
           >
-            Conhecer a gastronomia <ArrowRight size={16} />
+            {t("home.food.cta")} <ArrowRight size={16} />
           </Link>
         </div>
         <FoodCarousel />
@@ -592,42 +593,41 @@ export function Home() {
         <div className="park-teaser-image">
           <img src={parkSlideTwo} alt="Área aquática com toboáguas e lagoa" />
           <div className="park-teaser-stamp">
-            <Waves size={16} /> água
+            <Waves size={16} /> {t("home.park.stampLine1")}
             <br />
-            <b>+ aventura</b>
+            <b>{t("home.park.stampLine2")}</b>
           </div>
         </div>
         <div className="park-teaser-copy">
           <div className="park-teaser-kicker">
-            <Sparkles size={13} /> 05 · modo aventura
+            <Sparkles size={13} /> {t("home.park.kicker")}
           </div>
           <h2>
-            Um mergulho
+            {t("home.park.titleLine1")}
             <br />
-            <em>fora do roteiro.</em>
+            <em>{t("home.park.titleHighlight")}</em>
           </h2>
           <p>
-            Quando a vontade é brincar, o Little Beach entra em cena: toboáguas,
-            lagoa e um dia inteiro para rir sem olhar o relógio.
+            {t("home.park.copy")}
           </p>
           <Link
             href="/little-beach"
             className="button park-teaser-button"
             data-testid="button-home-little-beach"
           >
-            Conhecer o Little Beach <ArrowRight size={16} />
+            {t("home.park.cta")} <ArrowRight size={16} />
           </Link>
         </div>
       </section>
       <section className="gallery-section page-width">
         <div className="gallery-intro">
-          <SectionLabel>06 · guardar na memória</SectionLabel>
+          <SectionLabel>{t("home.gallery.sectionLabel")}</SectionLabel>
           <h2>
-            Vá embora com
+            {t("home.gallery.titleLine1")}
             <br />
-            <em>água nos olhos.</em>
+            <em>{t("home.gallery.titleHighlight")}</em>
           </h2>
-          <p>Ou volte logo. Algumas paisagens a gente reconhece como casa.</p>
+          <p>{t("home.gallery.copy")}</p>
         </div>
         <div className="gallery-grid">
           <div className="gallery-tall">
@@ -639,9 +639,9 @@ export function Home() {
           <div className="gallery-detail">
             <div className="detail-art">BD</div>
             <span>
-              dias simples
+              {t("home.gallery.detailLine1")}
               <br />
-              são dias grandes
+              {t("home.gallery.detailLine2")}
             </span>
           </div>
         </div>

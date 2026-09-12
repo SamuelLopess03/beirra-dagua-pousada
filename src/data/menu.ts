@@ -1,77 +1,64 @@
 import plateImage from "@assets/grilled-meal.png";
 
-export type MenuCategory =
-  | "Tudo"
-  | "Para começar"
-  | "Do mar"
-  | "Da brasa"
-  | "Para beber";
+export type MenuCategoryKey = "all" | "starters" | "sea" | "grill" | "drinks";
 
 export type MenuItem = {
-  name: string;
-  category: Exclude<MenuCategory, "Tudo">;
-  description: string;
-  mark?: string;
+  id: string;
+  categoryKey: Exclude<MenuCategoryKey, "all">;
+  hasMark?: boolean;
   image: string;
 };
 
-export const menuCategories: MenuCategory[] = [
-  "Tudo",
-  "Para começar",
-  "Do mar",
-  "Da brasa",
-  "Para beber",
+export const menuCategoryKeys: MenuCategoryKey[] = [
+  "all",
+  "starters",
+  "sea",
+  "grill",
+  "drinks",
 ];
 
 export const menuItems: MenuItem[] = [
   {
-    name: "Crocante de tapioca",
-    category: "Para começar",
-    description: "Com peixe curado, ervas frescas e toque cítrico.",
-    mark: "da casa",
+    id: "tapioca-crisp",
+    categoryKey: "starters",
+    hasMark: true,
     image: plateImage,
   },
   {
-    name: "Peixe do dia",
-    category: "Do mar",
-    description: "Grelhado, com acompanhamentos que mudam com a maré.",
+    id: "fish-of-the-day",
+    categoryKey: "sea",
     image: plateImage,
   },
   {
-    name: "Moqueca de maré",
-    category: "Do mar",
-    description: "Leite de coco, dendê suave e cheiro verde.",
+    id: "tide-moqueca",
+    categoryKey: "sea",
     image: plateImage,
   },
   {
-    name: "Arroz de frutos do mar",
-    category: "Do mar",
-    description: "Camarões, polvo e o caldo demorado da nossa cozinha.",
+    id: "seafood-rice",
+    categoryKey: "sea",
     image: plateImage,
   },
   {
-    name: "Brasa do litoral",
-    category: "Da brasa",
-    description: "Peixe inteiro, camarões e polvo para compartilhar.",
-    mark: "para dividir",
+    id: "coastal-grill",
+    categoryKey: "grill",
+    hasMark: true,
     image: plateImage,
   },
   {
-    name: "Legumes na brasa",
-    category: "Da brasa",
-    description: "Abóbora, cebola e folhas com molho de castanhas.",
+    id: "grilled-vegetables",
+    categoryKey: "grill",
     image: plateImage,
   },
   {
-    name: "Caju com água de coco",
-    category: "Para beber",
-    description: "Fresco, gelado e sem pressa.",
+    id: "cashew-coconut-water",
+    categoryKey: "drinks",
     image: plateImage,
   },
   {
-    name: "Caipirinha da casa",
-    category: "Para beber",
-    description: "Fruta da estação, cachaça e um pouco de sol.",
+    id: "house-caipirinha",
+    categoryKey: "drinks",
     image: plateImage,
   },
 ];
+

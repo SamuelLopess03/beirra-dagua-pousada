@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { ArrowRight, Check, Coffee, Moon, Users, Utensils, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { Room } from "@/data/rooms";
 
 type BookingDialogProps = {
@@ -7,8 +8,8 @@ type BookingDialogProps = {
   room?: Room;
 };
 
-function formatDate(value: string) {
-  return new Date(`${value}T12:00:00`).toLocaleDateString("pt-BR", {
+function formatDate(value: string, locale: string) {
+  return new Date(`${value}T12:00:00`).toLocaleDateString(locale, {
     day: "2-digit",
     month: "short",
     year: "numeric",
@@ -24,6 +25,11 @@ function formatPrice(value: number) {
 }
 
 export function BookingDialog({ onClose, room }: BookingDialogProps) {
+  const { t, i18n } = useTranslation();
+  const roomName = room ? t(`rooms.items.${room.slug}.name`) : "";
+  const roomType = room ? t(`rooms.items.${room.slug}.type`) : "";
+  const roomDesc = room ? t(`rooms.items.${room.slug}.desc`) : "";
+  const roomMealLabels = room ? room.mealKeys.map((key) => t(`mealPlans.${key}`)) : [];
   const [step, setStep] = useState<"form" | "review" | "sent">("form");
   const [dateError, setDateError] = useState("");
   const [form, setForm] = useState({
@@ -67,11 +73,11 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
   const mealPlanName = useMemo(
     () =>
       form.mealPlan === "meia"
-        ? "Meia pensão (R$ 80 / pessoa / dia)"
+        ? t("bookingDialog.mealHalfName")
         : form.mealPlan === "completa"
-          ? "Pensão completa (R$ 150 / pessoa / dia)"
-          : "Café da manhã incluso (R$ 0)",
-    [form.mealPlan],
+          ? t("bookingDialog.mealFullName")
+          : t("bookingDialog.mealIncludedName"),
+    [form.mealPlan, t],
   );
 
   const mealTotal = useMemo(
@@ -102,7 +108,7 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
         <button
           className="modal-close"
           onClick={onClose}
-          aria-label="Fechar"
+          aria-label={t("bookingDialog.close")}
           data-testid="button-fechar-reserva"
         >
           <X size={19} />
@@ -111,35 +117,35 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
           <>
             <div className="panel-kicker">
               <span className="eyebrow-dot" />{" "}
-              {room ? "Reserve seu quarto" : "Reserva sob medida"}
+              {room ? t("bookingDialog.kickerWithRoom") : t("bookingDialog.kickerWithoutRoom")}
             </div>
             <h2 id="booking-title">
               {room ? (
                 <>
-                  Seu descanso
+                  {t("bookingDialog.titleWithRoomLine1")}
                   <br />
-                  <em>começa aqui.</em>
+                  <em>{t("bookingDialog.titleWithRoomHighlight")}</em>
                 </>
               ) : (
                 <>
-                  Vamos encontrar
+                  {t("bookingDialog.titleWithoutRoomLine1")}
                   <br />
-                  <em>seu lugar.</em>
+                  <em>{t("bookingDialog.titleWithoutRoomHighlight")}</em>
                 </>
               )}
             </h2>
             <p className="panel-intro">
               {room
-                ? "Escolha suas datas e confira todos os detalhes antes de confirmar sua reserva."
-                : "Conte como você imagina seus dias por aqui. A gente responde com calma, detalhes e as melhores possibilidades."}
+                ? t("bookingDialog.introWithRoom")
+                : t("bookingDialog.introWithoutRoom")}
             </p>
             {room && (
               <div className="booking-room-preview">
                 <img src={room.image} alt="" />
                 <div>
-                  <span className="booking-room-type">{room.type}</span>
-                  <strong>{room.name}</strong>
-                  <span>A partir de {formatPrice(room.price)} / noite</span>
+                  <span className="booking-room-type">{roomType}</span>
+                  <strong>{roomName}</strong>
+                  <span>{t("bookingDialog.fromPricePerNight", { price: formatPrice(room.price) })}</span>
                 </div>
               </div>
             )}
@@ -151,7 +157,7 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
                   form.departure &&
                   new Date(form.departure) <= new Date(form.arrival)
                 ) {
-                  setDateError("A saída precisa acontecer depois da chegada.");
+                  setDateError(t("bookingDialog.dateError"));
                   return;
                 }
                 setStep("review");
@@ -160,7 +166,7 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
             >
               <div className="form-grid">
                 <label>
-                  Chegada
+                  {t("bookingDialog.arrival")}
                   <input
                     required
                     type="date"
@@ -170,7 +176,7 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
                   />
                 </label>
                 <label>
-                  Saída
+                  {t("bookingDialog.departure")}
                   <input
                     required
                     type="date"
@@ -187,7 +193,7 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
               
               <div className="form-grid">
                 <label>
-                  Adultos
+                  {t("bookingDialog.adults")}
                   <input
                     required
                     type="number"
@@ -199,7 +205,7 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
                   />
                 </label>
                 <label>
-                  Crianças
+                  {t("bookingDialog.children")}
                   <input
                     type="number"
                     min="0"
@@ -212,36 +218,36 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
               </div>
 
               <label>
-                Plano e Valor da Refeição
+                {t("bookingDialog.mealPlanLabel")}
                 <select
                   value={form.mealPlan}
                   onChange={(event) => update("mealPlan", event.target.value)}
                   data-testid="select-refeicao"
                 >
-                  <option value="incluso">Café da manhã incluso (R$ 0)</option>
-                  <option value="meia">Meia pensão (R$ 80 / pessoa por dia)</option>
-                  <option value="completa">Pensão completa (R$ 150 / pessoa por dia)</option>
+                  <option value="incluso">{t("bookingDialog.mealIncludedOption")}</option>
+                  <option value="meia">{t("bookingDialog.mealHalfOption")}</option>
+                  <option value="completa">{t("bookingDialog.mealFullOption")}</option>
                 </select>
               </label>
 
               <div className="form-grid">
                 <label>
-                  Seu nome
+                  {t("bookingDialog.name")}
                   <input
                     required
                     type="text"
-                    placeholder="Como podemos chamar você?"
+                    placeholder={t("bookingDialog.namePlaceholder")}
                     value={form.name}
                     onChange={(event) => update("name", event.target.value)}
                     data-testid="input-nome"
                   />
                 </label>
                 <label>
-                  E-mail
+                  {t("bookingDialog.email")}
                   <input
                     required
                     type="email"
-                    placeholder="voce@email.com"
+                    placeholder={t("bookingDialog.emailPlaceholder")}
                     value={form.email}
                     onChange={(event) => update("email", event.target.value)}
                     data-testid="input-email"
@@ -249,10 +255,10 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
                 </label>
               </div>
               <label>
-                Alguma preferência? <span className="optional">(opcional)</span>
+                {t("bookingDialog.notePreference")} <span className="optional">{t("bookingDialog.optional")}</span>
                 <textarea
                   rows={3}
-                  placeholder="Uma ocasião especial, dúvidas ou restrições alimentares..."
+                  placeholder={t("bookingDialog.notePlaceholder")}
                   value={form.note}
                   onChange={(event) => update("note", event.target.value)}
                   data-testid="input-preferencia"
@@ -263,75 +269,75 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
                 type="submit"
                 data-testid="button-enviar-reserva"
               >
-                Revisar reserva <ArrowRight size={17} />
+                {t("bookingDialog.reviewBooking")} <ArrowRight size={17} />
               </button>
             </form>
           </>
         ) : step === "review" ? (
           <div className="booking-review">
             <div className="panel-kicker">
-              <span className="eyebrow-dot" /> Confira sua reserva
+              <span className="eyebrow-dot" /> {t("bookingDialog.confirmKicker")}
             </div>
             <h2 id="booking-title">
-              Tudo certo
+              {t("bookingDialog.confirmTitleLine1")}
               <br />
-              <em>com seu plano?</em>
+              <em>{t("bookingDialog.confirmTitleHighlight")}</em>
             </h2>
             {room && (
               <div className="booking-review-room">
                 <img src={room.image} alt="" />
                 <div>
-                  <span className="booking-room-type">{room.type}</span>
-                  <strong>{room.name}</strong>
-                  <span>{room.desc}</span>
+                  <span className="booking-room-type">{roomType}</span>
+                  <strong>{roomName}</strong>
+                  <span>{roomDesc}</span>
                 </div>
               </div>
             )}
             <div className="booking-summary">
               <div>
-                <span>Estadia</span>
+                <span>{t("bookingDialog.stay")}</span>
                 <strong>
-                  {formatDate(form.arrival)} → {formatDate(form.departure)}
+                  {formatDate(form.arrival, i18n.language)} → {formatDate(form.departure, i18n.language)}
                 </strong>
               </div>
               <div>
                 <span>
-                  <Moon size={14} /> Noites
+                  <Moon size={14} /> {t("bookingDialog.nightsLabel")}
                 </span>
                 <strong>
-                  {nights} {nights === 1 ? "noite" : "noites"}
+                  {t("bookingDialog.night", { count: nights })}
                 </strong>
               </div>
               <div>
                 <span>
-                  <Users size={14} /> Hóspedes
+                  <Users size={14} /> {t("bookingDialog.guests")}
                 </span>
                 <strong>
-                  {adultsCount} {adultsCount === 1 ? "adulto" : "adultos"}
-                  {childrenCount > 0 && `, ${childrenCount} ${childrenCount === 1 ? "criança" : "crianças"}`}
+                  {t("bookingDialog.adult", { count: adultsCount })}
+                  {childrenCount > 0 && t("bookingDialog.childSuffix", { count: childrenCount })}
                 </strong>
               </div>
               <div>
                 <span>
-                  <Utensils size={14} /> Refeições
+                  <Utensils size={14} /> {t("bookingDialog.meals")}
                 </span>
                 <strong>{mealPlanName}</strong>
               </div>
               {room && (
                 <div>
                   <span>
-                    <Coffee size={14} /> Quarto inclui
+                    <Coffee size={14} /> {t("bookingDialog.roomIncludes")}
                   </span>
-                  <strong>{room.meals.join(" · ")}</strong>
+                  <strong>{roomMealLabels.join(" · ")}</strong>
                 </div>
               )}
               <div className="booking-summary-total">
-                <span>Total estimado</span>
+                <span>{t("bookingDialog.totalEstimate")}</span>
                 <strong>{formatPrice(totalEstimate)}</strong>
               </div>
             </div>
             <p className="booking-review-contact">
-              A confirmação será enviada para <strong>{form.email}</strong>.
+              {t("bookingDialog.confirmationSentTo", { email: form.email })}
             </p>
             <div className="booking-review-actions">
               <button
@@ -340,7 +346,7 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
                 onClick={() => setStep("form")}
                 data-testid="button-editar-reserva"
               >
-                Editar dados
+                {t("bookingDialog.editData")}
               </button>
               <button
                 className="button button-gold"
@@ -348,7 +354,7 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
                 onClick={() => setStep("sent")}
                 data-testid="button-confirmar-reserva"
               >
-                Confirmar reserva <ArrowRight size={17} />
+                {t("bookingDialog.confirmBooking")} <ArrowRight size={17} />
               </button>
             </div>
           </div>
@@ -357,22 +363,21 @@ export function BookingDialog({ onClose, room }: BookingDialogProps) {
             <div className="success-mark">
               <Check size={24} />
             </div>
-            <div className="panel-kicker">Pedido recebido</div>
+            <div className="panel-kicker">{t("bookingDialog.receivedKicker")}</div>
             <h2>
-              Até já,
+              {t("bookingDialog.seeYouSoon")}
               <br />
-              <em>{form.name.split(" ")[0] || "viajante"}.</em>
+              <em>{form.name.split(" ")[0] || t("bookingDialog.traveler")}.</em>
             </h2>
             <p>
-              Recebemos sua preferência. Vamos cuidar dos detalhes e retornar
-              para você pelo e-mail informado.
+              {t("bookingDialog.receivedCopy")}
             </p>
             <button
               className="button button-outline"
               onClick={onClose}
               data-testid="button-concluir-reserva"
             >
-              Voltar para o site <ArrowRight size={16} />
+              {t("bookingDialog.backToSite")} <ArrowRight size={16} />
             </button>
           </div>
         )}

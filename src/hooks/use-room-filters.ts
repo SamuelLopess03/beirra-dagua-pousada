@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
-import { roomOptions, type Room } from "@/data/rooms";
+import { useTranslation } from "react-i18next";
+import { roomOptions, type MealPlanKey, type Room } from "@/data/rooms";
 
 const ROOMS_PER_PAGE = 5;
 const MAX_PRICE = 2000;
@@ -9,7 +10,7 @@ function getInitialFilters() {
   const adultsParam = Number(params.get("adults"));
   const childrenParam = Number(params.get("children"));
   const capacityParam = Number(params.get("capacity"));
-  const meal = params.get("meal");
+  const meal = params.get("meal") as MealPlanKey | null;
   const mealPrice = params.get("mealPrice");
   const maxPrice = Number(params.get("maxPrice"));
 
@@ -28,13 +29,13 @@ function getInitialFilters() {
     capacities = [capacityParam];
   }
 
-  const meals: string[] = [];
+  const meals: MealPlanKey[] = [];
   if (meal) {
     meals.push(meal);
   } else if (mealPrice) {
-    if (mealPrice === "incluso") meals.push("Café da manhã");
-    if (mealPrice === "80") meals.push("Meia pensão");
-    if (mealPrice === "150") meals.push("Pensão completa");
+    if (mealPrice === "incluso") meals.push("breakfast");
+    if (mealPrice === "80") meals.push("halfBoard");
+    if (mealPrice === "150") meals.push("fullBoard");
   }
 
   return {
@@ -51,6 +52,7 @@ function getInitialFilters() {
 }
 
 export function useRoomFilters() {
+  const { t } = useTranslation();
   const initialFilters = getInitialFilters();
   const [page, setPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
@@ -60,7 +62,7 @@ export function useRoomFilters() {
   const [selectedCapacities, setSelectedCapacities] = useState<number[]>(
     initialFilters.capacities,
   );
-  const [selectedMeals, setSelectedMeals] = useState<string[]>(
+  const [selectedMeals, setSelectedMeals] = useState<MealPlanKey[]>(
     initialFilters.meals,
   );
   const [maxPrice, setMaxPrice] = useState<number>(initialFilters.maxPrice);
@@ -78,11 +80,11 @@ export function useRoomFilters() {
   const updateMealPrice = useCallback((val: string) => {
     setMealPrice(val);
     if (val === "incluso") {
-      setSelectedMeals(["Café da manhã"]);
+      setSelectedMeals(["breakfast"]);
     } else if (val === "80") {
-      setSelectedMeals(["Meia pensão"]);
+      setSelectedMeals(["halfBoard"]);
     } else if (val === "150") {
-      setSelectedMeals(["Pensão completa"]);
+      setSelectedMeals(["fullBoard"]);
     } else if (val === "") {
       setSelectedMeals([]);
     }
@@ -96,7 +98,7 @@ export function useRoomFilters() {
     setPage(0);
   }, []);
 
-  const toggleMeal = useCallback((meal: string) => {
+  const toggleMeal = useCallback((meal: MealPlanKey) => {
     setSelectedMeals((prev) =>
       prev.includes(meal) ? prev.filter((m) => m !== meal) : [...prev, meal],
     );
@@ -117,7 +119,8 @@ export function useRoomFilters() {
 
   const filteredRooms = useMemo(() => {
     return roomOptions.filter((room) => {
-      const matchesSearch = room.name
+      const roomName = t(`rooms.items.${room.slug}.name`);
+      const matchesSearch = roomName
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
 
@@ -130,7 +133,7 @@ export function useRoomFilters() {
 
       const matchesMeal =
         selectedMeals.length === 0 ||
-        selectedMeals.some((meal) => room.meals.includes(meal));
+        selectedMeals.some((meal) => room.mealKeys.includes(meal));
 
       const matchesPrice = room.price <= maxPrice;
 
@@ -142,7 +145,7 @@ export function useRoomFilters() {
         matchesPrice
       );
     });
-  }, [searchQuery, totalGuests, selectedCapacities, selectedMeals, maxPrice]);
+  }, [t, searchQuery, totalGuests, selectedCapacities, selectedMeals, maxPrice]);
 
   const totalPages = useMemo(
     () => Math.ceil(filteredRooms.length / ROOMS_PER_PAGE),
