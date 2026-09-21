@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
+import { ArrowRight, ShoppingCart } from "lucide-react";
 import { DoubleCalendar } from "@/components/booking/double-calendar";
 import { TicketTypeSelector } from "@/components/booking/ticket-type-selector";
 import { OrderSummarySidebar } from "@/components/booking/order-summary-sidebar";
@@ -184,6 +185,34 @@ export function TicketCheckout() {
     }, 0);
   }, [ticketSelections]);
 
+  const cartQty = useMemo(
+    () => Object.values(ticketSelections).reduce((sum, q) => sum + q, 0),
+    [ticketSelections],
+  );
+
+  const summaryRef = useRef<HTMLDivElement>(null);
+  const [summaryInView, setSummaryInView] = useState(false);
+
+  // Esconde o mini-carrinho enquanto o resumo completo está visível.
+  useEffect(() => {
+    const anchor = summaryRef.current;
+    if (!anchor) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setSummaryInView(entry.isIntersecting),
+      { threshold: 0.35 },
+    );
+    observer.observe(anchor);
+    return () => observer.disconnect();
+  }, []);
+
+  const cartBarVisible = cartQty > 0 && !summaryInView;
+  const scrollToSummary = () => {
+    const anchor = summaryRef.current;
+    if (!anchor) return;
+    const top = anchor.getBoundingClientRect().top + window.scrollY - 96;
+    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+  };
+
   return (
     <main className="ticket-checkout-page">
       <div className="page-width ticket-checkout-container">
@@ -214,14 +243,48 @@ export function TicketCheckout() {
           )}
         </div>
 
-        <OrderSummarySidebar
-          currentStep={currentStep}
-          selectedDate={selectedDate}
-          ticketSelections={ticketSelections}
-          allTickets={ALL_TICKETS}
-          onAdvance={() => setCheckoutStep("personal_data")}
-          isPersonalDataStep={checkoutStep === "personal_data"}
-        />
+        <div ref={summaryRef} className="ticket-summary-anchor">
+          <OrderSummarySidebar
+            currentStep={currentStep}
+            selectedDate={selectedDate}
+            ticketSelections={ticketSelections}
+            allTickets={ALL_TICKETS}
+            onAdvance={() => setCheckoutStep("personal_data")}
+            isPersonalDataStep={checkoutStep === "personal_data"}
+          />
+        </div>
+      </div>
+
+      {/* Mini-carrinho mobile: feedback imediato dos ingressos anexados */}
+      <div
+        className={`ticket-cart-bar${cartBarVisible ? " is-visible" : ""}`}
+        role="status"
+        aria-live="polite"
+        aria-hidden={!cartBarVisible}
+      >
+        <span className="ticket-cart-icon">
+          <ShoppingCart size={20} />
+          <span className="ticket-cart-count">{cartQty}</span>
+        </span>
+        <span className="ticket-cart-info">
+          <strong>
+            {totalPix.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </strong>
+          <small>
+            {cartQty} {cartQty === 1 ? "ingresso" : "ingressos"}
+          </small>
+        </span>
+        <button
+          type="button"
+          className="ticket-cart-btn"
+          onClick={scrollToSummary}
+          tabIndex={cartBarVisible ? undefined : -1}
+        >
+          Ver resumo <ArrowRight size={15} />
+        </button>
       </div>
     </main>
   );
