@@ -20,6 +20,29 @@ interface PersonalDataStepProps {
   totalPix: number;
 }
 
+const onlyDigits = (value: string) => value.replace(/\D/g, "");
+
+/** 000.000.000-00 (progressiva durante a digitação) */
+const maskCPF = (value: string) => {
+  const digits = onlyDigits(value).slice(0, 11);
+  if (digits.length > 9)
+    return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6, 9)}-${digits.slice(9)}`;
+  if (digits.length > 6) return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6)}`;
+  if (digits.length > 3) return `${digits.slice(0, 3)}.${digits.slice(3)}`;
+  return digits;
+};
+
+/** (00) 00000-0000 ou (00) 0000-0000 (progressiva durante a digitação) */
+const maskPhone = (value: string) => {
+  const digits = onlyDigits(value).slice(0, 11);
+  if (digits.length === 0) return "";
+  if (digits.length <= 2) return `(${digits}`;
+  if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  if (digits.length <= 10)
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+};
+
 export function PersonalDataStep({ onBackToSelection, onCompleteOrder, totalPix }: PersonalDataStepProps) {
   const [activeSubStep, setActiveSubStep] = useState<1 | 2 | 3>(1); // 1: Email, 2: Dados Pessoais, 3: Pagamento
 
@@ -206,10 +229,12 @@ export function PersonalDataStep({ onBackToSelection, onCompleteOrder, totalPix 
                 <input
                   id="cpf"
                   type="text"
+                  inputMode="numeric"
                   placeholder="000.000.000-00"
                   required
+                  maxLength={14}
                   value={formData.cpf}
-                  onChange={(e) => handleChange("cpf", e.target.value)}
+                  onChange={(e) => handleChange("cpf", maskCPF(e.target.value))}
                 />
               </div>
               <div className="input-group">
@@ -217,10 +242,12 @@ export function PersonalDataStep({ onBackToSelection, onCompleteOrder, totalPix 
                 <input
                   id="phone"
                   type="tel"
+                  inputMode="numeric"
                   placeholder="(00) 00000-0000"
                   required
+                  maxLength={15}
                   value={formData.phone}
-                  onChange={(e) => handleChange("phone", e.target.value)}
+                  onChange={(e) => handleChange("phone", maskPhone(e.target.value))}
                 />
               </div>
             </div>
