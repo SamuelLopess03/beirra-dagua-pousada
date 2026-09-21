@@ -205,12 +205,29 @@ export function TicketCheckout() {
     return () => observer.disconnect();
   }, []);
 
-  const cartBarVisible = cartQty > 0 && !summaryInView;
+  const cartBarVisible =
+    cartQty > 0 && !summaryInView && checkoutStep === "selection";
   const scrollToSummary = () => {
     const anchor = summaryRef.current;
     if (!anchor) return;
     const top = anchor.getBoundingClientRect().top + window.scrollY - 96;
     window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+  };
+
+  const scrollToTop = () => {
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  };
+
+  const goToPersonalData = () => {
+    setCheckoutStep("personal_data");
+    scrollToTop();
+  };
+
+  const backToSelection = () => {
+    setCheckoutStep("selection");
+    scrollToTop();
   };
 
   return (
@@ -236,7 +253,7 @@ export function TicketCheckout() {
             </>
           ) : (
             <PersonalDataStep
-              onBackToSelection={() => setCheckoutStep("selection")}
+              onBackToSelection={backToSelection}
               onCompleteOrder={(data) => console.log("Pedido concluído:", data)}
               totalPix={totalPix}
             />
@@ -249,7 +266,7 @@ export function TicketCheckout() {
             selectedDate={selectedDate}
             ticketSelections={ticketSelections}
             allTickets={ALL_TICKETS}
-            onAdvance={() => setCheckoutStep("personal_data")}
+            onAdvance={goToPersonalData}
             isPersonalDataStep={checkoutStep === "personal_data"}
           />
         </div>
