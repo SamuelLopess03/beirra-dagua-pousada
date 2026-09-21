@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { Mail, CreditCard, Lock, CheckCircle2, ChevronRight } from "lucide-react";
+import { Mail, CreditCard, Lock, CheckCircle2, ChevronRight, Apple } from "lucide-react";
 
 interface CustomerData {
   email: string;
@@ -159,7 +159,7 @@ export function PersonalDataStep({ onBackToSelection, onCompleteOrder, totalPix 
                 Google
               </button>
               <button type="button" className="social-btn">
-                <img src="https://www.svgrepo.com/show/511330/apple.svg" alt="Apple" width={18} />
+                <Apple size={18} aria-hidden="true" />
                 Apple
               </button>
             </div>

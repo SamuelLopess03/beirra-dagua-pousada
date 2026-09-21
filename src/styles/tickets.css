@@ -3157,4 +3157,29 @@
   .tts-card-notch {
     display: none;
   }
+
+  /* Checkout (dados + resumo): respiro das bordas e empilhamento */
+  .ticket-checkout-page .page-width {
+    width: min(100% - 32px, 560px);
+  }
+  .checkout-step-container {
+    border-radius: 18px;
+  }
+  .substep-item {
+    padding: 6px 4px;
+  }
+  .social-btn {
+    width: 100%;
+  }
+  .social-btn svg {
+    flex-shrink: 0;
+  }
+  .summary-total-pix {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .summary-total-pix strong {
+    font-size: 24px;
+  }
 }
