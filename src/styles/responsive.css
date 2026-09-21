@@ -12,6 +12,19 @@
   }
   .header-inner {
     height: 82px;
+    gap: 12px;
+  }
+  /* Logo à esquerda, idioma + hambúrguer agrupados à direita:
+     evita que a logo seja espremida/quebrada no mobile. */
+  .brand-link {
+    flex-shrink: 0;
+  }
+  .language-switcher {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .menu-toggle {
+    flex-shrink: 0;
   }
   .mobile-nav {
     display: flex;
@@ -19,15 +32,72 @@
     max-height: 0;
     overflow: hidden;
     padding-inline: 22px;
-    /* Azul escuro da logo no menu mobile */
-    background: #2a6fa8;
+    padding-block: 0;
+    /* Sempre transparente: o fundo unificado vem do header aberto.
+       (O azul sólido antigo aqui fazia a transição "piscar" do padrão
+       antigo para o novo ao abrir/fechar.) */
+    background: transparent;
+    border: 0;
     transition:
       max-height 0.35s ease,
-      padding 0.35s ease;
+      padding 0.35s ease,
+      background-color 0.3s ease;
   }
   .mobile-nav.is-open {
-    max-height: 400px;
-    padding-block: 16px 23px;
+    max-height: calc(100dvh - 82px);
+    overflow-y: auto;
+    /* Respiro entre a logo e o primeiro link no mobile */
+    padding-block: 20px 23px;
+  }
+  /* TOPO DA HOME: menu "transparente" sobre o hero (vê-se a imagem através,
+     com blur para manter leitura). Vale também p/ o topo do little-beach,
+     que tem hero escuro em gradiente/imagem. */
+  .site-header.is-mobile-open:not(.is-scrolled):not(.is-internal),
+  .site-header.is-mobile-open.is-park:not(.is-scrolled) {
+    background: rgba(10, 42, 68, 0.55);
+    backdrop-filter: blur(16px) saturate(1.25);
+    -webkit-backdrop-filter: blur(16px) saturate(1.25);
+    /* Sombra colada na base do menu: dissolve o corte com o conteúdo */
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.25),
+      0 18px 24px -18px rgba(0, 0, 0, 0.45);
+    color: #f5edda;
+  }
+  .site-header.is-mobile-open:not(.is-scrolled):not(.is-internal)
+    .mobile-nav-link:not(.mobile-nav-link-special),
+  .site-header.is-mobile-open.is-park:not(.is-scrolled)
+    .mobile-nav-link:not(.mobile-nav-link-special) {
+    color: rgba(248, 243, 233, 0.92);
+    border-bottom-color: rgba(255, 255, 255, 0.18);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  }
+  /* RESTANTE DA PÁGINA / PÁGINAS INTERNAS: menu sólido creme,
+     igual ao header com scroll — comportamento "normal". */
+  .site-header.is-mobile-open.is-scrolled,
+  .site-header.is-mobile-open.is-internal:not(.is-park) {
+    background-color: rgba(245, 237, 218, 0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    /* Sombra colada na base do menu: dissolve o corte com o conteúdo */
+    box-shadow:
+      0 4px 30px rgba(0, 0, 0, 0.08),
+      0 16px 22px -16px rgba(8, 34, 42, 0.35);
+    color: #2a6fa8;
+  }
+  .site-header.is-mobile-open.is-scrolled
+    .mobile-nav-link:not(.mobile-nav-link-special),
+  .site-header.is-mobile-open.is-internal:not(.is-park)
+    .mobile-nav-link:not(.mobile-nav-link-special) {
+    color: rgba(42, 111, 168, 0.9);
+    border-bottom-color: rgba(42, 111, 168, 0.14);
+    text-shadow: none;
+  }
+  /* No menu creme (com scroll / internas), o botão laranja segue o desktop:
+     sem sombra de texto. */
+  .site-header.is-mobile-open.is-scrolled .mobile-nav-link-special,
+  .site-header.is-mobile-open.is-internal:not(.is-park)
+    .mobile-nav-link-special {
+    text-shadow: none;
   }
   .mobile-nav-link {
     color: rgba(248, 243, 233, 0.82);
@@ -289,14 +359,17 @@
     letter-spacing: 0.11em;
   }
   .mobile-nav-link-special {
-    /* Laranja suave para o link especial no mobile */
-    color: #ff8c2a;
-    border: 1px solid rgba(255, 140, 42, 0.65);
-    background: rgba(61, 143, 209, 0.18);
+    /* Laranja sólida como no desktop (.nav-link-special), inclusive com
+       o mesmo sombreamento de texto para legibilidade */
+    color: #f5edda;
+    border: 1px solid #ff8c2a;
+    background: #ffad49;
     padding-inline: 13px;
     margin-top: 9px;
     box-shadow: 4px 4px 0 #2a6fa8;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
   }
+  .mobile-nav-link-special:hover,
   .mobile-nav-link-special.is-active {
     color: #f5edda;
     background: #ff8c2a;
@@ -640,6 +713,9 @@
   .room-toolbar-actions {
     align-items: start;
     width: 100%;
+    /* Respiro entre o título ("sua estadia / encontradas") e o botão
+       de filtrar no mobile — o display:block da toolbar anula o gap */
+    margin-top: 16px;
   }
   .room-results-note {
     order: 2;

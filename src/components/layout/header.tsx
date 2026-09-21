@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Menu, X, ShieldCheck, Zap, Sparkles } from "lucide-react";
 import { navItems } from "@/data/navigation";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
+import { useLockBodyScroll } from "@/hooks/use-lock-body-scroll";
 import logo from "@assets/logo-little-beach.jpg";
 
 export function Header() {
@@ -24,11 +25,19 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Fecha o menu mobile ao trocar de rota
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location]);
+
+  // Trava o scroll do body com o menu aberto (mobile)
+  useLockBodyScroll(mobileOpen);
+
   const showScrolled = isCheckout ? false : isScrolled;
 
   return (
     <header
-      className={`site-header ${showScrolled ? "is-scrolled" : ""} ${isInternal ? "is-internal" : ""} ${isPark ? "is-park" : ""} ${isCheckout ? "is-checkout" : ""}`}
+      className={`site-header ${showScrolled ? "is-scrolled" : ""} ${isInternal ? "is-internal" : ""} ${isPark ? "is-park" : ""} ${isCheckout ? "is-checkout" : ""} ${mobileOpen ? "is-mobile-open" : ""}`}
       data-testid="header-site"
     >
       <div className="header-inner">
@@ -77,6 +86,7 @@ export function Header() {
             className="menu-toggle"
             onClick={() => setMobileOpen((value) => !value)}
             aria-label={t("common.menu.open")}
+            aria-expanded={mobileOpen}
             data-testid="button-menu-mobile"
           >
             {mobileOpen ? <X size={23} /> : <Menu size={23} />}
@@ -84,7 +94,10 @@ export function Header() {
         )}
       </div>
       {!isCheckout && (
-        <div className={`mobile-nav ${mobileOpen ? "is-open" : ""}`}>
+        <div
+          className={`mobile-nav ${mobileOpen ? "is-open" : ""}`}
+          aria-hidden={!mobileOpen}
+        >
           {navItems.map((item) => (
             <Link
               key={item.href}

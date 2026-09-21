@@ -29,6 +29,12 @@
 .site-header.is-internal:not(.is-scrolled) {
   color: #2a6fa8;
 }
+/* Topo do little-beach (hero azul): borda da pílula de idioma, sigla e
+   hambúrguer em branco para contraste. Depois da regra .is-internal
+   (mesma especificidade) para prevalecer sobre o azul. */
+.site-header.is-park:not(.is-scrolled) {
+  color: #fff;
+}
 .header-inner {
   width: min(1280px, calc(100% - 80px));
   height: 108px;
@@ -55,37 +61,23 @@
   margin-top: 0;
 }
 .brand-link::before {
-  content: "";
-  position: absolute;
-  top: -12px;
-  left: -12px;
-  right: -12px;
-  bottom: -12px;
-  border-radius: 50%;
-  z-index: -1;
-  pointer-events: none;
-  background-color: transparent;
-  transition:
-    background-color 0.3s ease,
-    backdrop-filter 0.3s ease,
-    box-shadow 0.3s ease;
-}
-.site-header.is-scrolled .brand-link::before {
+  /* Halo removido: causava recorte/quebra da logo com z-index negativo
+     sobre o header fixo transparente no mobile. */
   display: none;
 }
 .brand-logo {
+  display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 50%;
-  mix-blend-mode: screen;
-  filter: saturate(0.9);
-  transition: mix-blend-mode 0.3s ease;
-}
-.site-header.is-scrolled .brand-logo,
-.site-header.is-internal:not(.is-scrolled) .brand-logo {
-  mix-blend-mode: multiply;
+  /* A logo é um JPG quadrado com fundo azul: mantém o fundo sólido e
+     circular em qualquer contexto (hero, menu aberto, header creme).
+     Sem mix-blend-mode para não "quebrar" sobre fundos diferentes. */
+  background-color: #2a6fa8;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 18px rgba(8, 34, 42, 0.28);
 }
 .desktop-nav {
   display: flex;
