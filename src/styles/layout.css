@@ -14,8 +14,10 @@
 }
 .site-header.is-scrolled {
   background-color: rgba(245, 237, 218, 0.95);
-  backdrop-filter: blur(12px);
+  /* Ordem intencional: -webkit- primeiro, padrão por último — o
+     minificador do build funde declarações gêmeas mantendo a última. */
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
   color: #2a6fa8;
 }

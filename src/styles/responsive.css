@@ -54,9 +54,12 @@
      que tem hero escuro em gradiente/imagem. */
   .site-header.is-mobile-open:not(.is-scrolled):not(.is-internal),
   .site-header.is-mobile-open.is-park:not(.is-scrolled) {
-    background: rgba(10, 42, 68, 0.55);
-    backdrop-filter: blur(16px) saturate(1.25);
+    background: rgba(10, 42, 68, 0.82);
+    /* Ordem intencional: -webkit- primeiro, padrão por último — o
+       minificador do build funde declarações gêmeas mantendo a última,
+       e a padrão precisa sobreviver para o blur funcionar em prod. */
     -webkit-backdrop-filter: blur(16px) saturate(1.25);
+    backdrop-filter: blur(16px) saturate(1.25);
     /* Sombra colada na base do menu: dissolve o corte com o conteúdo */
     box-shadow:
       0 12px 40px rgba(0, 0, 0, 0.25),
@@ -76,8 +79,9 @@
   .site-header.is-mobile-open.is-scrolled,
   .site-header.is-mobile-open.is-internal:not(.is-park) {
     background-color: rgba(245, 237, 218, 0.98);
-    backdrop-filter: blur(12px);
+    /* Ordem intencional: -webkit- primeiro, padrão por último (ver acima). */
     -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
     /* Sombra colada na base do menu: dissolve o corte com o conteúdo */
     box-shadow:
       0 4px 30px rgba(0, 0, 0, 0.08),
