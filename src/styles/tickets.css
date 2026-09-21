@@ -45,7 +45,8 @@
 }
 
 .site-header.is-checkout .brand-logo {
-  mix-blend-mode: multiply;
+  /* Sem blend: logo circular sólida funciona sobre o fundo areia do checkout */
+  mix-blend-mode: normal;
 }
 
 .ticket-checkout-benefits {
@@ -75,6 +76,15 @@
   display: grid;
   grid-template-columns: 1fr 380px;
   gap: 40px;
+}
+
+.ticket-summary-anchor {
+  min-width: 0;
+}
+
+/* Mini-carrinho: só no mobile (habilitado no bloco final ≤720px) */
+.ticket-cart-bar {
+  display: none;
 }
 
 @media (max-width: 1120px) {
@@ -3016,5 +3026,135 @@
 
   .tts-card-title {
     font-size: 19px;
+  }
+}
+
+/* ===== Mobile (≤720px): organização final da tela de ingressos =====
+   Bloco propositalmente no fim do arquivo para prevalecer sobre as
+   redeclarações de grid por tema (que anulavam o empilhamento mobile). */
+@media (max-width: 720px) {
+  /* No mobile o resumo vive no mini-carrinho fixo: esconde o benefício
+     do header para desafogar o topo */
+  .checkout-header-benefits {
+    display: none;
+  }
+
+  /* Mini-carrinho fixo: feedback imediato dos ingressos anexados */
+  .ticket-cart-bar {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(16, 58, 74, 0.97);
+    color: #f5edda;
+    border-radius: 16px;
+    padding: 12px 12px 12px 16px;
+    box-shadow: 0 14px 34px rgba(8, 34, 42, 0.4);
+    transform: translateY(140%);
+    transition: transform 0.32s ease;
+  }
+  .ticket-cart-bar.is-visible {
+    transform: none;
+  }
+  .ticket-checkout-page:has(.ticket-cart-bar.is-visible) {
+    padding-bottom: 92px;
+  }
+  .ticket-cart-icon {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: rgba(245, 237, 218, 0.14);
+  }
+  .ticket-cart-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 5px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: #ff8c2a;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+  }
+  .ticket-cart-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+  }
+  .ticket-cart-info strong {
+    font-size: 17px;
+    line-height: 1.1;
+  }
+  .ticket-cart-info small {
+    font-size: 11px;
+    color: rgba(245, 237, 218, 0.75);
+  }
+  .ticket-cart-btn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 0;
+    border-radius: 12px;
+    background: #ff8c2a;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 13px 16px;
+    cursor: pointer;
+  }
+
+  /* Calendário: 1 mês por vez no mobile (navega pelas setas) */
+  .ticket-calendar-wrapper {
+    gap: 0;
+  }
+  .ticket-calendar-wrapper > .ticket-month-container + .ticket-month-container {
+    display: none;
+  }
+  .ticket-month-container {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+  .ticket-calendar-grid {
+    gap: 6px;
+  }
+
+  /* Cards de ingresso: empilha as 3 colunas (info, benefícios, ação) */
+  .tts-card-content {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 20px;
+    min-height: 0;
+  }
+  .tts-card-info,
+  .tts-card-features,
+  .tts-card-action {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .tts-card-features {
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px dashed rgba(31, 83, 91, 0.22);
+    padding: 15px 0 0;
+  }
+  .tts-card-notch {
+    display: none;
   }
 }
