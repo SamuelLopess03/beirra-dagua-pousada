@@ -3121,10 +3121,10 @@
   }
 
   /* Calendário: 1 mês por vez no mobile (navega pelas setas) */
-  .ticket-calendar-wrapper {
+  .ticket-checkout-page .ticket-calendar-wrapper {
     gap: 0;
   }
-  .ticket-calendar-wrapper > .ticket-month-container + .ticket-month-container {
+  .ticket-checkout-page .ticket-calendar-wrapper > .ticket-month-container + .ticket-month-container {
     display: none;
   }
   .ticket-month-container {
@@ -3135,8 +3135,9 @@
     gap: 6px;
   }
 
-  /* Cards de ingresso: empilha as 3 colunas (info, benefícios, ação) */
-  .tts-card-content {
+  /* Cards de ingresso: empilha as 3 colunas (info, benefícios, ação).
+     Seletor com escopo da página para prevalecer sobre os temas. */
+  .ticket-checkout-page .tts-card-content {
     grid-template-columns: 1fr;
     gap: 16px;
     padding: 20px;
@@ -3154,19 +3155,74 @@
     border-top: 1px dashed rgba(31, 83, 91, 0.22);
     padding: 15px 0 0;
   }
-  .tts-card-notch {
+  /* Notches laterais só fazem sentido no card 3 colunas do desktop */
+  .ticket-checkout-page .tts-card-notch {
     display: none;
+  }
+
+  /* Trava anti scroll-horizontal + anti estouro de grid no mobile */
+  .ticket-checkout-page {
+    overflow-x: clip;
+  }
+  .ticket-checkout-content,
+  .ticket-summary-anchor {
+    min-width: 0;
   }
 
   /* Checkout (dados + resumo): respiro das bordas e empilhamento */
   .ticket-checkout-page .page-width {
-    width: min(100% - 32px, 560px);
+    width: min(100% - 40px, 560px);
   }
   .checkout-step-container {
     border-radius: 18px;
   }
+  .ticket-summary-sidebar {
+    padding: 24px 20px;
+    border-radius: 18px;
+  }
+  .ticket-timeline {
+    gap: 24px;
+  }
+  .ticket-timeline-step {
+    gap: 12px;
+  }
+  .summary-ticket-price {
+    white-space: nowrap;
+  }
   .substep-item {
     padding: 6px 4px;
+  }
+  /* Substeps e login social com escala legível no mobile */
+  .ticket-checkout-page .checkout-substeps-bar {
+    gap: 6px;
+  }
+  .ticket-checkout-page .substep-item {
+    gap: 6px;
+    padding: 6px 2px;
+  }
+  .ticket-checkout-page .substep-number {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+  .ticket-checkout-page .substep-label {
+    font-size: 10px;
+    /* Rótulos da etapa nunca quebram linha */
+    white-space: nowrap;
+  }
+  .ticket-checkout-page .social-buttons-row {
+    gap: 14px;
+  }
+  .ticket-checkout-page .social-btn {
+    height: 54px;
+    font-size: 15px;
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+  .ticket-checkout-page .social-btn svg {
+    width: 20px;
+    height: 20px;
   }
   .social-btn {
     width: 100%;
