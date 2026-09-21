@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { useLocation } from "wouter";
 import { Mail, CreditCard, Lock, CheckCircle2, ChevronRight, Apple } from "lucide-react";
 
 interface CustomerData {
@@ -45,6 +46,8 @@ const maskPhone = (value: string) => {
 
 export function PersonalDataStep({ onBackToSelection, onCompleteOrder, totalPix }: PersonalDataStepProps) {
   const [activeSubStep, setActiveSubStep] = useState<1 | 2 | 3>(1); // 1: Email, 2: Dados Pessoais, 3: Pagamento
+  // Navegação SPA com base do Router (funciona sob o subcaminho do GitHub Pages)
+  const [, navigate] = useLocation();
 
   const [formData, setFormData] = useState<CustomerData>({
     email: "",
@@ -111,7 +114,7 @@ export function PersonalDataStep({ onBackToSelection, onCompleteOrder, totalPix 
           </div>
         </div>
 
-        <button className="back-home-btn" onClick={() => window.location.href = "/"}>
+        <button className="back-home-btn" onClick={() => navigate("/")}>
           Voltar para a página inicial
         </button>
       </div>
