@@ -13,7 +13,7 @@ import {
 import { SectionLabel } from "@/components/layout/section-label";
 import { useRoomFilters } from "@/hooks/use-room-filters";
 import { useBooking } from "@/hooks/booking-context";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { Room, RoomDetailKey } from "@/data/rooms";
 
 const detailIcons: Record<RoomDetailKey, typeof Waves> = {
@@ -117,6 +117,20 @@ export function Quartos() {
     clearFilters,
   } = useRoomFilters();
   const [filtersOpen, setFiltersOpen] = useState(activeFilterCount > 0);
+  const resultsTopRef = useRef<HTMLDivElement>(null);
+
+  const goToPage = (next: number) => {
+    setPage(next);
+    // Ao paginar, leva ao início da exibição dos quartos em vez de
+    // manter o scroll lá embaixo na paginação.
+    requestAnimationFrame(() => {
+      const anchor = resultsTopRef.current;
+      if (!anchor) return;
+      const top =
+        anchor.getBoundingClientRect().top + window.scrollY - 96;
+      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    });
+  };
 
   return (
     <main className="inner-page">
@@ -150,7 +164,7 @@ export function Quartos() {
           </p>
         </div>
 
-        <div className="room-results-toolbar">
+        <div className="room-results-toolbar" ref={resultsTopRef}>
           <div>
             <span className="room-results-kicker">{t("quartosPage.resultsKicker")}</span>
             <strong>{t("quartosPage.resultsFound", { count: filteredRooms.length })}</strong>
@@ -381,7 +395,7 @@ export function Quartos() {
               <div className="room-pagination" data-testid="pagination-quartos">
                 <button
                   className="room-pagination-btn"
-                  onClick={() => setPage((p) => Math.max(0, p - 1))}
+                  onClick={() => goToPage(Math.max(0, page - 1))}
                   disabled={page === 0}
                   aria-label={t("quartosPage.previousRooms")}
                 >
@@ -394,7 +408,7 @@ export function Quartos() {
                   <button
                     key={i}
                     className={`room-pagination-dot${i === page ? " is-active" : ""}`}
-                    onClick={() => setPage(i)}
+                    onClick={() => goToPage(i)}
                     aria-label={t("quartosPage.pageLabel", { number: i + 1 })}
                     aria-current={i === page ? "page" : undefined}
                   />
@@ -402,7 +416,7 @@ export function Quartos() {
                 <button
                   className="room-pagination-btn"
                   onClick={() =>
-                    setPage((p) => Math.min(totalPages - 1, p + 1))
+                    goToPage(Math.min(totalPages - 1, page + 1))
                   }
                   disabled={page === totalPages - 1}
                   aria-label={t("quartosPage.nextRooms")}
