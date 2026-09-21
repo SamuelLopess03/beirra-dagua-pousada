@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Clock3, Utensils } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { SectionLabel } from "@/components/layout/section-label";
@@ -14,6 +14,7 @@ export function Cardapio() {
   const { openBooking } = useBooking();
   const [category, setCategory] = useState<MenuCategoryKey>("all");
   const [page, setPage] = useState(0);
+  const listTopRef = useRef<HTMLElement>(null);
   const filtered = useMemo(
     () =>
       category === "all"
@@ -38,6 +39,14 @@ export function Cardapio() {
 
   const selectPage = useCallback((nextPage: number) => {
     setPage(Math.max(0, Math.min(nextPage, totalPages - 1)));
+    // Ao paginar, volta ao início da listagem dos pratos em vez de
+    // manter o scroll lá embaixo na paginação.
+    requestAnimationFrame(() => {
+      const anchor = listTopRef.current;
+      if (!anchor) return;
+      const top = anchor.getBoundingClientRect().top + window.scrollY - 96;
+      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    });
   }, [totalPages]);
 
   return (
@@ -82,7 +91,7 @@ export function Cardapio() {
           </div>
         </div>
       </section>
-      <section className="menu-listing page-width" id="lista-pratos">
+      <section className="menu-listing page-width" id="lista-pratos" ref={listTopRef}>
         <div
           className="category-tabs"
           role="tablist"
