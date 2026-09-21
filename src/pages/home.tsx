@@ -19,6 +19,7 @@ import { ContactSection } from "@/components/contact-section";
 import { LocationCard } from "@/components/location-card";
 import { Carousel } from "@/components/carousel/carousel";
 import { useBooking } from "@/hooks/booking-context";
+import { useLockBodyScroll } from "@/hooks/use-lock-body-scroll";
 import { atmosphereSlides, foodSlides } from "@/data/slides";
 import heroImage from "@assets/pousada-aerea.jpeg";
 import heroBackgroundImage from "@assets/pousada.png";
@@ -96,6 +97,8 @@ function StayVideoCoverflow() {
   const [activeVideo, setActiveVideo] = useState(0);
   const [expandedVideo, setExpandedVideo] = useState<number | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  // Lightbox aberta: a página atrás não rola, o foco fica no vídeo.
+  useLockBodyScroll(expandedVideo !== null);
 
   useEffect(() => {
     const videos = stageRef.current?.querySelectorAll("video");

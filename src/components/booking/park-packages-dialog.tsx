@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { ArrowRight, Check, MessageCircle, Ticket, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useLockBodyScroll } from "@/hooks/use-lock-body-scroll";
 import { parkPackages } from "@/data/park-packages";
 
 const whatsappNumber = "5588981338506";
@@ -15,6 +16,8 @@ export function ParkPackagesDialog({
   initialPackageId,
 }: ParkPackagesDialogProps) {
   const { t } = useTranslation();
+  // Modal aberto: a página atrás não rola, o foco fica no modal.
+  useLockBodyScroll();
   const [selectedId, setSelectedId] = useState(
     initialPackageId ?? parkPackages[0].id,
   );

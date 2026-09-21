@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { ArrowRight, Check, Coffee, Moon, Users, Utensils, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useLockBodyScroll } from "@/hooks/use-lock-body-scroll";
 import type { Room } from "@/data/rooms";
 
 type BookingDialogProps = {
@@ -26,6 +27,8 @@ function formatPrice(value: number) {
 
 export function BookingDialog({ onClose, room }: BookingDialogProps) {
   const { t, i18n } = useTranslation();
+  // Modal aberto: a página atrás não rola, o foco fica no modal.
+  useLockBodyScroll();
   const roomName = room ? t(`rooms.items.${room.slug}.name`) : "";
   const roomType = room ? t(`rooms.items.${room.slug}.type`) : "";
   const roomDesc = room ? t(`rooms.items.${room.slug}.desc`) : "";
